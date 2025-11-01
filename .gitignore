@@ -1,0 +1,82 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+build/
+dist/
+MANIFEST
+
+# Virtual environments
+.env
+.env.*
+.venv/
+venv/
+env/
+.Python
+
+# =========================
+# Notebooks
+# =========================
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+~$*.ipynb
+
+# =========================
+# Data (keep structure, ignore contents)
+# =========================
+# Ignore all files under data/
+data/**
+
+# Allow these tiny placeholders to keep folders in Git
+!data/.gitkeep
+!data/**/.gitkeep
+!data/README.md
+!data/**/README.md
+
+# (Note: src/data/ is code—NOT ignored)
+
+# =========================
+# Results / runs / artifacts
+# =========================
+results/
+artifacts/
+runs/
+checkpoints/
+outputs/
+*.out
+*.err
+*.log
+*.tmp
+*.bak
+
+# =========================
+# Tests / Coverage
+# =========================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# =========================
+# Editors / IDEs
+# =========================
+.vscode/
+.idea/
+*.code-workspace
+
+# =========================
+# OS junk
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
