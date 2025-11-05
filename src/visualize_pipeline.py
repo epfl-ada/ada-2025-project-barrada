@@ -286,7 +286,7 @@ def plot_sentiment_volume_over_time(
     ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m'))
     fig.autofmt_xdate(rotation=30)
 
-    # Y-axis formatting with commas
+    # Y-axis formatting
     ax.get_yaxis().set_major_formatter(ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
     plt.tight_layout()
 
@@ -420,7 +420,6 @@ def plot_liwc_radar_profiles(df, sub_a, sub_b, label_a="Sub A", label_b="Sub B",
     upper_limit = max(0.05, plot_max * 1.2)
     print(f"  Setting plot upper limit to: {upper_limit:.2f}")
     
-    # Prepare Radar Data
     vals_a = pd.concat([vals_a_raw, vals_a_raw.iloc[[0]]]).values
     vals_b = pd.concat([vals_b_raw, vals_b_raw.iloc[[0]]]).values
     angles = [n / float(len(features)) * 2 * np.pi for n in range(len(features))]
