@@ -115,11 +115,7 @@ We enrich these datasets by calculating community roles based on network and sen
 
 ### Visualization & Reporting
 
-We use a 17-plot pipeline to tell our story. We use **bar charts** for example (`plot_top_sources`) to rank communities and **quadrant maps** (`plot_role_quadrant_map`) to define their social roles (e.g., "Critical," "Supportive").
-
-One of our most important visual is the **`plot_semantic_structural_heatmap`**. This heatmap compares **Topics (semantic rows)** with **Network Groups (structural columns)**. A bright square on a row is the visual signature of an **echo chamber**: it proves that a specific topic cluster is also a highly insular network, linking almost exclusively to itself while dismissing other groups.
-
-You can see all plots in the Jupyter Notebook. All visualizations are also saved as PNGs in the `results/figures/` directory.
+All our 17 plots and their description are in our main Jupyter Notebook `results.ipynb` . All visualizations are also saved as PNGs in the `results/figures/` directory.
 
 ## Repository Structure
 
