@@ -10,7 +10,7 @@ This project aims to uncover the hidden psychological structure underlying that 
 - **Psychological (LIWC):** How do they talk? (Emotional tone, cognitive style, "we" vs "they" linguistics)  
 - **Semantic:** What are they about? (Topic embeddings)
 
-By combining these layers, we seek to visualize Reddit as a “social MRI”, revealing how communities align, clash, or coexist—not only by what they discuss but how they think and feel. Our goal is to tell the story of Reddit’s invisible brain: the emotional and cognitive currents that shape the flow of ideas across its digital landscape.
+By combining these layers, we seek to visualize Reddit as a “social MRI”, revealing how communities align, clash, or coexist not only by what they discuss but how they think and feel. Our goal is to tell the story of Reddit’s invisible brain: the emotional and cognitive currents that shape the flow of ideas across its digital landscape.
 
 ## Research Questions
 
@@ -18,24 +18,22 @@ We organize the project around **four themes** that connect roles, psychology, t
 
 ### **Network Structure & Roles**
 
-* Do communities with specific psychological profiles (e.g., high **Anger**, high **We/They**) occupy distinct positions (central vs. peripheral; high PageRank/HITS vs. low)?
 * Are “analytical” communities (high **Cognitive**: Certain/Tentative/Insight) more likely to act as **bridges** (high betweenness) between disparate clusters?
 * Which subreddits emerge as influential amplifiers, supportive hubs, critical, or controversial targets, and what linguistic patterns characterize them?
 
 ### **Emotional Geography**
 
 * Which emotions (e.g., **Anger**, **Anxiety**, **Certainty**/**Tentativeness**) dominate across **negative vs. positive** links?
-* Do critical communities (high **outgoing negativity**) exhibit **depression markers** (high “I” usage + negative affect)?
 * Where do we observe **asymmetries**: the language a subreddit uses vs. the language used **against** it (incoming vs. outgoing LIWC)?
 
 ### **Social Dynamics**
 
-* Are **positive links** more common between **psychologically or topically similar** subreddits (homophily)?
+* Are **positive links** more common between **psychologically or topically similar** subreddits?
 * Do **ideological neighbors** criticize each other more than distant communities?
 
 ### **Echo Chambers & Polarization**
 
-* Do communities with high **certainty** and low **tentativeness** (dogmatism) form **more insular clusters**?
+* Do communities with high **certainty** and low **tentativeness** form **more insular clusters**?
 * How do semantic and structural groupings interact to form echo chambers?
 
 ## Additional Datasets
@@ -43,7 +41,7 @@ We organize the project around **four themes** that connect roles, psychology, t
 Beyond the Reddit hyperlink network, we use:
 
 - **Reddit User and Subreddit Embeddings (Stanford SNAP)** — [https://snap.stanford.edu/data/web-RedditEmbeddings.html]  
-  Provides 300-dimensional vectors representing subreddit topics.
+  Provides 300-dimensional vectors representing the topics of around 50000 subreddits.
 
 We process these vectors using PCA for dimensional reduction and K-Means Clustering to assign a categorical Topic Cluster ID to every subreddit.
 
@@ -67,7 +65,7 @@ We enrich these datasets by calculating community roles based on network and sen
 
 ### Data & Cleaning (data_processing.py)
 
-* We load the body and title hypernetwork (≈858k links). The PROPERTIES vector is split into 21 text attributes (e.g., readability, VADER sentiment) and 65 LIWC indicators per link. 
+* We load the body and title hypernetwork (≈858k links). The PROPERTIES vector is split into 21 text attributes and 65 LIWC indicators per link. 
 * We standardize subreddit names (lowercase, trimmed), drop self-loops, coerce timestamps to datetime, and create binary sentiment flags (is_positive, is_negative) plus convenience time fields (year/month). Invalid or malformed PROPERTIES rows are removed. 
 * The output is **combined_hyperlinks.csv** , the foundation for all subsequent analysis.
 
@@ -119,35 +117,34 @@ All our 17 plots and their description are in our main Jupyter Notebook `results
 
 ## Repository Structure
 
-* `/data/`            : Contains raw (ignored by .gitignore), processed, and analysis-ready data.
+* `/data/`            : Contains raw, processed, and analysis-ready data.
 * `/src/`             : All Python source code, organized as modules for each step of the pipeline (processing, network analysis, clustering, etc.).
 * `/results/`         : Contains generated figures (`/figures`).
 * `results.ipynb`     : Contains the main Jupyter Notebook 
 * `README.md`         : This file.
-* `pip_requirements.txt`: All required libraries.
+* `pip_requirements.txt`: All required modules.
 
 
 ## Proposed Timeline (to P3)
 
 
-* **Week 9:** Build 3D "Social MRI" map.
+* **Week 9:** Build 3D model of the network.
 * **Week 10:** Analyze psychological asymmetry (outgoing vs. incoming LIWC).
-* **Week 11:** Model topic homophily (allies) and inter-cluster interaction (antagonists).
-* **Week 12:** Finalize visuals and write narratives.
+* **Week 11:** Model topic and inter-cluster interaction .
+* **Week 12:** Finalize visuals and write narrative.
 
 ## Organization Within the Team
 
-* **Amer Lakrami — Network analysis**.
-* **Hamza Barrada — Embeddings and clustering**.
+* **Amer Lakrami — Embeddings and clustering**.
+* **Hamza Barrada —  Integration and visualization**.
 * **Omar El Khyari — LIWC and roles**.
-* **Omar Zakariya — Integration and visualization**.
+* **Omar Zakariya —  Network analysis**.
 * **Cesar Illanes — READme**.
 
 ## Questions for TAs
 
-1.  Is it better to use the Tausczik and Pennebaker (2010) paper ([link](https://www.cs.cmu.edu/~ylataus/files/TausczikPennebaker2010.pdf)) to justify and enhance our LIWC interpretations?
-2.  Is manually labeling our 40 K-Means topic clusters sufficient, or is an NLP validation required?
-3.  Is `k=50` sampling for betweenness centrality acceptable for P3, given the computation time?
+1.  Is manually labeling our 40 K-Means topic clusters sufficient, or is an NLP validation required?
+2.  Is `k=50` sampling for betweenness centrality acceptable for P3, given the computation time?
 
 
 ---
