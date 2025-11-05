@@ -1,14 +1,24 @@
-# Core
-pandas
-numpy
+# Core scientific stack
+pandas>=2.2
+numpy>=1.26
+scipy>=1.11
 
-# Visualization
-matplotlib
-seaborn
+# Plotting
+matplotlib>=3.8
+seaborn>=0.13
+plotly>=5.24
 
-# Dimensionality reduction / clustering (for embeddings)
-scikit-learn
+# Graphs & community detection
+# Pin networkx to 2.x to avoid API breaks with python-louvain on some systems
+networkx==2.8.8
+python-louvain>=0.16
 
-# Notebook experience
-jupyter
-ipykernel
+# ML
+scikit-learn>=1.4
+
+# Text label adjustment for matplotlib
+adjustText>=0.8
+
+# Notebooks / convenience
+ipython>=8.12
+jupyterlab>=4.0

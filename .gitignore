@@ -1,82 +1,83 @@
-# =========================
-# Python
-# =========================
+# ------------------------------
+# OS cruft
+# ------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------
+# Python build / cache / env
+# ------------------------------
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
 *.so
-*.egg
+*.dylib
 *.egg-info/
 .eggs/
-pip-wheel-metadata/
 build/
 dist/
-MANIFEST
-
-# Virtual environments
-.env
-.env.*
 .venv/
 venv/
-env/
-.Python
+ENV/
+.env
+.env.*
+*.env
 
-# =========================
-# Notebooks
-# =========================
+# ------------------------------
+# Jupyter / notebooks
+# ------------------------------
 .ipynb_checkpoints/
-*.nbconvert.ipynb
-~$*.ipynb
+*.ipynb~*
 
-# =========================
-# Data (keep structure, ignore contents)
-# =========================
-# Ignore all files under data/
-data/**
+# ------------------------------
+# Editors / IDE
+# ------------------------------
+.vscode/
+.idea/
 
-# Allow these tiny placeholders to keep folders in Git
+# ------------------------------
+# Testing / type-check / coverage
+# ------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+.mypy_cache/
+.pyre/
+
+# ------------------------------
+# Project data (large / generated)
+# Keep code small; don't version raw/derived datasets.
+# If you need to track a specific file, see the unignore rules below.
+# ------------------------------
+data/
 !data/.gitkeep
-!data/**/.gitkeep
 !data/README.md
-!data/**/README.md
 
-# (Note: src/data/ is code—NOT ignored)
+# Allow 'processed' directory to exist, but ignore its contents by default
+!data/processed/
+data/processed/**
 
-# =========================
-# Results / runs / artifacts
-# =========================
-results/
-artifacts/
-runs/
-checkpoints/
-outputs/
-*.out
-*.err
+# Explicitly ignore heavy sources if present
+data/hyperlink_network/
+data/subreddit_embeddings/
+
+# Common large text formats
+*.tsv
+*.tsv.gz
+*.csv.gz
+
+# ------------------------------
+# Results (figures/html are generated)
+# Keep only the table you listed.
+# ------------------------------
+results/**
+
+# ------------------------------
+# Logs / temp
+# ------------------------------
+logs/
 *.log
 *.tmp
 *.bak
-
-# =========================
-# Tests / Coverage
-# =========================
-.pytest_cache/
-.coverage
-.coverage.*
-htmlcov/
-
-# =========================
-# Editors / IDEs
-# =========================
-.vscode/
-.idea/
-*.code-workspace
-
-# =========================
-# OS junk
-# =========================
-.DS_Store
-.AppleDouble
-.LSOverride
-Thumbs.db
-ehthumbs.db
-Desktop.ini
