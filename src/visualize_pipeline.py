@@ -705,7 +705,6 @@ def plot_role_quadrant_map(df_roles, top_n=200, save_name="step2_role_quadrant.p
     for i, row in df_label.iterrows():
         texts.append(ax.text(row['pos_out_ratio'], row['neg_in_ratio'], row['subreddit'], fontsize=9, fontweight='bold'))
     
-    # MODIFICATION: Added 'force_text'
     adjust_text(texts, ax=ax, force_text=(0.5, 0.5))
     
     plt.tight_layout()
