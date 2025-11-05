@@ -1,6 +1,3 @@
-# ------------------------------
-# OS cruft
-# ------------------------------
 .DS_Store
 Thumbs.db
 
@@ -37,7 +34,7 @@ ENV/
 .idea/
 
 # ------------------------------
-# Testing / type-check / coverage
+# Testing
 # ------------------------------
 .pytest_cache/
 .coverage
@@ -48,29 +45,23 @@ coverage.xml
 
 # ------------------------------
 # Project data (large / generated)
-# Keep code small; don't version raw/derived datasets.
-# If you need to track a specific file, see the unignore rules below.
 # ------------------------------
 data/
 !data/.gitkeep
 !data/README.md
 
-# Allow 'processed' directory to exist, but ignore its contents by default
 !data/processed/
 data/processed/**
 
-# Explicitly ignore heavy sources if present
 data/hyperlink_network/
 data/subreddit_embeddings/
 
-# Common large text formats
 *.tsv
 *.tsv.gz
 *.csv.gz
 
 # ------------------------------
 # Results (figures/html are generated)
-# Keep only the table you listed.
 # ------------------------------
 results/**
 
