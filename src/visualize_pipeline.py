@@ -1038,7 +1038,7 @@ def plot_liwc_role_lift(
     role_columns=None,
     aggregate_by_subreddit_col="SRC_SUBREDDIT",
     save_name="step6_emotion_profiles_lift.png",
-    cmap="seismic"
+    cmap="RdYlGn"
 ):
     """Plot a heatmap of LIWC relative lift by role"""
 
