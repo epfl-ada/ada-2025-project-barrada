@@ -27,7 +27,6 @@ class EmbeddingProcessor:
         df.columns = column_names
         print(f" Columns: 1 subreddit + {self.embedding_dim} embedding dimensions")
 
-                
         n_before = len(df)
         df = df.drop_duplicates(subset='subreddit', keep='first')
         n_removed = n_before - len(df)

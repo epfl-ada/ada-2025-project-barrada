@@ -25,6 +25,7 @@ HTML_DIR.mkdir(exist_ok=True, parents=True)
 
 
 # Helper Function
+
 def load_hyperlinks_data(file_name="combined_hyperlinks.csv"):
     """Loads the processed hyperlinks CSV"""
 
@@ -162,11 +163,8 @@ def load_final_dataset(file_name="final_dataset.csv"):
 # STEP 1: HYPERLINK VISUALIZATIONS
 # =============================================================================
 
-# --- PNG Plot sentiment_distribution ---
 def plot_sentiment_distribution(df, save_name="step1_sentiment_distribution.png"):
-    """
-    Creates a bar chart of positive vs. negative link counts.
-    """
+    """ Creates a bar chart of positive vs. negative link counts."""
 
     print(f"Generating {save_name}...")
     
@@ -208,7 +206,7 @@ def plot_sentiment_distribution(df, save_name="step1_sentiment_distribution.png"
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- PNG Plot sentiment_volume_over_time ---
+
 def plot_sentiment_volume_over_time(
     df,
     save_name="step1_sentiment_volume_over_time.png",
@@ -301,7 +299,6 @@ def plot_sentiment_volume_over_time(
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- PNG Plot op_sources_sentiment ---
 def plot_top_sources_sentiment(df, top_k=15, save_name="step1_top_sources.png"):
     """Similar top sources."""
 
@@ -338,7 +335,6 @@ def plot_top_sources_sentiment(df, top_k=15, save_name="step1_top_sources.png"):
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- PNG Plot top_targets_sentiment
 def plot_top_targets_sentiment(df, top_k=15, save_name="step1_top_targets.png"):
     """Graph: Top Targets"""
 
@@ -395,7 +391,6 @@ def plot_top_targets_sentiment(df, top_k=15, save_name="step1_top_targets.png"):
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- PNG Plot iwc_radar_profiles ---
 def plot_liwc_radar_profiles(df, sub_a, sub_b, label_a="Sub A", label_b="Sub B", min_links=100, save_name="step1_liwc_radar_case_study.png"):
     """Compares the LIWC profiles of two specific subreddits."""
     print(f"Generating Case Study: r/{sub_a} vs. r/{sub_b}...")
@@ -466,7 +461,6 @@ def plot_attack_pattern_small_multiples(df, save_name="step1_attack_patterns.png
     # Find top 6 most aggressive sources
     top_aggressors = neg_df['SOURCE_SUBREDDIT'].value_counts().head(6).index.tolist()
     
-    # 3x3 grid
     fig, axes = plt.subplots(2, 3, figsize=(15, 10), sharex=False)
     axes = axes.flatten()
     
@@ -491,7 +485,6 @@ def plot_attack_pattern_small_multiples(df, save_name="step1_attack_patterns.png
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- PNG Plot liwc_diverging_lollipop ---
 def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
     print(f"Generating {save_name}...")
     
@@ -531,8 +524,8 @@ def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
     ax.set_xlabel('← More typical of NEGATIVE links       More typical of POSITIVE links →', fontsize=12, fontweight='bold')
     
     clean_labels = [l.replace('LIWC_', '') for l in diff.index]
-    ax.set_yticks(range(len(diff.index))) # Set tick positions
-    ax.set_yticklabels(clean_labels, fontsize=11) # Set tick labels
+    ax.set_yticks(range(len(diff.index))) 
+    ax.set_yticklabels(clean_labels, fontsize=11)
 
     plt.tight_layout()
     save_path = FIGURES_DIR / save_name
@@ -541,117 +534,10 @@ def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
     print(f"Saved PNG: {save_path}")
     return save_path
 
-# --- HTML Plot top_flows_sankey ---
-def plot_top_flows_sankey(df, top_k=40, save_name="step1_top_flows_sankey.html"):
-    """Graph 6 (HTML): Creates an interactive Sankey diagram of top K flows."""
-
-    print(f"Generating {save_name}...")
-
-    if isinstance(df, (str, Path)):
-        df = pd.read_csv(df)
-
-    # Basic column checks
-    for col in ['SOURCE_SUBREDDIT', 'TARGET_SUBREDDIT']:
-        if col not in df.columns:
-            raise ValueError("Sankey requires SOURCE_SUBREDDIT and TARGET_SUBREDDIT columns.")
-
-    if 'sentiment_numeric' in df.columns:
-        df['is_positive'] = df.get('is_positive', (df['sentiment_numeric'] > 0).astype(int))
-        df['is_negative'] = df.get('is_negative', (df['sentiment_numeric'] < 0).astype(int))
-    else:
-        df['is_positive'] = df.get('is_positive', 0).astype(int)
-        df['is_negative'] = df.get('is_negative', 0).astype(int)
-
-    def _agg(mask=None):
-        sub = df if mask is None else df[mask]
-        if len(sub) == 0:
-            return pd.DataFrame(columns=['SOURCE_SUBREDDIT','TARGET_SUBREDDIT','total','neg','pos'])
-        g = (
-            sub.groupby(['SOURCE_SUBREDDIT','TARGET_SUBREDDIT'])
-               .agg(total=('sentiment_numeric','size' if 'sentiment_numeric' in sub.columns else 'size'),
-                    neg=('is_negative','sum'),
-                    pos=('is_positive','sum'))
-               .reset_index()
-        )
-        return g.sort_values('total', ascending=False).head(top_k)
-
-    g_all = _agg()
-    g_pos = _agg(df['is_positive'] == 1)
-    g_neg = _agg(df['is_negative'] == 1)
-
-    def _build_sankey(g: pd.DataFrame):
-        nodes = sorted(set(g['SOURCE_SUBREDDIT']).union(set(g['TARGET_SUBREDDIT'])))
-        idx = {n: i for i, n in enumerate(nodes)}
-
-        src = g['SOURCE_SUBREDDIT'].map(idx).tolist()
-        dst = g['TARGET_SUBREDDIT'].map(idx).tolist()
-        val = g['total'].astype(float).tolist()
-
-        neg_ratio = (g['neg'] / g['total'].replace(0, np.nan)).fillna(0).clip(0, 1)
-
-        colors = [
-            f"rgba({int(255 * r)}, {int(255 * (1 - r))}, 80, 0.7)" for r in neg_ratio
-        ]
-
-        link = dict(
-            source=src,
-            target=dst,
-            value=val,
-            color=colors,
-            hovertemplate=(
-                "Src: %{source.label} → Dst: %{target.label}"
-                "<br>Links: %{value:,}"
-                "<br>Negativity: %{customdata:.1%}<extra></extra>"
-            ),
-            customdata=neg_ratio
-        )
-        node = dict(
-            label=nodes,
-            pad=12,
-            thickness=12,
-            line=dict(color="black", width=0.5)
-        )
-        return go.Sankey(node=node, link=link, valueformat=",", valuesuffix="")
-
-    sank_all = _build_sankey(g_all)
-    sank_pos = _build_sankey(g_pos)
-    sank_neg = _build_sankey(g_neg)
-
-    fig = go.Figure(data=[sank_all, sank_pos, sank_neg])
-    fig.data[0].visible = True
-    fig.data[1].visible = False
-    fig.data[2].visible = False
-
-    fig.update_layout(
-        title_text=f"Top {top_k} Subreddit-to-Subreddit Link Flows (link color = negativity ratio)",
-        title=dict(text=f"Top-{top_k} Source→Target Flows (link color = negativity ratio)", x=0.5),
-        height=700,
-        margin=dict(l=30, r=30, t=90, b=30),
-        updatemenus=[dict(
-            type="buttons",
-            direction="left",
-            x=0.5, y=1.12, xanchor="center",
-            buttons=[
-                dict(label="All",            method="update", args=[{"visible":[True, False, False]}]),
-                dict(label="Positive-only",  method="update", args=[{"visible":[False, True,  False]}]),
-                dict(label="Negative-only",  method="update", args=[{"visible":[False, False, True ]}]),
-            ]
-        )],
-        annotations=[dict(text="Filter:", x=0.43, y=1.12, xref="paper", yref="paper", showarrow=False)]
-    )
-
-    save_path = HTML_DIR / save_name if 'HTML_DIR' in globals() else Path(save_name)
-    fig.write_html(save_path, include_plotlyjs='cdn')
-    print(f"Saved HTML: {save_path}")
-
-    return save_path
-
 # =============================================================================
 # STEP 2: Psychological (LIWC) Analysis
 # =============================================================================
 
-
-# Role Quadrant Map 
 def plot_role_quadrant_map(df_roles, top_n=200, save_name="step2_role_quadrant.png"):
     """Plots the social roles of the most active subreddits."""
 
@@ -715,7 +601,6 @@ def plot_role_quadrant_map(df_roles, top_n=200, save_name="step2_role_quadrant.p
     return save_path
 
 
-# Psychological Asymmetry Dumbbell Plot
 def plot_psychological_asymmetry(df_roles, top_n=25, save_name="step2_anger_asymmetry.png"):
     """Shows the gap between outgoing vs. incoming 'Anger'."""
     print(f"Generating {save_name}...")
@@ -728,7 +613,6 @@ def plot_psychological_asymmetry(df_roles, top_n=25, save_name="step2_anger_asym
 
     df_filt = df[(df['n_links_in'] > 100) & (df['n_links_out'] > 100)].copy()
     
-    # Find top N with the largest incoming anger
     df_plot = df_filt.nlargest(top_n, 'LIWC_Anger_mean_in').sort_values('LIWC_Anger_mean_in')
     
     fig, ax = plt.subplots(figsize=(10, 12))
@@ -758,7 +642,6 @@ def plot_psychological_asymmetry(df_roles, top_n=25, save_name="step2_anger_asym
     return save_path
 
 
-# top 'influential' subreddits
 def plot_top_influential(roles_df, top_k=10, save_name="step2_top_influential.png"):
     """ Creates a bar chart of the top 'influential' subreddits."""
     print(f"Generating {save_name}...")
@@ -790,7 +673,6 @@ def plot_top_influential(roles_df, top_k=10, save_name="step2_top_influential.pn
     return save_path
 
 
-# Top Supported Subreddits
 def plot_top_supported(roles_df, top_k=10, save_name="step2_top_supported.png"):
     """Creates a bar chart of the top 'supportive' subreddits."""
     print(f"Generating {save_name}...")
@@ -825,7 +707,6 @@ def plot_top_supported(roles_df, top_k=10, save_name="step2_top_supported.png"):
 # STEP 3: Network Strcuture
 # =============================================================================
 
-# Top Influencers (Centrality Grid)
 def plot_centrality_grid(df_metrics, top_n=15, save_name="step3_centrality_grid.png"):
     """Shows the top N subreddits for four different centrality metrics in a 2x2 grid."""
 
@@ -894,7 +775,7 @@ def plot_pca_variance(df_var, save_name="step4_pca_variance.png"):
     ax2.set_ylim(0, 1.05)
     
     ax2.axhline(y=0.9, color='gray', linestyle='--', alpha=0.5)
-    ax2.text(len(df_var)-1, 0.96, '90% Threshold', color='gray', ha='center')
+    ax2.text(len(df_var)-1, 0.94, '90% Threshold', color='gray', ha='center')
 
     plt.title('PCA Explained Variance (Scree Plot)', fontsize=16, pad=15)
     plt.tight_layout()
@@ -908,7 +789,6 @@ def plot_pca_variance(df_var, save_name="step4_pca_variance.png"):
 # STEP 5: Cluesters
 # =============================================================================
 
-# Topic Cluster Size Distribution
 def plot_topic_cluster_distribution(df_clusters, save_name="step5_topic_distribution.png"):
     """Creates a horizontal bar chart showing the size of each topic cluster."""
     print(f"Generating {save_name}...")
@@ -941,7 +821,6 @@ def plot_topic_cluster_distribution(df_clusters, save_name="step5_topic_distribu
 # FINAL STEP
 # =============================================================================
 
-# Network Role of Topics
 def plot_topic_network_role(df_final, top_n=40, save_name="step6_topic_network_role.png"):
     """Dumbbell plot showing avg incoming vs. outgoing sentiment for each topic."""
 
@@ -983,7 +862,6 @@ def plot_topic_network_role(df_final, top_n=40, save_name="step6_topic_network_r
     print(f"Saved PNG: {save_path}")
     return save_path
 
-#Semantic vs. Structural Alignment
 def plot_semantic_structural_heatmap(df_final, top_n=15, save_name="step6_sem_struct_heatmap.png"):
     """Heatmap showing the intersection of Topic Clusters (Semantic) vs.Network Communities (Structural)."""
 
@@ -1083,7 +961,6 @@ def plot_liwc_role_lift(
     eps = 1e-12
     lift = (emotion_df - gmean) / (gmean + eps)
 
-    # Plot
     plt.figure(figsize=(12, 6))
     sns.heatmap(
         lift, annot=True, fmt=".1%",
@@ -1099,160 +976,4 @@ def plot_liwc_role_lift(
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
     plt.show()
 
-    return save_path
-
-
-# --- HTML : The "Inter-Cluster Attack Network"
-def plot_inter_cluster_attack_network(
-    df_hyperlinks, 
-    df_clusters, 
-    df_cluster_labels,
-    html_dir,
-    out_filename="step6_inter_cluster_network.html",
-    edge_threshold=50
-):
-    """Builds the interactive network of topics."""
-    print(f"Generating {out_filename}")
-    
-    links_with_source_topic = df_hyperlinks.merge(
-        df_clusters[['subreddit', 'topic_cluster']],
-        left_on='SOURCE_SUBREDDIT',
-        right_on='subreddit',
-        how='inner'
-    ).rename(columns={'topic_cluster': 'source_topic'})
-
-    # Map topics to target subreddits
-    links_with_topics = links_with_source_topic.merge(
-        df_clusters[['subreddit', 'topic_cluster']],
-        left_on='TARGET_SUBREDDIT',
-        right_on='subreddit',
-        how='inner'
-    ).rename(columns={'topic_cluster': 'target_topic'})
-
-    topic_flows = links_with_topics.groupby(['source_topic', 'target_topic']).agg(
-        total_links=('LINK_SENTIMENT', 'count'),
-        negative_links=('LINK_SENTIMENT', lambda x: (x == -1).sum())
-    ).reset_index()
-    
-    topic_flows['negativity_ratio'] = topic_flows['negative_links'] / topic_flows['total_links']
-
-    # Get node sizes
-    cluster_sizes = df_clusters['topic_cluster'].value_counts()
-    
-    # Get node in/out stats
-    total_out = topic_flows.groupby('source_topic')['total_links'].sum()
-    total_in = topic_flows.groupby('target_topic')['total_links'].sum()
-    neg_out = topic_flows.groupby('source_topic')['negative_links'].sum()
-    neg_in = topic_flows.groupby('target_topic')['negative_links'].sum()
-
-    # Build NetworkX Graph
-    G = nx.DiGraph()
-    label_map = df_cluster_labels.set_index('topic_cluster')['label'].to_dict()
-
-    for cluster_id in range(40):
-        G.add_node(cluster_id,
-                   label=label_map.get(cluster_id, f"Cluster {cluster_id}"),
-                   size=int(cluster_sizes.get(cluster_id, 0)),
-                   total_out=int(total_out.get(cluster_id, 0)),
-                   total_in=int(total_in.get(cluster_id, 0)),
-                   neg_out=int(neg_out.get(cluster_id, 0)),
-                   neg_in=int(neg_in.get(cluster_id, 0))
-        )
-
-    for _, row in topic_flows.iterrows():
-        if row['total_links'] >= edge_threshold and row['source_topic'] != row['target_topic']:
-            G.add_edge(row['source_topic'], row['target_topic'],
-                       weight=float(row['total_links']),
-                       negative=float(row['negative_links']),
-                       neg_ratio=float(row['negativity_ratio'])
-            )
-
-    pos = nx.spring_layout(G, k=3, iterations=100, seed=42, weight='weight')
-
-    node_x, node_y, node_text, node_size, node_color = [], [], [], [], []
-
-    for node in G.nodes():
-        x, y = pos[node]
-        node_x.append(x)
-        node_y.append(y)
-        info = G.nodes[node]
-        
-        out_neg_pct = (info['neg_out'] / info['total_out'] * 100) if info['total_out'] > 0 else 0
-        in_neg_pct = (info['neg_in'] / info['total_in'] * 100) if info['total_in'] > 0 else 0
-        
-        node_text.append(
-            f"<b>{info['label']} (Cluster {node})</b><br>" +
-            f"Size: {info['size']:,} subreddits<br>" +
-            f"Outgoing: {info['total_out']:,} links ({info['neg_out']:,} neg, {out_neg_pct:.1f}%)<br>" +
-            f"Incoming: {info['total_in']:,} links ({info['neg_in']:,} neg, {in_neg_pct:.1f}%)"
-        )
-        node_size.append(10 + np.log10(info['size'] + 1) * 10)
-        node_color.append(out_neg_pct / 100) # Color by outgoing negativity
-
-    node_trace = go.Scatter(
-        x=node_x, y=node_y,
-        mode='markers+text',
-        marker=dict(
-            size=node_size,
-            color=node_color,
-            colorscale='RdYlGn_r',
-            reversescale=False,
-            cmin=0, cmax=0.5,
-            showscale=True,
-            colorbar=dict(title='Outgoing Negativity', tickformat='.0%')
-        ),
-        text=[G.nodes[n]['label'] for n in G.nodes()],
-        textposition='top center',
-        textfont=dict(size=8),
-        hovertext=node_text,
-        hoverinfo='text',
-        showlegend=False
-    )
-    
-    edge_traces = []
-    colors = {'low': 'rgba(84, 160, 255, 0.4)', 'med': 'rgba(255, 177, 66, 0.4)', 'high': 'rgba(255, 107, 107, 0.5)'}
-    traces = {k: {'x': [], 'y': [], 'text': [], 'width': []} for k in colors}
-
-    for u, v, data in G.edges(data=True):
-        x0, y0 = pos[u]
-        x1, y1 = pos[v]
-        
-        if data['neg_ratio'] < 0.08: key = 'low'
-        elif data['neg_ratio'] < 0.17: key = 'med'
-        else: key = 'high'
-        
-        traces[key]['x'].extend([x0, x1, None])
-        traces[key]['y'].extend([y0, y1, None])
-        traces[key]['text'].append(
-            f"{G.nodes[u]['label']} → {G.nodes[v]['label']}<br>" +
-            f"Volume: {int(data['weight'])}<br>" +
-            f"Negativity: {data['neg_ratio']:.1%}"
-        )
-        traces[key]['width'].append(min(10, 0.5 + np.log10(data['weight'] + 1)))
-
-    edge_trace_low = go.Scatter(x=traces['low']['x'], y=traces['low']['y'], mode='lines', line=dict(color=colors['low'], width=1.5), hoverinfo='none', name='Supportive (<8% neg)')
-    edge_trace_med = go.Scatter(x=traces['med']['x'], y=traces['med']['y'], mode='lines', line=dict(color=colors['med'], width=1.5), hoverinfo='none', name='Contested (8-17% neg)')
-    edge_trace_high = go.Scatter(x=traces['high']['x'], y=traces['high']['y'], mode='lines', line=dict(color=colors['high'], width=1.5), hoverinfo='none', name='Attack (>18% neg)')
-
-    fig = go.Figure(data=[edge_trace_low, edge_trace_med, edge_trace_high, node_trace])
-    
-    fig.update_layout(
-        title=dict(
-            text='<b>Inter-Topic Attack Network (K=40)</b><br><sup>Node size = subreddit count | Node color = outgoing negativity | Edge color = link negativity</sup>',
-            x=0.5, font=dict(size=18)
-        ),
-        showlegend=True,
-        legend=dict(x=0.01, y=0.99),
-        hovermode='closest',
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        plot_bgcolor='white',
-        height=900,
-        margin=dict(l=10, r=10, t=80, b=10)
-    )
-
-    save_path = Path(html_dir) / out_filename
-    save_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.write_html(save_path, include_plotlyjs='cdn')
-    print(f"  Step 5: Saved HTML to {save_path}")
     return save_path

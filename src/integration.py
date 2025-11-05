@@ -207,9 +207,8 @@ class DataIntegrator:
         output_path = self.processed_dir / filename
         df.to_csv(output_path, index=False)
                 
-        print(f"\ Saved final dataset: {output_path}")
-        print(f"  Shape: {df.shape[0]:,} rows × {df.shape[1]} columns")
-        
+        print(f"Saved final dataset: {output_path}")
+        print(f"Shape: {df.shape[0]:,} rows × {df.shape[1]} columns")
         return output_path
     
     

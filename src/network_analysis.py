@@ -79,7 +79,7 @@ class NetworkAnalyzer:
         print(f"Edges: {self.G_neg.number_of_edges():>10,}")
         
         # Undirected version for community detection
-        print(f"\ Building undirected network for community detection...")
+        print(f"Building undirected network for community detection...")
         self.G_undirected = self.G.to_undirected()
         
         return self.G
@@ -145,11 +145,9 @@ class NetworkAnalyzer:
         in_degree_cent = nx.in_degree_centrality(self.G)
         out_degree_cent = nx.out_degree_centrality(self.G)
         
-        # PageRank
         print("PageRank...")
         pagerank = nx.pagerank(self.G, alpha=0.85)
         
-        # HITS 
         print("HITS (hubs and authorities)...")
         hits_h, hits_a = nx.hits(self.G, max_iter=100)
         
@@ -250,7 +248,6 @@ class NetworkAnalyzer:
             for node, comm in partition.items()
         ])
         
-        # Community sizes
         community_sizes = community_df['community'].value_counts().sort_index()
         n_communities = len(community_sizes)
         
@@ -267,7 +264,6 @@ class NetworkAnalyzer:
             sample = ', '.join(members[:5])
             print(f"Community {comm_id:>3}: {size:>5,} members - {sample}...")
         
-        # Modularity
         modularity = community_louvain.modularity(partition, self.G_undirected)
         print(f"\n Modularity: {modularity:.4f}")
         
