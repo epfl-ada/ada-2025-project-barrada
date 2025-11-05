@@ -1,5 +1,37 @@
 # Reddit’s Invisible Brain: The Web Hidden Beneath the Threads
 
+## Quickstart
+
+```bash
+# clone project
+git clone https://github.com/epfl-ada/ada-2025-project-barrada.git barrADA
+cd barrADA
+```
+
+```bash
+# create conda environment (optional)
+conda create -n barrada python=3.13
+conda activate barrada
+```
+
+```bash
+# install requirements
+pip install -r pip_requirements.txt
+```
+
+```bash
+# create data folders and download initial datasets
+mkdir -p data/hyperlink_network && mkdir -p data/subreddit_embeddings
+wget -O data/hyperlink_network/soc-redditHyperlinks-body.tsv "https://snap.stanford.edu/data/soc-redditHyperlinks-body.tsv"
+wget -O data/hyperlink_network/soc-redditHyperlinks-title.tsv "https://snap.stanford.edu/data/soc-redditHyperlinks-title.tsv"
+wget -O data/subreddit_embeddings/web-redditEmbeddings-subreddits.csv "https://snap.stanford.edu/data/web-redditEmbeddings-subreddits.csv"
+```
+
+```bash
+# run server to look into results.ipynb file or python files inside src/
+jupyter lab
+```
+
 ## Abstract
 
 Reddit is not just a collection of online forums; it is a living ecosystem of interconnected communities, each with its own emotional and cognitive identity. Through hyperlinks, subreddits comment on, critique, and reference one another, forming a complex web of inter-community relationships.
@@ -14,7 +46,7 @@ By combining these layers, we seek to visualize Reddit as a “social MRI”, re
 
 ## Research Questions
 
-We organize the project around **four themes** that connect roles, psychology, topics, and structure. 
+We organize the project around **four themes** that connect roles, psychology, topics, and structure.
 
 ### **Network Structure & Roles**
 
@@ -38,10 +70,7 @@ We organize the project around **four themes** that connect roles, psychology, t
 
 ## Additional Datasets
 
-Beyond the Reddit hyperlink network, we use:
-
-- **Reddit User and Subreddit Embeddings (Stanford SNAP)** — [https://snap.stanford.edu/data/web-RedditEmbeddings.html]  
-  Provides 300-dimensional vectors representing the topics of around 50000 subreddits.
+Beyond the [Reddit hyperlink network](https://snap.stanford.edu/data/soc-RedditHyperlinks.html), we use the [Reddit User and Subreddit Embeddings (Stanford SNAP)](https://snap.stanford.edu/data/web-RedditEmbeddings.html)\, which provides 300-dimensional vectors representing the topics of around 50000 subreddits.
 
 We process these vectors using PCA for dimensional reduction and K-Means Clustering to assign a categorical Topic Cluster ID to every subreddit.
 
@@ -51,9 +80,8 @@ We enrich these datasets by calculating community roles based on network and sen
 
 - **Critical:** high outgoing negativity  
 - **Controversial:** high incoming negativity  
-- **Supportive:** high outgoing positive/neutral links  
+- **Supportive:** high outgoing positive/neutral links    
 - **Influential:** high incoming positive/neutral links
-
 
 **Data Note:** The raw `.tsv` and `.csv` files from SNAP are not included in this repository. To run the pipeline place them in the following directories:
 * `data/hyperlink_network/soc-redditHyperlinks-body.tsv`
@@ -63,36 +91,36 @@ We enrich these datasets by calculating community roles based on network and sen
 
 ## Methods
 
-### Data & Cleaning (data_processing.py)
+### [Data & Cleaning](src/data_processing.py)
 
 * We load the body and title hypernetwork (≈858k links). The PROPERTIES vector is split into 21 text attributes and 65 LIWC indicators per link. 
 * We standardize subreddit names (lowercase, trimmed), drop self-loops, coerce timestamps to datetime, and create binary sentiment flags (is_positive, is_negative) plus convenience time fields (year/month). Invalid or malformed PROPERTIES rows are removed. 
-* The output is **combined_hyperlinks.csv** , the foundation for all subsequent analysis.
+* The output is **combined_hyperlinks.csv**, the foundation for all subsequent analysis.
 
-### Linguistic / Psychological Layer (liwc_analysis.py)
+### [Linguistic / Psychological Layer](src/liwc_analysis.py)
 
-* We aggregate LIWC scores per subreddit as both source and target
-* We Compute interpretable composites e.g.:
+* We aggregate LIWC scores per subreddit as both source and target.
+* We compute interpretable composites:
     * **Emotion_Total**
-    * **Negemo_Specific** = mean of Anger/Anxiety/Sad
-    * **Cognitive_Total** = mean of Certain/Tentative/Insight/Discrepancy/Cause 
-    * We derive **asymmetry** features (outgoing minus incoming) to capture “how I talk” vs “how others talk about me.” 
+    * **Negemo_Specific** = mean of Anger/Anxiety/Sad.
+    * **Cognitive_Total** = mean of Certain/Tentative/Insight/Discrepancy/Cause. 
+    * We derive **asymmetry** features (outgoing minus incoming) to capture *how I talk* vs *how others talk about me*.
 * These features feed role labels (**Critical**, **Controversial**, **Supportive**, **Influential**).
 * The output is saved as `subreddit_features_{source/target}.csv`.
 
 
-### Network Analysis (network_analysis.py)
+### [Network Analysis](src/network_analysis.py)
 
 * **Graph Construction:** We build a `networkx` directed graph `G` from the hyperlink data, where subreddits are nodes and aggregated hyperlinks are weighted, directed edges. The aggregated edge list is saved to `network_edges.csv`.
 * **Centrality Analysis:** We compute key metrics for each node to identify influential subreddits:
-    * **PageRank** to measure "prestige" or "importance."
+    * **PageRank** to measure "prestige" or "importance".
     * **HITS** to find "hubs" (good linkers) and "authorities" (good content).
-    * **Betweenness Centrality** (using `k=50` sampling) to find "bridges."
+    * **Betweenness Centrality** (using `k=50` sampling) to find "bridges".
     All node metrics are saved in `network_node_metrics.csv`.
 * **Community Detection:** We use the **Louvain method** on an undirected version of the graph to optimize for modularity, discovering structurally dense "communities" of subreddits. 
 * The resulting assignments are saved in `network_communities.csv`.
 
-### Semantic Layer (embedding_processing.py, topic_clustering.py)
+### [Semantic](src/embedding_processing.py) [Layer](src/topic_clustering.py)
 
 * **PCA Dimensionality Reduction:** We load the 300-dimensional raw subreddit embeddings and apply **PCA**, reducing them to 50 components. This captures ~90% of the variance while reducing noise and improving clustering. The output is saved to `embeddings_processed.csv`.
 * **K-Means Topic Clustering:** We run **K-Means clustering** (with K=40) on the 50 PCA components to group semantically similar subreddits. This assigns a "Topic Cluster ID" to each subreddit.
@@ -100,7 +128,7 @@ We enrich these datasets by calculating community roles based on network and sen
 * The final mapping of subreddits to topic IDs and labels are saved in `embeddings_kmeans_40.csv`.
 
 
-### Integration & Statistical Testing (integration.py)
+### [Integration & Statistical Testing](src/integration.py)
 
 * **Feature Consolidation:** We merge all previously generated datasets using the `subreddit` column as the primary key.
 * **Layer Merging:** This step performs a series of joins to combine:
@@ -111,19 +139,40 @@ We enrich these datasets by calculating community roles based on network and sen
     * **Derived Roles** (`subreddit_roles.csv`)
 * **Final Dataset Creation:** The result is a single, comprehensive table, `final_dataset.csv`, where each row represents one subreddit and its complete structural, semantic, and psychological features.
 
-### Visualization & Reporting
+### [Visualization & Reporting](results.ipynb)
 
-All our 17 plots and their description are in our main Jupyter Notebook `results.ipynb` . All visualizations are also saved as PNGs in the `results/figures/` directory.
+All our 17 plots and their description are in our main Jupyter Notebook file. All visualizations are also saved as PNGs in the `results/figures/` directory.
 
 ## Repository Structure
 
-* `/data/`            : Contains raw, processed, and analysis-ready data.
+```
+├── data                        <- Project data files
+│
+├── results                     <- Project result files
+│   ├── figures                 <- PNG files
+|
+├── src                         <- Source code
+│   ├── data_processing.py
+│   ├── data_processing.py
+│   ├── integration.py
+│   ├── liwc_analysis.py
+│   ├── network_analysis.py
+│   ├── topic_clustering.py
+│   ├── visualize_pipeline.py
+│ 
+├── results.ipynb               <- A well-structured notebook showing the results
+│
+├── .gitignore                  <- List of files ignored by git
+├── pip_requirements.txt        <- File for installing python dependencies
+└── README.md
+```
+
+* `/data/`            : Contains raw, processed, and analysis-ready data. Created when downloading the initial datasets.
 * `/src/`             : All Python source code, organized as modules for each step of the pipeline (processing, network analysis, clustering, etc.).
-* `/results/`         : Contains generated figures (`/figures`).
+* `/results/`         : Contains generated figures (`/figures`). Created after running `results.ipynb`.
 * `results.ipynb`     : Contains the main Jupyter Notebook 
 * `README.md`         : This file.
 * `pip_requirements.txt`: All required modules.
-
 
 ## Proposed Timeline (to P3)
 
