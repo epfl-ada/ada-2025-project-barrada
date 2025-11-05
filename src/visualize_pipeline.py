@@ -136,7 +136,7 @@ def load_topic_clusters(file_name="embeddings_kmeans_40.csv"):
     return pd.read_csv(csv_path)
 
 def load_cluster_labels(file_name="cluster_labels_40.csv"):
-    """Loads the human-readable labels for the 40 topic clusters."""
+    """Loads the labels for the 40 topic clusters."""
 
     csv_path = PROCESSED_DIR / file_name
     if not csv_path.exists():

@@ -96,7 +96,7 @@ We enrich these datasets by calculating community roles based on network and sen
 
 * **PCA Dimensionality Reduction:** We load the 300-dimensional raw subreddit embeddings and apply **PCA**, reducing them to 50 components. This captures ~90% of the variance while reducing noise and improving clustering. The output is saved to `embeddings_processed.csv`.
 * **K-Means Topic Clustering:** We run **K-Means clustering** (with K=40) on the 50 PCA components to group semantically similar subreddits. This assigns a "Topic Cluster ID" to each subreddit.
-* **Topic Labeling:** We manually inspect the most central members of each cluster to assign a human-readable topic label (e.g., "Politics", "Gaming"). 
+* **Topic Labeling:** We manually inspect the most central members of each cluster to assign a topic label (e.g., "Politics", "Gaming"). 
 * The final mapping of subreddits to topic IDs and labels are saved in `embeddings_kmeans_40.csv`.
 
 

@@ -83,7 +83,7 @@ class DataIntegrator:
         print(f"  {len(features['roles']):,} subreddits * {len(features['roles'].columns)} features")
         print(f"  Roles columns: {list(features['roles'].columns)}") 
 
-        # 7. Topic clusters (human-readable) 
+        # 7. Topic clusters 
         print(" Loading topic clusters...")
         features['topic_clusters'] = pd.read_csv(
             self.processed_dir / "embeddings_kmeans_40.csv"
