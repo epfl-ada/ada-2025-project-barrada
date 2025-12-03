@@ -1,3 +1,4 @@
+from typing import Dict, List, Tuple, Union, Any, Optional
 import pandas as pd
 import numpy as np
 import networkx as nx
@@ -7,7 +8,7 @@ import community as community_louvain
 class NetworkAnalyzer:
     """Analyze the structure of Reddit's inter-community network"""
     
-    def __init__(self, hyperlinks_df, output_dir="data/processed"):
+    def __init__(self, hyperlinks_df: pd.DataFrame, output_dir: Union[str, Path] = "data/processed") -> None:
         self.df = hyperlinks_df
         ROOT = Path(__file__).resolve().parent.parent
         self.output_dir = Path(ROOT / output_dir)
@@ -18,7 +19,7 @@ class NetworkAnalyzer:
         self.G_neg = None 
         self.G_undirected = None 
         
-    def build_networks(self):
+    def build_networks(self) -> nx.DiGraph:
         """Construct network graphs"""        
         print("\n Building main directed network...")
         
@@ -84,7 +85,7 @@ class NetworkAnalyzer:
         
         return self.G
     
-    def compute_basic_stats(self):
+    def compute_basic_stats(self) -> Dict[str, Union[int, float]]:
         """Compute basic network statistics"""
         print("BASIC NETWORK STATISTICS")
         
@@ -131,7 +132,7 @@ class NetworkAnalyzer:
         
         return stats
     
-    def compute_node_metrics(self):
+    def compute_node_metrics(self, k_approx: int = 50) -> pd.DataFrame:
         """Compute centrality and node-level metrics"""
         print("COMPUTING NODE METRICS")
         
@@ -151,11 +152,12 @@ class NetworkAnalyzer:
         print("HITS (hubs and authorities)...")
         hits_h, hits_a = nx.hits(self.G, max_iter=100)
         
-        # Betweenness (sample for large networks)
-        print("Betweenness centrality...")
-        if len(nodes) > 50:
-            print(f"Sampling 50 nodes for betweenness (for p2 we choose to test with only 50 nodes)")
-            betweenness = nx.betweenness_centrality(self.G, k=50)
+        # Betweenness
+        print(f"Betweenness centrality (Approximation k={k_approx})...")
+        if len(nodes) > k_approx:
+            print(f"Sampling {k_approx} nodes for betweenness to ensure computational feasibility.")
+            # Added seed=42
+            betweenness = nx.betweenness_centrality(self.G, k = k_approx, seed = 42)
         else:
             betweenness = nx.betweenness_centrality(self.G)
         
@@ -229,7 +231,7 @@ class NetworkAnalyzer:
         
         return metrics_df
     
-    def detect_communities(self, resolution=1.0):
+    def detect_communities(self, resolution: float = 1.0) -> Tuple[pd.DataFrame, float]:
         """Detect communities using Louvain algorithm"""
         print("COMMUNITY DETECTION")
         
@@ -269,7 +271,7 @@ class NetworkAnalyzer:
         
         return community_df, modularity
     
-    def analyze_sentiment_structure(self):
+    def analyze_sentiment_structure(self) -> Dict[str, float]:
         """Analyze how sentiment relates to network structure"""
         print("SENTIMENT-STRUCTURE ANALYSIS")
         
@@ -311,7 +313,7 @@ class NetworkAnalyzer:
             'sentiment_std': np.std(sentiments)
         }
     
-    def save_results(self):
+    def save_results(self) -> Dict[str, Any]:
         """Save all network analysis results"""
         print("SAVING NETWORK RESULTS")
         
@@ -370,7 +372,7 @@ class NetworkAnalyzer:
         }
 
 
-def analyze_network(hyperlinks_df):
+def analyze_network(hyperlinks_df: pd.DataFrame) -> Tuple[Dict[str, Any], nx.DiGraph]:
     """Main function to run network analysis"""
     print("NETWORK STRUCTURE ANALYSIS")
     

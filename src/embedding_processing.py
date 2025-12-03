@@ -1,3 +1,4 @@
+from typing import Tuple, Union, Optional
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -7,14 +8,14 @@ from sklearn.preprocessing import StandardScaler
 class EmbeddingProcessor:
     """Process subreddit embeddings"""
     
-    def __init__(self, embeddings_path, output_dir="data/processed"):
+    def __init__(self, embeddings_path: Union[str, Path], output_dir: str = "data/processed") -> None:
         self.embeddings_path = embeddings_path
         ROOT = Path(__file__).resolve().parent.parent
         self.output_dir = Path(ROOT / output_dir)
         self.output_dir.mkdir(exist_ok=True, parents=True)
         self.embedding_dim = 300
         
-    def load_embeddings(self):
+    def load_embeddings(self) -> pd.DataFrame:
         """Load embeddings with column handling"""
         print("Loading.....")
         
@@ -36,7 +37,7 @@ class EmbeddingProcessor:
         
         return df
     
-    def validate_embeddings(self, df):
+    def validate_embeddings(self, df: pd.DataFrame) -> pd.DataFrame:
         """Check embedding quality"""
         print("Embedding validation")
         
@@ -58,7 +59,7 @@ class EmbeddingProcessor:
         
         return df
     
-    def compute_pca(self, df, n_components=50):
+    def compute_pca(self, df: pd.DataFrame, n_components: int = 50) -> Tuple[pd.DataFrame, PCA]:
         """Reduce dimensionality with PCA"""
         print("PCA Dimensionality Reduction....")
         
@@ -91,7 +92,7 @@ class EmbeddingProcessor:
         
         return df, pca
     
-    def save_processed(self, df, filename="embeddings_processed.csv"):
+    def save_processed(self, df: pd.DataFrame, filename: str = "embeddings_processed.csv") -> Path:
         """Save processed embeddings"""
         output_path = self.output_dir / filename
         df.to_csv(output_path, index=False)
@@ -99,7 +100,7 @@ class EmbeddingProcessor:
         
         return output_path
     
-    def run(self, n_pca=50):
+    def run(self, n_pca: int = 50) -> Tuple[pd.DataFrame, PCA]:
         """Execute embedding processing pipeline"""
         print("Embedding Processing....")
         
@@ -112,10 +113,10 @@ class EmbeddingProcessor:
         print(" Embedding Processing Complete")        
         return df, pca
 
-def process_embeddings(
-    embeddings_path=None,
-    output_dir=None
-    ):
+def process_embeddings(embeddings_path: Optional[Union[str, Path]] = None,
+                       output_dir: Optional[Union[str, Path]] = None
+                       ) -> Tuple[pd.DataFrame, PCA]:
+    
     """Main function to run the embedding processing pipeline"""
     if embeddings_path is None or output_dir is None:
         try:

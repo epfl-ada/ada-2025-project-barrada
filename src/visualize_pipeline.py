@@ -6,6 +6,7 @@ import seaborn as sns
 import plotly.graph_objects as go
 from pathlib import Path
 import matplotlib.ticker as ticker
+from typing import Optional, List, Union, Any
 try:
     from adjustText import adjust_text
 except ImportError:
@@ -26,7 +27,7 @@ HTML_DIR.mkdir(exist_ok=True, parents=True)
 
 # Helper Function
 
-def load_hyperlinks_data(file_name="combined_hyperlinks.csv"):
+def load_hyperlinks_data(file_name: str = "combined_hyperlinks.csv") -> Optional[pd.DataFrame]:
     """Loads the processed hyperlinks CSV"""
 
     csv_path = PROCESSED_DIR / file_name
@@ -41,7 +42,7 @@ def load_hyperlinks_data(file_name="combined_hyperlinks.csv"):
         
     return df
 
-def load_pca_variance_data(file_name="pca_variance.csv"):
+def load_pca_variance_data(file_name: str = "pca_variance.csv") -> Optional[pd.DataFrame]:
     """Loads PCA variance data."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -51,7 +52,7 @@ def load_pca_variance_data(file_name="pca_variance.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_embeddings_data(file_name="embeddings_processed.csv"):
+def load_embeddings_data(file_name: str = "embeddings_processed.csv") -> Optional[pd.DataFrame]:
     """Loads processed embeddings"""
 
     csv_path = PROCESSED_DIR / file_name
@@ -65,7 +66,7 @@ def load_embeddings_data(file_name="embeddings_processed.csv"):
     except ValueError:
         return pd.read_csv(csv_path)
     
-def load_liwc_sentiment_comparison(file_name="liwc_sentiment_comparison.csv"):
+def load_liwc_sentiment_comparison(file_name: str = "liwc_sentiment_comparison.csv") -> Optional[pd.DataFrame]:
     """Loads the LIWC sentiment comparison data."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -75,7 +76,7 @@ def load_liwc_sentiment_comparison(file_name="liwc_sentiment_comparison.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_subreddit_roles(file_name="subreddit_roles.csv"):
+def load_subreddit_roles(file_name: str = "subreddit_roles.csv") -> Optional[pd.DataFrame]:
     """Loads the merged subreddit roles and features data."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -85,7 +86,7 @@ def load_subreddit_roles(file_name="subreddit_roles.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_psychological_profiles(file_name="psychological_profiles.csv"):
+def load_psychological_profiles(file_name: str = "psychological_profiles.csv") -> Optional[pd.DataFrame]:
     """Loads the top-100 psychological profiles."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -95,7 +96,7 @@ def load_psychological_profiles(file_name="psychological_profiles.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_network_metrics(file_name="network_node_metrics.csv"):
+def load_network_metrics(file_name: str = "network_node_metrics.csv") -> Optional[pd.DataFrame]:
     """Loads the node-level network metrics (pagerank, centrality, etc.)."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -105,7 +106,7 @@ def load_network_metrics(file_name="network_node_metrics.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_network_communities(file_name="network_communities.csv"):
+def load_network_communities(file_name: str = "network_communities.csv") -> Optional[pd.DataFrame]:
     """Loads the community assignments for each subreddit."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -115,7 +116,7 @@ def load_network_communities(file_name="network_communities.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_network_edges(file_name="network_edges.csv"):
+def load_network_edges(file_name: str = "network_edges.csv") -> Optional[pd.DataFrame]:
     """Loads the aggregated network edge list."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -125,7 +126,7 @@ def load_network_edges(file_name="network_edges.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_topic_clusters(file_name="embeddings_kmeans_40.csv"):
+def load_topic_clusters(file_name: str = "embeddings_kmeans_40.csv") -> Optional[pd.DataFrame]:
     """Loads the topic cluster assignment for each subreddit."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -135,7 +136,7 @@ def load_topic_clusters(file_name="embeddings_kmeans_40.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_cluster_labels(file_name="cluster_labels_40.csv"):
+def load_cluster_labels(file_name: str = "cluster_labels_40.csv") -> Optional[pd.DataFrame]:
     """Loads the labels for the 40 topic clusters."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -145,7 +146,7 @@ def load_cluster_labels(file_name="cluster_labels_40.csv"):
     
     return pd.read_csv(csv_path)
 
-def load_final_dataset(file_name="final_dataset.csv"):
+def load_final_dataset(file_name: str = "final_dataset.csv") -> Optional[pd.DataFrame]:
     """Loads the final, fully integrated dataset."""
 
     csv_path = PROCESSED_DIR / file_name
@@ -163,7 +164,7 @@ def load_final_dataset(file_name="final_dataset.csv"):
 # STEP 1: HYPERLINK VISUALIZATIONS
 # =============================================================================
 
-def plot_sentiment_distribution(df, save_name="step1_sentiment_distribution.png"):
+def plot_sentiment_distribution(df: pd.DataFrame, save_name: str = "step1_sentiment_distribution.png") -> Path:
     """ Creates a bar chart of positive vs. negative link counts."""
 
     print(f"Generating {save_name}...")
@@ -207,12 +208,12 @@ def plot_sentiment_distribution(df, save_name="step1_sentiment_distribution.png"
     return save_path
 
 
-def plot_sentiment_volume_over_time(
-    df,
-    save_name="step1_sentiment_volume_over_time.png",
-    rolling_window=3,
-    dpi=150,
-):
+def plot_sentiment_volume_over_time(df: pd.DataFrame,
+                                    save_name: str = "step1_sentiment_volume_over_time.png",
+                                    rolling_window: int = 3,
+                                    dpi: int = 150,
+                                    ) -> Optional[Path]:
+
     print(f"Generating {save_name}...")
     if 'timestamp' not in df.columns:
         print(f"Cannot generate {save_name}: 'timestamp' column not found.")
@@ -299,13 +300,14 @@ def plot_sentiment_volume_over_time(
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_top_sources_sentiment(df, top_k=15, save_name="step1_top_sources.png"):
+def plot_top_sources_sentiment(df: pd.DataFrame, top_k: int = 15, save_name: str = "step1_top_sources.png") -> Path:
     """Similar top sources."""
 
     print(f"Generating {save_name}...")
     
     # Get counts of pos/neg per source
-    counts = df[df['LINK_SENTIMENT'].isin([1, -1])].groupby('SOURCE_SUBREDDIT')['LINK_SENTIMENT'].value_counts().unstack(fill_value=0)
+    counts = df[df['LINK_SENTIMENT']
+                .isin([1, -1])].groupby('SOURCE_SUBREDDIT')['LINK_SENTIMENT'].value_counts().unstack(fill_value=0)
     counts.columns = ['Negative', 'Positive']
     
     # Calculate total and get top K 
@@ -335,7 +337,10 @@ def plot_top_sources_sentiment(df, top_k=15, save_name="step1_top_sources.png"):
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_top_targets_sentiment(df, top_k=15, save_name="step1_top_targets.png"):
+def plot_top_targets_sentiment(df: pd.DataFrame, 
+                               top_k: int = 15, 
+                               save_name: str = "step1_top_targets.png"
+                               ) -> Optional[Path]:
     """Graph: Top Targets"""
 
     print(f"Generating {save_name}...")
@@ -391,7 +396,15 @@ def plot_top_targets_sentiment(df, top_k=15, save_name="step1_top_targets.png"):
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_liwc_radar_profiles(df, sub_a, sub_b, label_a="Sub A", label_b="Sub B", min_links=100, save_name="step1_liwc_radar_case_study.png"):
+def plot_liwc_radar_profiles(df: pd.DataFrame, 
+                            sub_a: str, 
+                            sub_b: str, 
+                            label_a: str = "Sub A", 
+                            label_b: str = "Sub B", 
+                            min_links: int = 100, 
+                            save_name: str = "step1_liwc_radar_case_study.png"
+                            ) -> Optional[Path]:
+    
     """Compares the LIWC profiles of two specific subreddits."""
     print(f"Generating Case Study: r/{sub_a} vs. r/{sub_b}...")
 
@@ -452,7 +465,7 @@ def plot_liwc_radar_profiles(df, sub_a, sub_b, label_a="Sub A", label_b="Sub B",
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_attack_pattern_small_multiples(df, save_name="step1_attack_patterns.png"):
+def plot_attack_pattern_small_multiples(df: pd.DataFrame, save_name: str = "step1_attack_patterns.png") -> Path:
     print(f"Generating {save_name}...")
     
     neg_df = df[df['LINK_SENTIMENT'] == -1].copy()
@@ -484,7 +497,7 @@ def plot_attack_pattern_small_multiples(df, save_name="step1_attack_patterns.png
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
+def plot_liwc_diverging_lollipop(df: pd.DataFrame, save_name: str = "step1_liwc_diverging.png") -> Optional[Path]:
     print(f"Generating {save_name}...")
     
     liwc_cats = [
@@ -519,8 +532,10 @@ def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
     ax.scatter(x=diff.values, y=diff.index, color=my_color, s=100, alpha=1.0)
     
     ax.axvline(0, color='grey', linestyle='--', alpha=0.6)
-    ax.set_title('What distinguishes Positive vs Negative links?\n(Difference in Standardized LIWC Scores)', fontsize=16, pad=15)
-    ax.set_xlabel('← More typical of NEGATIVE links       More typical of POSITIVE links →', fontsize=12, fontweight='bold')
+    ax.set_title('What distinguishes Positive vs Negative links?\n(Difference in Standardized LIWC Scores)'
+                 , fontsize=16, pad=15)
+    ax.set_xlabel('← More typical of NEGATIVE links       More typical of POSITIVE links →'
+                  , fontsize=12, fontweight='bold')
     
     clean_labels = [l.replace('LIWC_', '') for l in diff.index]
     ax.set_yticks(range(len(diff.index))) 
@@ -537,7 +552,7 @@ def plot_liwc_diverging_lollipop(df, save_name="step1_liwc_diverging.png"):
 # STEP 2: Psychological (LIWC) Analysis
 # =============================================================================
 
-def plot_role_quadrant_map(df_roles, top_n=200, save_name="step2_role_quadrant.png"):
+def plot_role_quadrant_map(df_roles: pd.DataFrame, top_n: int = 200, save_name: str = "step2_role_quadrant.png") -> Path:
     """Plots the social roles of the most active subreddits."""
 
     print(f"Generating {save_name}...")
@@ -600,7 +615,11 @@ def plot_role_quadrant_map(df_roles, top_n=200, save_name="step2_role_quadrant.p
     return save_path
 
 
-def plot_psychological_asymmetry(df_roles, top_n=25, save_name="step2_anger_asymmetry.png"):
+def plot_psychological_asymmetry(df_roles: pd.DataFrame
+                                 , top_n: int = 25
+                                 , save_name: str = "step2_anger_asymmetry.png"
+                                 ) -> Optional[Path]:
+    
     """Shows the gap between outgoing vs. incoming 'Anger'."""
     print(f"Generating {save_name}...")
     
@@ -641,7 +660,7 @@ def plot_psychological_asymmetry(df_roles, top_n=25, save_name="step2_anger_asym
     return save_path
 
 
-def plot_top_influential(roles_df, top_k=10, save_name="step2_top_influential.png"):
+def plot_top_influential(roles_df: pd.DataFrame, top_k: int = 10, save_name: str = "step2_top_influential.png") -> Path:
     """ Creates a bar chart of the top 'influential' subreddits."""
     print(f"Generating {save_name}...")
     
@@ -672,7 +691,7 @@ def plot_top_influential(roles_df, top_k=10, save_name="step2_top_influential.pn
     return save_path
 
 
-def plot_top_supported(roles_df, top_k=10, save_name="step2_top_supported.png"):
+def plot_top_supported(roles_df: pd.DataFrame, top_k: int = 10, save_name: str = "step2_top_supported.png") -> Path:
     """Creates a bar chart of the top 'supportive' subreddits."""
     print(f"Generating {save_name}...")
     
@@ -706,7 +725,7 @@ def plot_top_supported(roles_df, top_k=10, save_name="step2_top_supported.png"):
 # STEP 3: Network Strcuture
 # =============================================================================
 
-def plot_centrality_grid(df_metrics, top_n=15, save_name="step3_centrality_grid.png"):
+def plot_centrality_grid(df_metrics: pd.DataFrame, top_n: int = 15, save_name: str = "step3_centrality_grid.png") -> Path:
     """Shows the top N subreddits for four different centrality metrics in a 2x2 grid."""
 
     print(f"Generating {save_name}...")
@@ -750,7 +769,7 @@ def plot_centrality_grid(df_metrics, top_n=15, save_name="step3_centrality_grid.
 # STEP 4: EMBEDDING VISUALIZATIONS
 # =============================================================================
 
-def plot_pca_variance(df_var, save_name="step4_pca_variance.png"):
+def plot_pca_variance(df_var: pd.DataFrame, save_name: str = "step4_pca_variance.png") -> Path:
     """Combined bar and line plot for PCA variance."""
     print(f"Generating {save_name}...")
     
@@ -768,7 +787,13 @@ def plot_pca_variance(df_var, save_name="step4_pca_variance.png"):
 
     # Line chart for cumulative variance
     ax2 = ax1.twinx()
-    sns.lineplot(x=df_var.index, y='cumulative_variance', data=df_var, color='#ee5253', marker='o', linewidth=2, ax=ax2, zorder=2)
+    sns.lineplot(x=df_var.index, y='cumulative_variance'
+                 , data=df_var
+                 , color='#ee5253'
+                 , marker='o'
+                 , linewidth=2
+                 , ax=ax2
+                 , zorder=2)
     ax2.set_ylabel('Cumulative Explained Variance', fontsize=12, color='#ee5253')
     ax2.tick_params(axis='y', labelcolor='#ee5253')
     ax2.set_ylim(0, 1.05)
@@ -788,7 +813,7 @@ def plot_pca_variance(df_var, save_name="step4_pca_variance.png"):
 # STEP 5: Cluesters
 # =============================================================================
 
-def plot_topic_cluster_distribution(df_clusters, save_name="step5_topic_distribution.png"):
+def plot_topic_cluster_distribution(df_clusters: pd.DataFrame, save_name: str = "step5_topic_distribution.png") -> Path:
     """Creates a horizontal bar chart showing the size of each topic cluster."""
     print(f"Generating {save_name}...")
     
@@ -820,7 +845,10 @@ def plot_topic_cluster_distribution(df_clusters, save_name="step5_topic_distribu
 # FINAL STEP
 # =============================================================================
 
-def plot_topic_network_role(df_final, top_n=40, save_name="step6_topic_network_role.png"):
+def plot_topic_network_role(df_final: pd.DataFrame,
+                             top_n: int = 40, 
+                             save_name: str = "step6_topic_network_role.png"
+                             ) -> Optional[Path]:
     """Dumbbell plot showing avg incoming vs. outgoing sentiment for each topic."""
 
     print(f"Generating {save_name}...")
@@ -861,7 +889,10 @@ def plot_topic_network_role(df_final, top_n=40, save_name="step6_topic_network_r
     print(f"Saved PNG: {save_path}")
     return save_path
 
-def plot_semantic_structural_heatmap(df_final, top_n=15, save_name="step6_sem_struct_heatmap.png"):
+def plot_semantic_structural_heatmap(df_final: pd.DataFrame
+                                     , top_n: int = 15
+                                     , save_name: str = "step6_sem_struct_heatmap.png"
+                                     ) -> Optional[Path]:
     """Heatmap showing the intersection of Topic Clusters (Semantic) vs.Network Communities (Structural)."""
 
     print(f"Generating {save_name}...")
@@ -908,16 +939,15 @@ def plot_semantic_structural_heatmap(df_final, top_n=15, save_name="step6_sem_st
     return save_path
 
 
-def plot_liwc_role_lift(
-    df: pd.DataFrame,
-    key_liwc=None,
-    role_columns=None,
-    aggregate_by_subreddit_col="SRC_SUBREDDIT",
-    save_name="step6_emotion_profiles_lift.png",
-    cmap="RdYlGn"
-):
+def plot_liwc_role_lift(df: pd.DataFrame,
+                        key_liwc: Optional[List[str]] = None,
+                        role_columns: Optional[List[str]] = None,
+                        aggregate_by_subreddit_col: str = "SRC_SUBREDDIT",
+                        save_name: str = "step6_emotion_profiles_lift.png",
+                        cmap: str = "RdYlGn"
+                        ) -> Path:
+    
     """Plot a heatmap of LIWC relative lift by role"""
-
     if key_liwc is None:
         key_liwc = [
             'LIWC_Anger_mean', 'LIWC_Posemo_mean', 'LIWC_Anx_mean',

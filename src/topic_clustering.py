@@ -4,6 +4,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import normalize
 from sklearn.metrics import silhouette_score, davies_bouldin_score
 import numpy as np
+from typing import Tuple, Union
 
 class TopicClustering:
     """
@@ -53,12 +54,12 @@ class TopicClustering:
         39: 'NSFW',
     }
 
-    def __init__(self, embeddings_path, output_dir):
+    def __init__(self, embeddings_path: Union[str, Path], output_dir: Union[str, Path]) -> None:
         self.embeddings_path = Path(embeddings_path)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def run(self, print_samples=True):
+    def run(self, print_samples: bool = True) -> Tuple[pd.DataFrame, float, float]:
         print("Loading raw embeddings...")
         df = pd.read_csv(self.embeddings_path, header=None)
         subreddit_names = df.iloc[:, 0].str.lower().str.strip().values
@@ -131,7 +132,11 @@ class TopicClustering:
 
         return topic_clusters_df, silhouette, davies_bouldin
 
-def run_topic_clustering(embeddings_path, output_dir, print_samples=True):
+def run_topic_clustering(embeddings_path: Union[str, Path],
+                        output_dir: Union[str, Path],
+                        print_samples: bool = True
+                        ) -> Tuple[pd.DataFrame, float, float]:
+    
     cluster_runner = TopicClustering(embeddings_path, output_dir)
     return cluster_runner.run(print_samples=print_samples)
 

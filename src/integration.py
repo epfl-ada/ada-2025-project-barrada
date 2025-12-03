@@ -1,3 +1,4 @@
+from typing import Dict, Union
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -5,11 +6,11 @@ from pathlib import Path
 class DataIntegrator:
     """Merge network, LIWC, and embedding features into unified dataset"""
     
-    def __init__(self, processed_dir="data/processed"):
+    def __init__(self, processed_dir: Union[str, Path] = "data/processed") -> None:
         self.processed_dir = Path(processed_dir)
         self.final_df = None
         
-    def load_all_features(self):
+    def load_all_features(self) -> Dict[str, pd.DataFrame]:
         """Load all processed feature files"""
         print("LOADING....")
         
@@ -96,7 +97,7 @@ class DataIntegrator:
         
         return features
     
-    def merge_features(self, features):
+    def merge_features(self, features: Dict[str, pd.DataFrame]) -> pd.DataFrame:
         """Merge all feature datasets on subreddit"""
         print("MERGING ALL FEATURES")
         
@@ -202,7 +203,7 @@ class DataIntegrator:
         return merged
     
         
-    def save_final_dataset(self, df, filename="final_dataset.csv"):
+    def save_final_dataset(self, df: pd.DataFrame, filename: str = "final_dataset.csv") -> Path:
         """Save the integrated dataset"""
         output_path = self.processed_dir / filename
         df.to_csv(output_path, index=False)
@@ -212,7 +213,7 @@ class DataIntegrator:
         return output_path
     
     
-    def run(self):
+    def run(self) -> pd.DataFrame:
         """Execute full integration pipeline"""
         print("Integration Pipeline...")
         
@@ -224,7 +225,7 @@ class DataIntegrator:
         return merged
 
 
-def integrate_all_data():
+def integrate_all_data() -> pd.DataFrame:
     """Main function to run data integration"""
     integrator = DataIntegrator()
     final_df = integrator.run()

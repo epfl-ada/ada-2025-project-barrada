@@ -1,3 +1,4 @@
+from typing import List, Optional, Tuple, Union
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -5,7 +6,11 @@ from pathlib import Path
 class HyperlinkDataProcessor:
     """Process and combine Reddit hyperlink data from body and title sources"""
     
-    def __init__(self, body_path, title_path, output_dir="data/processed"):
+    def __init__(self, 
+                 body_path: Union[str, Path], 
+                 title_path: Union[str, Path], 
+                 output_dir: str = "data/processed"
+                 ) -> None:
         self.body_path = body_path
         self.title_path = title_path 
         ROOT = Path(__file__).resolve().parent.parent
@@ -47,14 +52,14 @@ class HyperlinkDataProcessor:
             'vader_negative', 'vader_compound'
         ]
         
-    def parse_post_properties(self, properties_str):
+    def parse_post_properties(self, properties_str: str) -> Optional[List[float]]:
         """Parse PROPERTIES string into individual features"""
         try:
             return [float(x) for x in properties_str.split(',')]
         except (AttributeError, ValueError, TypeError):
             return None
     
-    def load_and_combine(self):
+    def load_and_combine(self) -> pd.DataFrame:
         """Load both TSV files and combine them"""
         print("LOADING HYPERLINK DATA")
         
@@ -83,7 +88,7 @@ class HyperlinkDataProcessor:
         
         return combined
     
-    def expand_post_properties(self, df):
+    def expand_post_properties(self, df: pd.DataFrame) -> pd.DataFrame:
         """Extract LIWC and text features"""
         print("\nExtracting features from PROPERTIES...")
         
@@ -116,7 +121,7 @@ class HyperlinkDataProcessor:
         
         return df
     
-    def validate_data(self, df):
+    def validate_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """DATA VALIDATION"""
         print("DATA VALIDATION")
         
@@ -161,7 +166,7 @@ class HyperlinkDataProcessor:
         
         return df
     
-    def clean_data(self, df):
+    def clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """Clean and prepare data"""
         print("DATA CLEANING")
         
@@ -197,7 +202,7 @@ class HyperlinkDataProcessor:
         
         return df
     
-    def create_liwc_aggregates(self, df):
+    def create_liwc_aggregates(self, df: pd.DataFrame) -> pd.DataFrame:
         """Create higher-level LIWC category aggregates"""
         
         # Emotional categories
@@ -224,7 +229,7 @@ class HyperlinkDataProcessor:
         
         return df
     
-    def save_processed(self, df, filename="combined_hyperlinks.csv"):
+    def save_processed(self, df: pd.DataFrame, filename: str = "combined_hyperlinks.csv") -> Path:
         """Save processed data"""
         output_path = self.output_dir / filename
         df.to_csv(output_path, index=False)
@@ -232,7 +237,7 @@ class HyperlinkDataProcessor:
         print(f"\n Saved to: {output_path}")
         return output_path
     
-    def run(self):
+    def run(self) -> Tuple[pd.DataFrame, List[str]]:
         """Execute full preprocessing pipeline"""
         print("Data Preprocessing....")
         
@@ -247,10 +252,10 @@ class HyperlinkDataProcessor:
 
 
 def process_hyperlinks(
-    body_path=Path("data/hyperlink_network/soc-redditHyperlinks-body.tsv"),
-    title_path=Path("data/hyperlink_network/soc-redditHyperlinks-title.tsv"),
-    output_dir=Path("data/processed")
-    ):
+    body_path: Path = Path("data/hyperlink_network/soc-redditHyperlinks-body.tsv"),
+    title_path: Path = Path("data/hyperlink_network/soc-redditHyperlinks-title.tsv"),
+    output_dir: Path = Path("data/processed")
+    ) -> Tuple[pd.DataFrame, List[str]]:
     """
     Main function to run the preprocessing pipeline.
     """

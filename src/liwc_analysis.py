@@ -1,3 +1,4 @@
+from typing import List, Dict, Union, Any
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -6,7 +7,12 @@ from scipy import stats
 class LIWCAnalyzer:
     """Analyze psychological patterns in inter-subreddit communication"""
     
-    def __init__(self, hyperlinks_df, liwc_columns, output_dir="data/processed"):
+    def __init__(self, 
+                 hyperlinks_df: pd.DataFrame, 
+                 liwc_columns: List[str], 
+                 output_dir: Union[str, Path] = "data/processed"
+                 ) -> None:
+        
         self.df = hyperlinks_df
         self.liwc_columns = liwc_columns
         ROOT = Path(__file__).resolve().parent.parent
@@ -25,7 +31,7 @@ class LIWCAnalyzer:
                       'LIWC_Money', 'LIWC_Relig', 'LIWC_Death']
         }
     
-    def aggregate_by_subreddit(self, role='source'):
+    def aggregate_by_subreddit(self, role: str = 'source') -> pd.DataFrame:
         """
         Aggregate LIWC features at subreddit level
         """
@@ -83,7 +89,7 @@ class LIWCAnalyzer:
         
         return result
     
-    def compare_sentiment_groups(self):
+    def compare_sentiment_groups(self) -> pd.DataFrame:
         """Compare LIWC profiles of positive vs negative links"""
         print("COMPARING POSITIVE VS NEGATIVE LINKS")
         
@@ -140,7 +146,7 @@ class LIWCAnalyzer:
         
         return comparison_df
     
-    def analyze_psychological_roles(self, top_n=50):
+    def analyze_psychological_roles(self, top_n: int = 50) -> pd.DataFrame:
         """
         Identify psychological roles of communities
         (Critics, Targets, Amplifiers, etc.)
@@ -233,7 +239,7 @@ class LIWCAnalyzer:
         
         return merged
     
-    def get_psychological_profiles(self, top_n=100):
+    def get_psychological_profiles(self, top_n: int = 100) -> pd.DataFrame:
         """Create psychological profiles for active subreddits"""
         print(f"Create psychological profiles (top {top_n})")
         
@@ -273,7 +279,7 @@ class LIWCAnalyzer:
         
         return profiles_df
     
-    def save_results(self):
+    def save_results(self) -> Dict[str, pd.DataFrame]:
         """Save all LIWC analysis results"""
         print("SAVING RESULTS")
         
@@ -328,7 +334,7 @@ class LIWCAnalyzer:
         }
 
 
-def analyze_liwc(hyperlinks_df, liwc_columns):
+def analyze_liwc(hyperlinks_df: pd.DataFrame, liwc_columns: List[str]) -> Dict[str, pd.DataFrame]:
     """Main function to run LIWC analysis"""
     print("LIWC PSYCHOLOGICAL ANALYSIS")
     
