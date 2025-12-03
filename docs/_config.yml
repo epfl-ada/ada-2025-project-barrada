@@ -1,0 +1,9 @@
+theme: jekyll-theme-minimal
+title: Reddit’s Invisible Brain: The Web Hidden Beneath the Threads
+description: A template website for ADA
+show_downloads: True
+navigation:
+  - title: Home
+    url: /
+  - title: Example
+    url: example
