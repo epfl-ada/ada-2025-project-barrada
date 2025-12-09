@@ -10,6 +10,7 @@ class TopicClustering:
     """
     Runs K-Means clustering (K=40) with definitive manual semantic overrides.
     "Final Boss" version: Balances academic critique vs. toxic mockery.
+    Prints Top 10 Central members (mathematically closest to centroid) for validation.
     """
 
     CLUSTER_LABELS_40 = {
@@ -35,7 +36,7 @@ class TopicClustering:
         19: 'Celebrities/Models',
         20: 'Music',
         21: 'Random',
-        22: 'Esports/Online Games', # Renamed from Gaming-Mobile
+        22: 'Esports/Online Games',
         23: 'Spam/Personalities',
         24: 'Football',
         25: 'NSFW-Homosexual',
@@ -93,7 +94,7 @@ class TopicClustering:
         'galacticracing': 'Games',
         'findagame': 'Games',
         
-        # --- 5. META-COMMENTARY ) ---
+        # --- 5. META-COMMENTARY ---
         'bettersubredditdrama': 'Meta-Commentary',
         'shitamericanssay': 'Meta-Commentary',
         'shitpoliticssays': 'Meta-Commentary',
@@ -149,14 +150,17 @@ class TopicClustering:
         subreddit_names = df.iloc[:, 0].str.lower().str.strip().values
         embedding_matrix = df.iloc[:, 1:].values
 
+        # Normalize L2 so Euclidean distance ranking ~ Cosine Similarity ranking
         embedding_matrix_norm = normalize(embedding_matrix, norm='l2', axis=1)
 
         print(f"Running K-Means clustering (K=40) on {len(subreddit_names)} subreddits...")
         kmeans = KMeans(n_clusters=40, init='k-means++', n_init=10,
                         max_iter=300, random_state=42)
+        
         cluster_labels = kmeans.fit_predict(embedding_matrix_norm)
-        centroids = kmeans.cluster_centers_
-
+        
+        distances = np.min(kmeans.transform(embedding_matrix_norm), axis=1)
+        
         silhouette = silhouette_score(embedding_matrix_norm, cluster_labels,
                                       metric='cosine', sample_size=min(10000, len(subreddit_names)),
                                       random_state=42)
@@ -167,7 +171,8 @@ class TopicClustering:
 
         topic_clusters_df = pd.DataFrame({
             'subreddit': subreddit_names,
-            'topic_cluster': cluster_labels
+            'topic_cluster': cluster_labels,
+            'distance_to_centroid': distances  # Store for sorting
         })
 
         topic_clusters_df['topic_cluster_label'] = topic_clusters_df['topic_cluster'].map(self.CLUSTER_LABELS_40)
@@ -187,7 +192,7 @@ class TopicClustering:
         print(f"  Total subreddits re-classified: {fixed_count}\n")
 
         output_path = self.output_dir / "embeddings_kmeans_40.csv"
-        topic_clusters_df.to_csv(output_path, index=False)
+        topic_clusters_df.drop(columns=['distance_to_centroid']).to_csv(output_path, index=False)
         print(f" Topic clusters saved to: {output_path}")
 
         labelmap_path = self.output_dir / "cluster_labels_40.csv"
@@ -200,22 +205,25 @@ class TopicClustering:
         return topic_clusters_df, silhouette, davies_bouldin
 
     def _print_cluster_samples(self, df):
-        print("Top 10 central + 10 random members per cluster (Post-Fix validation):")
+        """Prints the Top 10 most central members of each cluster."""
+        print("Top 10 CENTRAL members per cluster (Closest to mathematical centroid):")
         
         unique_labels = sorted(df['topic_cluster_label'].unique())
         
         for label in unique_labels:
-            cluster_subs = df[df['topic_cluster_label'] == label]['subreddit'].values
+            # Filter for this cluster
+            cluster_data = df[df['topic_cluster_label'] == label]
             
-            if len(cluster_subs) == 0:
+            if len(cluster_data) == 0:
                 continue
                 
-            random_idx = np.random.choice(len(cluster_subs), size=min(10, len(cluster_subs)), replace=False)
+            # Sort by distance (smaller is better/more central)
+            top_central = cluster_data.sort_values('distance_to_centroid', ascending=True).head(10)
             
-            print(f"\nCluster: {label} - {len(cluster_subs)} members")
-            print("  10 Random samples:")
-            for i, idx in enumerate(random_idx, 1):
-                print(f"    {i}. {cluster_subs[idx]}")
+            print(f"\nCluster: {label} - {len(cluster_data)} members")
+            print("  Top 10 Central:")
+            for i, (idx, row) in enumerate(top_central.iterrows(), 1):
+                print(f"    {i}. {row['subreddit']}")
 
 def run_topic_clustering(embeddings_path: Union[str, Path],
                         output_dir: Union[str, Path],
