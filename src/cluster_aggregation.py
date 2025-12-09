@@ -272,25 +272,31 @@ class ClusterAggregator:
         print("\nAggregating to cluster level...")
         
         cluster_records = []
-        unique_clusters = sorted(self.df_final['topic_cluster'].dropna().unique())
         
-        for cluster_id in unique_clusters:
-            cluster_label = self.df_final[
-                self.df_final['topic_cluster'] == cluster_id
-            ]['topic_cluster_label'].iloc[0]
-                        
+        unique_labels = sorted(self.df_final['topic_cluster_label'].dropna().unique())
+        
+        for cluster_label in unique_labels:
+            cluster_ids = self.df_final[
+                self.df_final['topic_cluster_label'] == cluster_label
+            ]['topic_cluster'].value_counts()
+            
+            cluster_id = int(cluster_ids.index[0]) if len(cluster_ids) > 0 else -1
+            
             cluster_subs = self.get_cluster_subreddits(cluster_label)
             n_subreddits = len(cluster_subs)
             
             if n_subreddits == 0:
-                print(f"    Warning: No subreddits found")
+                print(f"    Warning: No subreddits found for {cluster_label}")
                 continue
             
+            print(f"  Processing: {cluster_label} (n={n_subreddits})")
+            
             record = {
-                'cluster_id': int(cluster_id),
+                'cluster_id': cluster_id,
                 'cluster_label': cluster_label,
                 'n_subreddits': n_subreddits
             }
+
             
             link_metrics = self.calculate_link_metrics(cluster_label)
             record.update(link_metrics)
