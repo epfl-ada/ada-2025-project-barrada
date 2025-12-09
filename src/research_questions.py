@@ -1,29 +1,36 @@
 import pandas as pd
 import numpy as np
+import json
 from pathlib import Path
 from typing import Dict, Tuple, List, Optional
 from scipy import stats
-from sklearn.metrics.pairwise import cosine_similarity
+import math
 
 class ResearchQuestions:
     """
-    Final Statistical Pipeline for P3.
+    Final Statistical Pipeline for P3, optimized for web deployment.
     
     Features:
-    - Scans ALL numeric variables to find top drivers (unbiased).
-    - Reports 'Top 10 Overall' AND 'Top 10 LIWC' separately.
-    - Covers all 6 Themes: Structure, Emotion, Dynamics, Echo Chambers, Narrative, Power.
+    - Runs all Research Questions (RQs) and logs results to CSV.
+    - Exports key metrics to JSON format.
     """
     
     def __init__(self, data_dir: str = "data/processed"):
         self.data_dir = Path(data_dir)
-        self.output_dir = Path("results/statistics")
-        self.output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Directories for analytical log files (CSV)
+        self.rq_analysis_dir = self.data_dir / "rq_analysis"
+        self.rq_analysis_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Directories for web app JSON files
+        self.web_app_data_dir = Path("web-app/data")
+        self.web_app_data_dir.mkdir(parents=True, exist_ok=True)
         
         self.df_final: Optional[pd.DataFrame] = None
         self.df_links: Optional[pd.DataFrame] = None
         self.df_cluster: Optional[pd.DataFrame] = None
-    
+        self.all_rq_results: Dict[str, pd.DataFrame] = {}
+            
     def load_data(self) -> None:
         """Load required datasets with integrity checks."""
         print("Loading datasets...")
@@ -31,9 +38,33 @@ class ResearchQuestions:
             self.df_final = pd.read_csv(self.data_dir / "final_dataset.csv")
             self.df_links = pd.read_csv(self.data_dir / "combined_hyperlinks.csv")
             self.df_cluster = pd.read_csv(self.data_dir / "cluster_master_dataset.csv")
+            
+            # Ensure topic_cluster_label is string for merging
+            if 'cluster_id' in self.df_cluster.columns:
+                 self.df_cluster['cluster_id'] = self.df_cluster['cluster_id'].astype(str)
+                 if 'topic_cluster' in self.df_final.columns:
+                     self.df_final['topic_cluster'] = self.df_final['topic_cluster'].astype(str)
+
         except FileNotFoundError as e:
             print(f"Error loading data: {e}")
             raise
+
+    def _log_and_store(self, method_name: str, df_or_dict) -> pd.DataFrame:
+        """Helper to store results internally and save to CSV."""
+        if isinstance(df_or_dict, dict):
+            df = pd.DataFrame([df_or_dict])
+        elif isinstance(df_or_dict, pd.DataFrame):
+            df = df_or_dict
+        else:
+            return pd.DataFrame()
+            
+        df.columns = [col.replace('LIWC_', '').replace('_mean', '').replace('pct_role_', '') for col in df.columns]
+
+        # Log to CSV
+        csv_path = self.rq_analysis_dir / f"{method_name}.csv"
+        df.to_csv(csv_path, index=False)
+        self.all_rq_results[method_name] = df
+        return df
 
     def _scan_correlations(self, df: pd.DataFrame, target_col: str, 
                           exclude_cols: List[str] = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
@@ -58,6 +89,10 @@ class ResearchQuestions:
                     continue
                     
                 corr, p = stats.spearmanr(clean[target_col], clean[col])
+                
+                if math.isnan(corr):
+                    continue
+                    
                 res.append({
                     'Feature': col.replace('_mean', ''),
                     'Correlation': corr,
@@ -84,9 +119,7 @@ class ResearchQuestions:
     # =========================================================================
 
     def rq1a_analytical_bridges(self) -> pd.DataFrame:
-        """RQ1a: Analytical Communities as Bridges."""
         print("RQ1a: Analytical Communities as Bridges")
-        
         df = self.df_final.copy()
         required_cols = ['LIWC_Insight_mean', 'LIWC_Certain_mean', 'LIWC_CogMech_mean', 
                         'LIWC_Tentat_mean', 'betweenness']
@@ -102,13 +135,11 @@ class ResearchQuestions:
         correlation, p_value = stats.spearmanr(df_clean['analytical_score'], df_clean['betweenness'])
         
         print(f"  N={len(df_clean):,}, Correlation={correlation:.4f}, p={p_value:.6f}")
-        print()
-        return pd.DataFrame([{'test': 'spearman', 'correlation': correlation, 'p_value': p_value}])
+        return self._log_and_store('rq1a_analytical_bridges', 
+            {'test': 'spearman', 'correlation': correlation, 'p_value': p_value, 'N': len(df_clean)})
     
     def rq1b_role_patterns(self) -> pd.DataFrame:
-        """RQ1b: Linguistic Patterns by Role."""
         print("RQ1b: Linguistic Patterns by Role")
-        
         df = self.df_final.copy()
         role_cols = ['role_influential', 'role_supportive', 'role_critical', 'role_controversial']
         
@@ -126,15 +157,13 @@ class ResearchQuestions:
         
         results = pd.DataFrame(profiles)
         print(results.to_string(index=False))
-        print()
-        return results
+        return self._log_and_store('rq1b_role_patterns', results)
 
     # =========================================================================
     # THEME 2: EMOTIONAL GEOGRAPHY
     # =========================================================================
     
     def rq2a_emotion_dominance(self) -> pd.DataFrame:
-        """RQ2a: Emotion Dominance in Link Types."""
         print("RQ2a: Emotion Dominance in Link Types")
         
         # Test ALL LIWC features in links
@@ -158,11 +187,9 @@ class ResearchQuestions:
         df_res = pd.DataFrame(results).sort_values('ratio_neg_to_pos', ascending=False)
         print("Top 10 Features Dominating Negative Links (highest ratio):")
         print(df_res[['feature', 'ratio_neg_to_pos', 'p_value']].head(10).to_string(index=False))
-        print()
-        return df_res
+        return self._log_and_store('rq2a_emotion_dominance', df_res)
 
     def rq2b_asymmetry_analysis(self) -> pd.DataFrame:
-        """RQ2b: Emotional Asymmetry (Incoming vs Outgoing)."""
         print("RQ2b: Emotional Asymmetry (Incoming vs Outgoing)")
                 
         out_cols = [c for c in self.df_final.columns if c.startswith('LIWC_') and c.endswith('_mean')]
@@ -179,6 +206,10 @@ class ResearchQuestions:
             clean = comparison_df.dropna()
             
             if len(clean) > 100:
+                # Skip if no variance for t-test
+                if clean['incoming'].std() == 0 and clean[out_col].std() == 0:
+                     continue
+                     
                 t_stat, p = stats.ttest_rel(clean['incoming'], clean[out_col])
                 mean_diff = clean['incoming'].mean() - clean[out_col].mean()
                 
@@ -193,15 +224,13 @@ class ResearchQuestions:
         df_res = pd.DataFrame(results).sort_values('abs_diff', ascending=False)
         print("Top 10 Largest Asymmetries (Language Received vs Sent):")
         print(df_res[['feature', 'direction', 'mean_diff_in_minus_out']].head(10).to_string(index=False))
-        print()
-        return df_res
+        return self._log_and_store('rq2b_asymmetry_analysis', df_res)
 
     # =========================================================================
     # THEME 3: SOCIAL DYNAMICS
     # =========================================================================
 
-    def rq3a_similarity_sentiment(self) -> Dict:
-        """RQ3a: Psychological Similarity & Sentiment."""
+    def rq3a_similarity_sentiment(self) -> pd.DataFrame:
         print("RQ3a: Psychological Similarity & Sentiment")
         
         sample = self.df_links.sample(min(10000, len(self.df_links)), random_state=42)
@@ -221,19 +250,24 @@ class ResearchQuestions:
                 sents.append(row['LINK_SENTIMENT'])
         
         df_sim = pd.DataFrame({'sim': sims, 'sent': sents})
-        df_sim['quartile'] = pd.qcut(df_sim['sim'], 4, labels=['Low', 'Med-Low', 'Med-High', 'High'])
         
-        stats_df = df_sim.groupby('quartile', observed=False)['sent'].apply(lambda x: (x==1).mean())
-        print(f"  Positive Link Rate - Low Sim: {stats_df['Low']:.1%}, High Sim: {stats_df['High']:.1%}")
-        print()
-        return stats_df.to_dict()
+        try:
+            df_sim['quartile'] = pd.qcut(df_sim['sim'], 4, labels=['Low', 'Med-Low', 'Med-High', 'High'], duplicates='drop')
+        except ValueError:
+            df_sim['quartile'] = pd.cut(df_sim['sim'], bins=np.linspace(df_sim['sim'].min(), df_sim['sim'].max(), 5), include_lowest=True)
 
-    def rq3b_ideological_neighbors(self) -> Dict:
-        """RQ3b: Topical Homophily."""
-        print("RQ3b: Topical Homophily (Same vs Different Cluster)")
         
-        if 'topic_cluster_label' not in self.df_final.columns:
-            return {}
+        stats_df = df_sim.groupby('quartile', observed=True)['sent'].apply(lambda x: (x==1).mean()).reset_index(name='positive_rate')
+        
+        low_sim_rate = stats_df.iloc[0]['positive_rate'] if not stats_df.empty else np.nan
+        high_sim_rate = stats_df.iloc[-1]['positive_rate'] if not stats_df.empty else np.nan
+
+        print(f"  Positive Link Rate - Low Sim: {low_sim_rate:.1%}, High Sim: {high_sim_rate:.1%}")
+        return self._log_and_store('rq3a_similarity_sentiment', stats_df)
+
+    def rq3b_ideological_neighbors(self) -> pd.DataFrame:
+        print("RQ3b: Topical Homophily (Same vs Different Cluster)")
+        if 'topic_cluster_label' not in self.df_final.columns: return self._log_and_store('rq3b_ideological_neighbors', {})
 
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
         df_links_temp = self.df_links.copy()
@@ -250,22 +284,19 @@ class ResearchQuestions:
         print(f"  Within-Cluster Positive Rate: {same_pos:.1%}")
         print(f"  Cross-Cluster Positive Rate:  {diff_pos:.1%}")
         print(f"  Result: Neighbors are {same_pos - diff_pos:+.1%} more positive.")
-        print()
-        return {'same': same_pos, 'diff': diff_pos}
+        return self._log_and_store('rq3b_ideological_neighbors', 
+            {'within_positive_rate': same_pos, 'cross_positive_rate': diff_pos})
 
     # =========================================================================
     # THEME 4: ECHO CHAMBERS & POLARIZATION
     # =========================================================================
 
     def rq4a_certainty_insularity(self) -> pd.DataFrame:
-        """RQ4a: Certainty vs Insularity."""
         print("RQ4a: Certainty and Insularity")
-        
         df = self.df_cluster.copy()
         required = ['LIWC_Certain_mean', 'LIWC_Tentat_mean', 'insularity']
         
-        if not all(col in df.columns for col in required):
-            return pd.DataFrame()
+        if not all(col in df.columns for col in required): return self._log_and_store('rq4a_certainty_insularity', {})
             
         df['certainty_score'] = df['LIWC_Certain_mean'] - df['LIWC_Tentat_mean']
         corr, p = stats.spearmanr(df['certainty_score'], df['insularity'])
@@ -275,27 +306,17 @@ class ResearchQuestions:
         echo = df.nlargest(5, 'insularity')[['cluster_label', 'insularity', 'certainty_score']]
         print("\nTop 5 Most Insular Clusters:")
         print(echo.to_string(index=False))
-        print()
-        return echo
+        return self._log_and_store('rq4a_certainty_insularity', echo)
 
     def rq4b_semantic_structural_interaction(self) -> pd.DataFrame:
-        """
-        RQ4b: Echo Chamber Detection (Semantic vs Structural Alignment).
-        Calculates Purity Score: How well does a Topic Cluster map to a single Network Community?
-        """
         print("RQ4b: Echo Chamber Detection (Semantic vs Structural Alignment)")
-        
-        if 'community' not in self.df_final.columns:
-            return pd.DataFrame()
+        if 'community' not in self.df_final.columns: return self._log_and_store('rq4b_semantic_structural_interaction', {})
 
-        # Cross-tabulate Topic Clusters vs Network Communities
         ct = pd.crosstab(self.df_final['topic_cluster_label'], self.df_final['community'])
-        
         alignment = []
         for topic in ct.index:
             total_subs = ct.loc[topic].sum()
             max_overlap = ct.loc[topic].max()
-            # Avoid division by zero
             purity = max_overlap / total_subs if total_subs > 0 else 0
             
             alignment.append({
@@ -303,28 +324,19 @@ class ResearchQuestions:
                 'total_subs': total_subs,
                 'max_concentration': max_overlap,
                 'purity': purity,
-                'type': 'Echo Chamber' if purity > 0.6 else 'Distributed'
             })
             
         df_align = pd.DataFrame(alignment).sort_values('purity', ascending=False)
-        
         print("Top 10 Most 'Pure' Echo Chambers (Perfect Alignment):")
         print(df_align[['topic', 'purity', 'max_concentration']].head(10).to_string(index=False))
-        
-        print("\nTop 10 Least Pure Clusters (Most Distributed/Fragmented):")
-        print(df_align[['topic', 'purity', 'max_concentration']].tail(10).sort_values('purity').to_string(index=False))
-        
-        print()
-        return df_align
-
+        return self._log_and_store('rq4b_semantic_structural_interaction', df_align)
+    
     # =========================================================================
-    # THEME 5: EXTENDED ANALYSIS (The P3 Narrative)
+    # THEME 5: EXTENDED ANALYSIS
     # =========================================================================
 
     def rq5_topic_bridges(self) -> pd.DataFrame:
-        """RQ5: Topic Clusters as Bridges."""
         print("RQ5: Topic Clusters as Bridges")
-        
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
         df_temp = self.df_links.copy()
         df_temp['src_cluster'] = df_temp['SOURCE_SUBREDDIT'].map(sub_map)
@@ -338,29 +350,23 @@ class ResearchQuestions:
         
         print("Top 5 Bridging Clusters (Highest % of cross-topic links):")
         print(grouped.head(5).to_string(index=False))
-        print()
-        return grouped
+        return self._log_and_store('rq5_topic_bridges', grouped)
 
     def rq6_betweenness_predictors(self) -> pd.DataFrame:
-        """
-        RQ6: Predictors of Network Influence (Betweenness).
-        Scientific: Scans ALL numeric columns.
-        """
         print("RQ6: Predictors of Network Influence (Betweenness)")
-        
         df = self.df_final[self.df_final['total_links'] > 10].copy()
-        
         overall, liwc = self._scan_correlations(df, 'betweenness')
         
         print("Top 10 OVERALL Predictors:")
         print(overall[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
         print("\nTop 10 LIWC Predictors (Linguistic only):")
         print(liwc[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
-        print()
-        return overall
+        
+        overall['type'] = 'overall'
+        liwc['type'] = 'liwc'
+        return self._log_and_store('rq6_betweenness_predictors', pd.concat([overall, liwc]))
 
     def rq7_cluster_sentiment_network(self) -> pd.DataFrame:
-        """RQ7: Cluster-to-Cluster Sentiment (Rivalries & Alliances)."""
         print("RQ7: Cluster-to-Cluster Sentiment (Rivalries & Alliances)")
         
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
@@ -369,42 +375,38 @@ class ResearchQuestions:
         df_temp['tgt_cluster'] = df_temp['TARGET_SUBREDDIT'].map(sub_map)
         
         valid = df_temp.dropna(subset=['src_cluster', 'tgt_cluster'])
-        valid = valid[valid['src_cluster'] != valid['tgt_cluster']]
         
         pairs = valid.groupby(['src_cluster', 'tgt_cluster']).agg(
             n_links=('POST_ID', 'count'),
-            avg_sentiment=('LINK_SENTIMENT', 'mean')
+            avg_sentiment=('LINK_SENTIMENT', 'mean'),
+            n_negative_links=('LINK_SENTIMENT', lambda x: (x == -1).sum()),
+            n_positive_links=('LINK_SENTIMENT', lambda x: (x == 1).sum())
         ).reset_index()
         
-        pairs = pairs[pairs['n_links'] > 50].sort_values('avg_sentiment')
+        pairs_filtered = pairs[pairs['n_links'] > self.LINK_VOLUME_THRESHOLD].sort_values('avg_sentiment')
         
         print("Top 5 Rivalries (Most Negative Links):")
-        print(pairs.head(5).to_string(index=False))
+        print(pairs_filtered.head(5).to_string(index=False))
         print("\nTop 5 Alliances (Most Positive Links):")
-        print(pairs.tail(5).to_string(index=False))
-        print()
-        return pairs
+        print(pairs_filtered.tail(5).to_string(index=False))
+        
+        pairs.to_csv(self.rq_analysis_dir / 'rq7_cluster_flow_matrix.csv', index=False)
+        return self._log_and_store('rq7_cluster_sentiment_network', pairs_filtered)
 
     def rq8_role_distribution(self) -> pd.DataFrame:
-        """RQ8: Role Distribution Across Clusters."""
         print("RQ8: Role Distribution (Cluster Composition)")
-        
         cols = ['cluster_label', 'pct_role_critical', 'pct_role_supportive']
         available = [c for c in cols if c in self.df_cluster.columns]
         
-        if not available:
-            return pd.DataFrame()
+        if not available: return self._log_and_store('rq8_role_distribution', {})
             
         df = self.df_cluster.sort_values('pct_role_critical', ascending=False)
         print("Top 5 Clusters by % Critical Subreddits (The Aggressors):")
         print(df[available].head(5).to_string(index=False))
-        print()
-        return df
+        return self._log_and_store('rq8_role_distribution', df[['cluster_label', 'pct_role_critical', 'pct_role_supportive']])
 
     def rq9_external_negativity(self) -> pd.DataFrame:
-        """RQ9: External Negativity (The Crusader Ranking)."""
         print("RQ9: External Negativity Ranking (The 'Crusaders')")
-        
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
         df_temp = self.df_links.copy()
         df_temp['src_cluster'] = df_temp['SOURCE_SUBREDDIT'].map(sub_map)
@@ -422,13 +424,10 @@ class ResearchQuestions:
         
         print("Top 10 Most Aggressive Externally:")
         print(df_res.head(10).to_string(index=False))
-        print()
-        return df_res
+        return self._log_and_store('rq9_external_negativity', df_res)
 
     def rq10_internal_civility(self) -> pd.DataFrame:
-        """RQ10: Internal Civility (The Echo Chamber Effect)."""
         print("RQ10: Internal Civility Ranking (The 'Cannibals' vs 'Monks')")
-        
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
         df_temp = self.df_links.copy()
         df_temp['src_cluster'] = df_temp['SOURCE_SUBREDDIT'].map(sub_map)
@@ -447,14 +446,9 @@ class ResearchQuestions:
         print(df_res.head(5).to_string(index=False))
         print("\nTop 5 Most Civil (Lowest Internal Conflict):")
         print(df_res.tail(5).to_string(index=False))
-        print()
-        return df_res
+        return self._log_and_store('rq10_internal_civility', df_res)
 
     def rq11_vocabulary_of_peace(self) -> pd.DataFrame:
-        """
-        RQ11: The Vocabulary of Peace (Internal Negativity Predictors).
-        Scientific: Scans ALL numeric columns in cluster dataset.
-        """
         print("RQ11: The Vocabulary of Peace (Predictors of Internal Conflict)")
         
         # Calculate Internal Negativity
@@ -476,14 +470,12 @@ class ResearchQuestions:
         print(overall[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
         print("\nTop 10 LIWC Predictors (Linguistic):")
         print(liwc[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
-        print()
-        return overall
+
+        overall['type'] = 'overall'
+        liwc['type'] = 'liwc'
+        return self._log_and_store('rq11_vocabulary_of_peace', pd.concat([overall, liwc]))
 
     def rq12_vocabulary_of_war(self) -> pd.DataFrame:
-        """
-        RQ12: The Vocabulary of War (Predictors of External Aggression).
-        Scientific: Scans ALL numeric columns.
-        """
         print("RQ12: The Vocabulary of War (Predictors of External Attacks)")
         
         # Calculate External Negativity
@@ -506,14 +498,12 @@ class ResearchQuestions:
         print(overall[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
         print("\nTop 10 LIWC Predictors (Linguistic):")
         print(liwc[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
-        print()
-        return overall
+
+        overall['type'] = 'overall'
+        liwc['type'] = 'liwc'
+        return self._log_and_store('rq12_vocabulary_of_war', pd.concat([overall, liwc]))
 
     def rq13_anatomy_of_isolation(self) -> pd.DataFrame:
-        """
-        RQ13: The Anatomy of Isolation (Predictors of Insularity).
-        Scientific: Scans ALL numeric columns.
-        """
         print("RQ13: The Anatomy of Isolation (What predicts Echo Chamber formation?)")
         
         df = self.df_cluster.copy()
@@ -523,16 +513,17 @@ class ResearchQuestions:
         print(overall[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
         print("\nTop 10 LIWC Predictors of Isolation:")
         print(liwc[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
-        print()
-        return overall
 
+        overall['type'] = 'overall'
+        liwc['type'] = 'liwc'
+        return self._log_and_store('rq13_anatomy_of_isolation', pd.concat([overall, liwc]))
+    
     # =========================================================================
-    # THEME 6: POWER DYNAMICS (The "Smart" Analysis)
+    # THEME 6: POWER DYNAMICS
     # =========================================================================
-
+    
     def rq14_punching_bag_index(self) -> pd.DataFrame:
-        """RQ14: The Punching Bag Index (Net Toxicity Flow)."""
-        print("RQ14: The Punching Bag Index (Net Toxicity Flow)")
+        print("RQ14: The Punching Bag Index")
         
         neg_links = self.df_links[self.df_links['LINK_SENTIMENT'] == -1]
         
@@ -555,11 +546,9 @@ class ResearchQuestions:
         
         print("\nTop 5 'Bullies' (Export Hate, Don't Take It):")
         print(active[['hate_import', 'hate_export', 'net_toxicity_flow']].tail(5).sort_values('net_toxicity_flow', ascending=False).to_string())
-        print()
-        return active
+        return self._log_and_store('rq14_punching_bag_index', active)
 
     def rq15_mainstream_curse(self) -> pd.DataFrame:
-        """RQ15: The Mainstream Curse (Power vs Toxicity)."""
         print("RQ15: The Mainstream Curse (Correlation: Power vs Toxicity)")
         
         df = self.df_final[self.df_final['total_links'] > 50].copy()
@@ -573,40 +562,38 @@ class ResearchQuestions:
         for p_metric in power_metrics:
             for t_metric in tox_metrics:
                 if p_metric in df.columns and t_metric in df.columns:
-                    corr, p = stats.spearmanr(df[p_metric], df[t_metric])
-                    res.append({
-                        'Power_Metric': p_metric,
-                        'Toxicity_Metric': t_metric,
-                        'Correlation': corr,
-                        'P_Value': p,
-                        'Verdict': "Power breeds Toxicity" if corr > 0.1 else "No Curse"
-                    })
+                    if df[p_metric].std() > 0 and df[t_metric].std() > 0:
+                        corr, p = stats.spearmanr(df[p_metric], df[t_metric])
+                        
+                        if not math.isnan(corr):
+                            res.append({
+                                'Power_Metric': p_metric,
+                                'Toxicity_Metric': t_metric,
+                                'Correlation': corr,
+                                'P_Value': p,
+                                'Verdict': "Power breeds Toxicity" if corr > 0.1 else "No Curse"
+                            })
                     
         df_res = pd.DataFrame(res)
         print(df_res.to_string(index=False))
-        print()
-        return df_res
+        return self._log_and_store('rq15_mainstream_curse', df_res)
 
     def rq16_power_formula(self) -> pd.DataFrame:
-        """
-        RQ16: The Power Formula (What predicts PageRank?).
-        Scientific: Scans ALL features.
-        """
         print("RQ16: The Power Formula (What predicts PageRank?)")
         
         df = self.df_final[self.df_final['total_links'] > 50].copy()
-        
         overall, liwc = self._scan_correlations(df, 'pagerank', exclude_cols=['pagerank'])
         
         print("Top 10 OVERALL Predictors of Power:")
         print(overall[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
         print("\nTop 10 LIWC Predictors of Power:")
         print(liwc[['Feature', 'Correlation', 'P_Value']].to_string(index=False))
-        print()
-        return overall
+
+        overall['type'] = 'overall'
+        liwc['type'] = 'liwc'
+        return self._log_and_store('rq16_power_formula', pd.concat([overall, liwc]))
 
     def rq17_david_vs_goliath(self) -> Dict:
-        """RQ17: David vs. Goliath (Asymmetric Warfare)."""
         print("RQ17: David vs. Goliath (Power Dynamics of Attacks)")
         
         pr_map = self.df_final.set_index('subreddit')['pagerank'].to_dict()
@@ -627,40 +614,45 @@ class ResearchQuestions:
         
         verdict = "Insurgency (Punching Up)" if insurgency > bullying else "Bullying (Punching Down)"
         print(f"  VERDICT: {verdict}.")
-        print()
-        return {'bullying_pct': bullying/total, 'insurgency_pct': insurgency/total}
+        
+        result_dict = {'total_attacks': total, 'bullying_pct': bullying/total, 'insurgency_pct': insurgency/total, 'verdict': verdict}
+        self.all_rq_results['rq17_david_vs_goliath_raw'] = valid # Store raw for animation JSON
+        return self._log_and_store('rq17_david_vs_goliath', result_dict)
     
     def rq18_toxicity_contagion(self) -> pd.DataFrame:
-        """RQ18: The Contagion Hypothesis (Does receiving hate make you hateful?)."""
         print("RQ18: The Contagion Hypothesis (Cycle of Violence)")
         
         df = self.df_final[self.df_final['total_links'] > 50].copy()
         
-        # We look at the correlation between receiving negative links and sending them
-        corr, p = stats.spearmanr(df['neg_in_ratio'], df['neg_out_ratio'])
+        if df['neg_in_ratio'].std() == 0 or df['neg_out_ratio'].std() == 0:
+            corr, p = np.nan, np.nan
+        else:
+            corr, p = stats.spearmanr(df['neg_in_ratio'], df['neg_out_ratio'])
         
         print(f"  N={len(df):,}")
-        print(f"  Correlation between In-Hate and Out-Hate: {corr:.4f} (p={p:.6e})")
         
-        verdict = "Infectious (Hate breeds Hate)" if corr > 0.3 else "Absorptive (Victims don't reflect)"
+        if not math.isnan(corr):
+            print(f"  Correlation between In-Hate and Out-Hate: {corr:.4f} (p={p:.6e})")
+            verdict = "Infectious (Hate breeds Hate)" if corr > 0.3 else "Absorptive (Victims don't reflect)"
+        else:
+            print("  Correlation is NaN (Insufficient variance).")
+            verdict = "N/A"
+        
         print(f"  VERDICT: {verdict}")
-        print()
-        return pd.DataFrame([{'correlation': corr, 'p_value': p, 'verdict': verdict}])
+        result_df = pd.DataFrame([{'correlation': corr, 'p_value': p, 'verdict': verdict}])
+        return self._log_and_store('rq18_toxicity_contagion', result_df)
 
     def rq19_critics_vs_trolls(self) -> pd.DataFrame:
-        """RQ19: Critics vs. Trolls (The Intellectual vs Emotional Negative Link)."""
         print("RQ19: Critics vs. Trolls (Types of Negativity by Cluster)")
         
-        # Filter for negative links only
         neg_links = self.df_links[self.df_links['LINK_SENTIMENT'] == -1].copy()
-        
-        # Map clusters
         sub_map = self.df_final.set_index('subreddit')['topic_cluster_label'].to_dict()
         neg_links['src_cluster'] = neg_links['SOURCE_SUBREDDIT'].map(sub_map)
                 
-        if 'LIWC_Cause' not in neg_links.columns:
-            print("  Missing LIWC columns in link data. Skipping.")
-            return pd.DataFrame()
+        required_liwc = ['LIWC_Cause', 'LIWC_Insight', 'LIWC_Swear', 'LIWC_Anger']
+        if not all(col in neg_links.columns for col in required_liwc):
+            print(f"  Missing LIWC columns: {required_liwc}. Skipping.")
+            return self._log_and_store('rq19_critics_vs_trolls', {})
 
         neg_links['critic_score'] = neg_links['LIWC_Cause'] + neg_links['LIWC_Insight']
         neg_links['troll_score'] = neg_links['LIWC_Swear'] + neg_links['LIWC_Anger']
@@ -674,22 +666,26 @@ class ResearchQuestions:
         
         print("\nTop 5 'Critic' Clusters (Logic/Insight in Negative Links):")
         print(grouped.sort_values('critic_score', ascending=False).head(5)[['troll_score', 'critic_score']].to_string())
-        print()
-        return grouped
-    
+        return self._log_and_store('rq19_critics_vs_trolls', grouped)
 
     def run_all(self) -> None:
         """Run the full consolidated analysis pipeline."""
         print("STATISTICAL ANALYSIS: RESEARCH QUESTIONS\n")
         self.load_data()
         
-        # Theme 1-4
+        # Theme 1
         self.rq1a_analytical_bridges()
         self.rq1b_role_patterns()
+        
+        # Theme 2
         self.rq2a_emotion_dominance()
         self.rq2b_asymmetry_analysis()
+        
+        # Theme 3
         self.rq3a_similarity_sentiment()
         self.rq3b_ideological_neighbors()
+        
+        # Theme 4
         self.rq4a_certainty_insularity()
         self.rq4b_semantic_structural_interaction()
         
@@ -714,9 +710,8 @@ class ResearchQuestions:
         
         print("\nALL ANALYSES COMPLETE")
 
-def run_research_questions(data_dir: str = "data/processed") -> None:
-    rq = ResearchQuestions(data_dir)
-    rq.run_all()
-
 if __name__ == "__main__":
-    run_research_questions()
+    rq = ResearchQuestions(data_dir='data/processed')
+    
+    rq.run_all() 
+    
