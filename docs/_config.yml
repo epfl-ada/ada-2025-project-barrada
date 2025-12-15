@@ -1,9 +1,32 @@
 theme: jekyll-theme-minimal
-title: "Reddit's Invisible Brain: The Web Hidden Beneath the Threads"
-description: "A template website for ADA"
+title: "Reddit's Invisible Brain"
+description: "858,488 hyperlinks. 67,180 communities. One invisible war."
 show_downloads: false
+
+# Single-page navigation with anchor links
 navigation:
-  - title: Home
-    url: /
-  - title: Example
-    url: /example
+  - title: "The Insurgency"
+    url: "#insurgency"
+  - title: "Echo Chambers"
+    url: "#echo-chambers"
+  - title: "The Power Game"
+    url: "#power"
+  - title: "Methods"
+    url: "#methods"
+  - title: "Team"
+    url: "#team"
+
+# Your team
+team:
+  - name: "Amer Lakrami"
+  - name: "Hamza Barrada"
+  - name: "Omar El Khyari"
+  - name: "Omar Zakariya"
+  - name: "Cesar Illanes"
+
+# Color scheme (you can change these)
+colors:
+  critic: "#e74c3c"
+  supportive: "#2ecc71"
+  influential: "#3498db"
+  controversial: "#f39c12"

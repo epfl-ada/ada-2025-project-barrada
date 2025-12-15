@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Synapses of Reddit</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE LAYOUT --- */
+        body {
+            font-family: "IBM Plex Sans", sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-family: Georgia, serif;
+            color: #2c3e50;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        #chart-container {
+            position: relative;
+            width: 950px;
+            height: 950px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- SVG STYLES --- */
+        
+        /* Links (The Synapses) */
+        .link {
+            fill: none;
+            stroke-opacity: 0.15;
+            stroke-width: 1px;
+            transition: stroke-opacity 0.4s, stroke-width 0.4s;
+            mix-blend-mode: multiply; /* Makes overlapping lines darker/richer */
+        }
+
+        .link.positive { stroke: #27ae60; } /* Green */
+        .link.negative { stroke: #c0392b; } /* Red */
+
+        /* Nodes (The Neurons) */
+        .node circle {
+            stroke: #fff;
+            stroke-width: 1.5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .node text {
+            font-family: "IBM Plex Sans", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            fill: #444;
+            text-shadow: 0 2px 4px #fff, 0 -2px 4px #fff, 2px 0 4px #fff, -2px 0 4px #fff;
+            pointer-events: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        /* Role Arcs (The Brain Regions) */
+        .role-arc {
+            fill-opacity: 0.1;
+            transition: fill-opacity 0.3s;
+        }
+        .role-arc-label {
+            font-family: "IBM Plex Sans", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            fill: #999;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            pointer-events: none;
+            text-shadow: 0 2px 5px #fff;
+        }
+
+        /* --- INTERACTION STATES --- */
+        
+        /* Faded State (Background) */
+        .faded { opacity: 0.05 !important; }
+        
+        /* Active/Hover State */
+        .node.active circle {
+            stroke: #333;
+            stroke-width: 3px;
+            r: 8px !important;
+        }
+        .node.active text {
+            opacity: 1 !important;
+            font-size: 13px !important;
+            fill: #000 !important;
+        }
+
+        .link.active {
+            stroke-opacity: 0.8 !important;
+            stroke-width: 2.5px !important;
+        }
+
+        /* --- LEGEND --- */
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+        .legend-section { margin-bottom: 12px; }
+        .legend-title { font-weight: bold; margin-bottom: 6px; color: #333; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .legend-item { display: flex; align-items: center; margin-bottom: 4px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+        .line { width: 25px; height: 3px; margin-right: 8px; border-radius: 2px; }
+
+        /* --- TOOLTIP --- */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            max-width: 250px;
+            line-height: 1.4;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Fig 7. The Synapses of Influence</h2>
+    <div class="subtitle">
+        Visualizing the nervous system of Reddit. Clusters are grouped by <strong>Social Role</strong>.
+        <br>Lines represent hyperlinks: <span style="color:#27ae60; font-weight:bold;">Green = Support</span>, 
+        <span style="color:#c0392b; font-weight:bold;">Red = Conflict</span>. 
+        Hover to trace pathways; Click to lock focus.
+    </div>
+
+    <div id="chart-container"></div>
+
+    <div class="legend">
+        <div class="legend-section">
+            <div class="legend-title">Connection Type</div>
+            <div class="legend-item"><div class="line" style="background:#27ae60;"></div>Positive Flow (Support)</div>
+            <div class="legend-item"><div class="line" style="background:#c0392b;"></div>Negative Flow (Conflict)</div>
+        </div>
+        <div class="legend-section">
+            <div class="legend-title">Cluster Role</div>
+            <div class="legend-item"><div class="dot" style="background:#f1c40f;"></div>Influential (Power)</div>
+            <div class="legend-item"><div class="dot" style="background:#27ae60;"></div>Supportive (Help)</div>
+            <div class="legend-item"><div class="dot" style="background:#8e44ad;"></div>Controversial (Conflict)</div>
+            <div class="legend-item"><div class="dot" style="background:#c0392b;"></div>Critical (Attack)</div>
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        async function init() {
+            const width = 950;
+            const height = 950;
+            const radius = width / 2;
+            const innerRadius = radius - 140; // Space for labels and role arcs
+
+            // COLORS
+            const roleColors = {
+                "Influential": "#f1c40f",
+                "Supportive": "#27ae60",
+                "Controversial": "#8e44ad",
+                "Critical": "#c0392b",
+                "Neutral": "#bdc3c7"
+            };
+
+            const svg = d3.select("#chart-container").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [-width / 2, -height / 2, width, height])
+                .append("g");
+
+            try {
+                // LOAD DATA
+                const [nodes, edges] = await Promise.all([
+                    d3.json('../data/nodes.json'),
+                    d3.json('../data/edges.json')
+                ]);
+
+                // 1. DATA PROCESSING: HIERARCHY
+                // We group clusters by their DOMINANT ROLE for the circle sectors
+                const hierarchyData = {
+                    name: "root",
+                    children: [
+                        { name: "Influential", children: [] },
+                        { name: "Supportive", children: [] },
+                        { name: "Controversial", children: [] },
+                        { name: "Critical", children: [] },
+                        { name: "Neutral", children: [] }
+                    ]
+                };
+
+                const roleIdx = { "Influential":0, "Supportive":1, "Controversial":2, "Critical":3, "Neutral":4 };
+
+                // Map nodes to hierarchy
+                const nodeMap = new Map();
+                nodes.forEach(n => {
+                    // Calculate dominant role
+                    const r = [
+                        {id: "Influential", val: n.pct_influential},
+                        {id: "Supportive", val: n.pct_supportive},
+                        {id: "Controversial", val: n.pct_controversial},
+                        {id: "Critical", val: n.pct_critical}
+                    ].sort((a,b) => b.val - a.val)[0];
+                    
+                    // Threshold: Must have at least 5% in that role, else Neutral
+                    const role = r.val > 5 ? r.id : "Neutral";
+                    
+                    const nodeObj = {
+                        name: n.name,
+                        role: role,
+                        civility: 100 - n.internal_negativity,
+                        size: n.size,
+                        ...n
+                    };
+                    
+                    hierarchyData.children[roleIdx[role]].children.push(nodeObj);
+                });
+
+                // Remove empty categories
+                hierarchyData.children = hierarchyData.children.filter(c => c.children.length > 0);
+
+                // 2. LAYOUT: CLUSTER (Radial)
+                const cluster = d3.cluster()
+                    .size([360, innerRadius]);
+
+                const root = d3.hierarchy(hierarchyData)
+                    .sort((a, b) => a.data.name.localeCompare(b.data.name)); // Alphabetical within role
+
+                cluster(root);
+
+                // Map leaves for link lookup
+                const leaves = root.leaves();
+                leaves.forEach(l => nodeMap.set(l.data.name, l));
+
+                // 3. LAYOUT: LINKS (Bundle)
+                // Filter small links to prevent browser crash
+                const bundleLinks = edges
+                    .filter(e => e.value > 30) 
+                    .map(e => {
+                        const source = nodeMap.get(e.source);
+                        const target = nodeMap.get(e.target);
+                        if (source && target) {
+                            return {
+                                source: source,
+                                target: target,
+                                sentiment: e.sentiment,
+                                value: e.value
+                            };
+                        }
+                    }).filter(d => d);
+
+                // Line generator with BUNDLING (Beta = 0.85 makes them tight like nerves)
+                const line = d3.lineRadial()
+                    .curve(d3.curveBundle.beta(0.85))
+                    .radius(d => d.y)
+                    .angle(d => d.x / 180 * Math.PI);
+
+                // 4. DRAWING
+
+                // A. Role Arcs (Background Sectors)
+                // We need to calculate start/end angles for each Role parent
+                const roleArcs = root.children.map(child => {
+                    const childLeaves = child.leaves();
+                    return {
+                        name: child.data.name,
+                        startAngle: childLeaves[0].x,
+                        endAngle: childLeaves[childLeaves.length-1].x,
+                        color: roleColors[child.data.name]
+                    };
+                });
+
+                const arcGen = d3.arc()
+                    .innerRadius(innerRadius + 20)
+                    .outerRadius(innerRadius + 40)
+                    .startAngle(d => (d.startAngle - 1) * Math.PI / 180) // Slight padding
+                    .endAngle(d => (d.endAngle + 1) * Math.PI / 180);
+
+                const arcs = svg.append("g").selectAll("path")
+                    .data(roleArcs)
+                    .join("path")
+                    .attr("d", arcGen)
+                    .attr("class", "role-arc")
+                    .style("fill", d => d.color);
+
+                // Role Labels
+                svg.append("g").selectAll("text")
+                    .data(roleArcs)
+                    .join("text")
+                    .attr("class", "role-arc-label")
+                    .attr("dy", -15) // Push outward
+                    .append("textPath")
+                    .attr("xlink:href", (d, i) => {
+                        const id = "arcPath" + i;
+                        // Invisible arc for text path
+                        svg.append("path")
+                            .attr("id", id)
+                            .attr("d", arcGen(d))
+                            .style("fill", "none");
+                        return "#" + id;
+                    })
+                    .style("text-anchor", "middle")
+                    .attr("startOffset", "25%")
+                    .text(d => d.name)
+                    .style("fill", d => d.color);
+
+                // B. Links
+                const linkGroup = svg.append("g").selectAll("path")
+                    .data(bundleLinks)
+                    .join("path")
+                    .attr("class", d => d.sentiment < 0.6 ? "link negative" : "link positive")
+                    .attr("d", d => line(d.source.path(d.target)))
+                    .style("stroke-width", d => Math.max(0.5, Math.min(d.value / 400, 3)));
+
+                // C. Nodes
+                const nodeGroup = svg.append("g").selectAll("g")
+                    .data(leaves)
+                    .join("g")
+                    .attr("class", "node")
+                    .attr("transform", d => `rotate(${d.x - 90}) translate(${d.y},0)`)
+                    .on("mouseover", mouseover)
+                    .on("mouseout", mouseout)
+                    .on("click", clickLock);
+
+                nodeGroup.append("circle")
+                    .attr("r", 4)
+                    .style("fill", d => roleColors[d.data.role]);
+
+                nodeGroup.append("text")
+                    .attr("dy", "0.31em")
+                    .attr("x", d => d.x < 180 ? 10 : -10)
+                    .attr("text-anchor", d => d.x < 180 ? "start" : "end")
+                    .attr("transform", d => d.x >= 180 ? "rotate(180)" : null)
+                    .text(d => d.data.name);
+
+                // --- INTERACTION LOGIC ---
+                let isLocked = false;
+
+                function mouseover(event, d) {
+                    if (isLocked) return;
+                    highlight(d);
+                }
+
+                function mouseout() {
+                    if (isLocked) return;
+                    reset();
+                }
+
+                function clickLock(event, d) {
+                    event.stopPropagation();
+                    
+                    if (isLocked) {
+                        // If already locked, reset first
+                        reset();
+                        // If clicking same node, unlock. If different, highlight new one.
+                        if (d3.select(this).classed("clicked-node")) {
+                            isLocked = false;
+                            return;
+                        }
+                    }
+                    
+                    isLocked = true;
+                    highlight(d);
+                    d3.select(this).classed("clicked-node", true); // Mark as active
+                }
+
+                // Global click to unlock
+                d3.select("body").on("click", () => {
+                    if (isLocked) {
+                        isLocked = false;
+                        reset();
+                    }
+                });
+
+                // --- HELPER FUNCTIONS ---
+
+                function highlight(d) {
+                    // Fade Everything
+                    nodeGroup.classed("faded", true);
+                    linkGroup.classed("faded", true);
+                    d3.selectAll(".role-arc").classed("faded", true);
+
+                    // Unfade Current Node
+                    // Find the visual element corresponding to data 'd'
+                    nodeGroup.filter(n => n === d)
+                        .classed("faded", false)
+                        .classed("active", true);
+
+                    // Find Connected Links & Neighbors
+                    const connected = new Set();
+                    connected.add(d.data.name);
+
+                    linkGroup.filter(l => l.source === d || l.target === d)
+                        .classed("faded", false)
+                        .classed("active", true)
+                        .each(l => {
+                            connected.add(l.source.data.name);
+                            connected.add(l.target.data.name);
+                        })
+                        .raise(); // Bring lines to front
+
+                    // Unfade Neighbors
+                    nodeGroup.filter(n => connected.has(n.data.name))
+                        .classed("faded", false)
+                        .classed("active", true);
+                        
+                    // Tooltip
+                    const tooltip = d3.select("#tooltip");
+                    tooltip.style("opacity", 1)
+                        .html(`<strong>${d.data.name}</strong><br>
+                               Role: ${d.data.role}<br>
+                               Cluster Size: ${d.data.size}`)
+                        .style("left", (event.pageX + 15) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                }
+
+                function reset() {
+                    nodeGroup.classed("faded", false).classed("active", false).classed("clicked-node", false);
+                    linkGroup.classed("faded", false).classed("active", false);
+                    d3.selectAll(".role-arc").classed("faded", false);
+                    d3.select("#tooltip").style("opacity", 0);
+                }
+
+            } catch (e) {
+                console.error(e);
+                document.body.innerHTML = `<h3 style='color:red'>Error loading data: ${e.message}</h3>`;
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

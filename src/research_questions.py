@@ -53,13 +53,13 @@ class ResearchQuestions:
         
         try:
             self.df_final = pd.read_csv(self.data_dir / "final_dataset.csv")
-            print(f"  - Loaded final_dataset.csv: {len(self.df_final):,} subreddits")
+            print(f"Loaded final_dataset.csv: {len(self.df_final):,} subreddits")
             
             self.df_links = pd.read_csv(self.data_dir / "combined_hyperlinks.csv")
-            print(f"  - Loaded combined_hyperlinks.csv: {len(self.df_links):,} links")
+            print(f"Loaded combined_hyperlinks.csv: {len(self.df_links):,} links")
             
             self.df_cluster = pd.read_csv(self.data_dir / "cluster_master_dataset.csv")
-            print(f"  - Loaded cluster_master_dataset.csv: {len(self.df_cluster)} clusters")
+            print(f"Loaded cluster_master_dataset.csv: {len(self.df_cluster)} clusters")
             
             if 'cluster_id' in self.df_cluster.columns:
                 self.df_cluster['cluster_id'] = self.df_cluster['cluster_id'].astype(str)
