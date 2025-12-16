@@ -1,0 +1,330 @@
+---
+layout: default
+title: Reddit Invisible Brain
+permalink: /
+---
+<section class="hero hero-top grain" id="top">
+  <div class="hero-background" aria-hidden="true">
+    <div class="hero-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow hero-glow--primary animate-pulse-glow"></div>
+    <div class="hero-glow hero-glow--accent animate-pulse-glow"></div>
+  </div>
+  <div class="hero-inner">
+    <h1 class="hero-title animate-fade-up delay-1">
+      The Hidden Architecture of <span class="text-gradient">Reddit Conflict</span>
+    </h1>
+    <p class="hero-subtitle animate-fade-up delay-2">
+      An analytical deep-dive into
+      <span class="data-highlight"> 858,488 </span> hyperlinks across
+      <span class="data-highlight">67,180 </span> subreddits.
+    </p>
+    <p class="hero-description animate-fade-up delay-3">
+      What does Reddit's collective mind look like when one question touches every community? Follow the data as it fans out across roles, subreddits, and emotional beats.
+    </p>
+    <div class="hero-actions animate-fade-up delay-4">
+      <a class="hero-cta" href="#psychology">
+        Begin the story
+        <span class="hero-cta-icon">↓</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-indicator animate-bounce" aria-hidden="true"><span></span></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<section class="story-chapter" id="intro">  
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center"> Introduction </h2>
+    </div>
+
+    <div class="split-layout">
+      <div class="text-block">
+        <p class="lead quote">
+          Reddit is a place where you can find the cure for a rare disease in one thread, and a heated debate about the aerodynamics of a lobster in the next.
+        </p>
+        <p>
+          To the outsider, Reddit looks like a mess. It is a cacophony of 57 million daily active users screaming into the void. It feels random. It feels chaotic.
+        </p>
+        <p>
+          But if you look past the memes and the arguments, <strong>is there a hidden order?</strong>
+        </p>
+        <p>
+          We didn't just read the threads; we mapped the invisible wires connecting them. By analyzing <strong>858,488 hyperlinks</strong>, we discovered that Reddit isn't just a collection of forums—it is a single, living brain with its own geography, psychology, and wars.
+        </p>
+      </div>
+
+      <div class="viz-container">
+        <figure class="media-frame rotate-slight">
+          <img src="assets/img/into_reddit_fighting.png" alt="Screenshot of r/Place chaos or a funny thread" />
+          <figcaption class="caption-center">
+            <strong> The Chaos.</strong> <br>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <p>
+      We often think of subreddits as isolated islands. In reality, they travel in clusters. By grouping every participant into coordination blocs, we can see which coalitions launch attacks, which absorb them, and how quickly those assaults ripple outward.
+    </p>
+  </div>
+</section>
+
+<section class="story-chapter" id="clusters">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title  text-center">How We Clustered the Chaos</h2>
+    </div>
+    <p>
+      To map the chaos, we analyzed the <strong>semantic DNA</strong> of over 51,000 subreddits using high-dimensional embedding vectors. We applied <strong>K-Means Clustering (K=40)</strong> to these normalized vectors, mathematically grouping communities not by what they claim to be, but by how their users actually interact and overlap.
+    </p>
+    <p>
+      However, algorithms struggle with irony. To ensure accuracy, we built a <strong>manual override system</strong> to reclassify edge cases, like distinguishing geopolitical news forums from the adult content subreddits they parody. The result is the "Digital Archipelago": 40 distinct, validated continents of thought that serve as the board for our analysis.
+    </p>
+    <div class="viz-frame" aria-label="Cluster network visualization">
+      <iframe
+        src="{{ '/assets/visualizations/network.html' | relative_url }}"
+        height="600"
+        loading="lazy"
+        title="Cluster attacks visualization"
+      ></iframe>
+    </div>
+    <p>
+      The first thing you notice about this network is the color. It is overwhelmingly green. Most clusters are peaceful havens like <em>Lifestyle</em>, <em>Music</em>, and <em>Movies</em>.
+    </p>
+    <p>
+      The red links are concentrated arteries of conflict between hubs like <em>Politics</em> and <em>Meta-Commentary</em>. Conflict is not random&mdash;it is routed by a few blocs.
+    </p>
+    <p>
+      Question: if the links aren’t random, who drives them? The answer lives in the roles inside each cluster.
+    </p>
+
+  </div>
+</section>
+
+<section class="story-chapter" id="roles">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Four Roles Inside Every Cluster</h2>
+      <p>
+        Once the clusters are mapped, we can profile the voices driving them. Each bloc leans toward four archetypes—
+        Influential, Controversial, Supportive, and Critics—that shape how attacks and defenses unfold.
+      </p>
+    </div>
+
+    <div class="roles-layout">
+      <div>
+        <div class="viz-frame" aria-label="Role composition visualization">
+          <iframe
+            src="{{ '/assets/visualizations/roles_pie.html' | relative_url }}"
+            height="560"
+            loading="lazy"
+            title="Role composition visualization"
+          ></iframe>
+        </div>
+      </div>
+      <div>
+            <div class="text-block">
+              <p style="margin-top: 3rem;"><strong>The Critics (594 subreddits, 0.9%)</strong> The attack dogs of Reddit. Anger is 3.3× higher than Influential subs (0.022 vs 0.007) and negemo is 0.036. These are confident takedown artists like r/SubredditDrama, r/Drama, r/ShitRedditSays.</p>
+              <p><strong>The Controversial (454 subreddits, 0.7%)</strong> Lightning rods for conflict. Anger at 0.013 and negemo 0.023 (67% of Critics). They don’t always start fights, but fights find them (r/The_Donald, r/KotakuInAction, r/conspiracy).</p>
+              <p><strong>The Influential (8,923 subreddits, 13.3%)</strong> The establishment. Highest positivity (0.026) and lowest anger (0.007). Power here is civil—think r/AskReddit, r/news, r/todayilearned. Low certainty (0.007) hints at open-mindedness.</p>
+              <p><strong>The Supportive (6,635 subreddits, 9.9%)</strong> The helpers. Positivity 0.026 with 13% lower negativity than Influential (0.012 vs 0.013). Lowest anger (0.005). Empathy-first spaces like r/relationship_advice, r/Depression, r/RandomKindness.</p>
+            </div>
+
+      </div>
+    </div>
+    <p style="margin-top: 4rem;">
+      Only 1.6% of subreddits sit in conflict roles (Critical + Controversial). Toxicity is concentrated in a few specialist communities; most of Reddit is neutral or supportive.
+      </p>
+      <p>
+      Let’s explore the top clusters for each archetype and see whether specific topics dominate their behavior.
+    </p>
+    <div class="viz-frame" aria-label="Role composition visualization">
+        <iframe
+          src="{{ '/assets/visualizations/top_roles.html' | relative_url }}"
+          height="560"
+          loading="lazy"
+          title="Role composition visualization"
+        ></iframe>
+    </div>
+    <p style="margin-top: 3rem;"> 
+      The Influential are the largest group, spanning broad-interest hubs like <strong>News</strong> and <strong>AskReddit</strong>.
+      The Supportive cluster is dominated by mental health and advice forums, reflecting their empathetic nature.
+      Controversial roles are often found in politically charged or meta-commentary communities.
+      Critics congregate in drama-centric and politics subreddits, where conflict is a central theme.
+    </p>
+    <p>
+      who does the critical attacks do they attack outside their own cluster or inside?
+    </p>
+  </div>
+</section>
+
+<section class="story-chapter" id="echo">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Echo Chambers & Isolation</h2>
+    </div>
+
+    <h3 class="text-center">Do comfort zones make Reddit meaner?</h3>
+
+    <p>
+      The default fear is simple: if communities stay inside their own bubbles, they become hostile to outsiders.
+      So we start with the most direct test: compare how positive links are when subreddits interact
+      <em>within</em> the same topic cluster versus <em>across</em> clusters.
+    </p>
+
+    <!-- Quick results table -->
+    <div style="display:flex;justify-content:center;margin:1rem 0;">
+      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Interaction type</th>
+            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Positive links</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">Within-cluster</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>93.6%</strong></td>
+          </tr>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">Cross-cluster</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>88.9%</strong></td>
+          </tr>
+          <tr>
+            <td style="padding:10px;">Homophily bonus</td>
+            <td style="padding:10px;text-align:right;"><strong>+4.7%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="viz-frame" aria-label="Echo chamber visualization">
+      <iframe
+        src="{{ '/assets/visualizations/echo.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Echo chambers visualization"
+      ></iframe>
+    </div>
+
+    <p>
+      Yes, Reddit has comfort zones: communities are slightly kinder to their own “neighbors”.
+      But the doom story doesn’t survive contact with the data: even across clusters, links are positive
+      almost 9 times out of 10. Echo effects exist, but they’re not automatically toxic.
+      That forces the next question: <strong>what actually creates isolation?</strong>
+    </p>
+
+    <h3 class="text-center">The Certainty Trap (that doesn’t exist)</h3>
+
+    <p>
+      A common assumption is that isolation is ideological: confident, dogmatic communities should form tighter bubbles.
+      We tested this by correlating a linguistic certainty score (certainty minus tentativeness) with cluster insularity.
+      If the story were true, the relationship should be strong and significant.
+    </p>
+
+    <!-- Printed stats in a small grid -->
+    <div style="display:flex;justify-content:center;margin:1rem 0;">
+      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Test</th>
+            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">Spearman correlation (certainty vs insularity)</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>r = 0.074</strong></td>
+          </tr>
+          <tr>
+            <td style="padding:10px;">Significance</td>
+            <td style="padding:10px;text-align:right;"><strong>p = 0.65</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      The hypothesis fails. The most insular clusters are not especially “certain” in their language.
+      Isolation here is not a psychological defect; it’s usually structural and functional
+      (language barriers, niche specificity, platform rules, self-sufficiency).
+      So if isolation isn’t driven by dogma, we need a stricter definition of an “echo chamber”.
+    </p>
+
+    <h3 class="text-center">The Purity Principle</h3>
+
+    <p>
+      We define echo chambers structurally, not emotionally. Our purity metric measures how tightly
+      a semantic topic cluster aligns with a single network community. A perfect score (1.0) would mean:
+      “this topic doesn’t just share interests — it behaves like a sealed ecosystem”.
+    </p>
+
+    <!-- Top echo chambers table -->
+    <div style="display:flex;justify-content:center;margin:1rem 0;">
+      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Top echo chambers (purity)</th>
+            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Purity</th>
+            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">n subreddits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">Japanese</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>91.8%</strong></td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">146</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">NSFW</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>78.1%</strong></td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">728</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">Music</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>73.2%</strong></td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">325</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #eee;">My Little Pony</td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>72.5%</strong></td>
+            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">74</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;">Football</td>
+            <td style="padding:10px;text-align:right;"><strong>71.8%</strong></td>
+            <td style="padding:10px;text-align:right;">214</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      These are real echo chambers by structure. But here’s the part people usually get wrong:
+      <strong>high purity doesn’t automatically mean toxicity.</strong> Japanese is the cleanest example —
+      it’s extremely pure, yet one of the most internally civil clusters (only <strong>0.19%</strong> internal negativity).
+      Isolation can be peaceful when it’s built on shared interest rather than shared outrage.
+    </p>
+
+    <p>
+      So the real problem isn’t “echo chambers exist”. The real problem is:
+      <strong>what type of isolation is it?</strong>
+    </p>
+  </div>
+</section>
+
+
+
+<section class="story-section">
+  <div class="section-inner">
+    <p class="story-outro">
+      Each visualization is live-linked to the underlying dataset so you can rerun the story with your own
+      inputs. Feed it a different spark and the invisible brain reshapes itself in minutes.
+      <a href="{{ '/about/' | relative_url }}">Learn more about the methodology &rarr;</a>
+    </p>
+  </div>
+</section>

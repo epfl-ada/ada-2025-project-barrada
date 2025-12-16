@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Network Graph</title>
+    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'IBM Plex Sans', sans-serif; 
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        #network-container { 
+            width: 100vw; 
+            height: 100vh; 
+            position: relative;
+        }
+
+        /* --- CONTROLS & LEGEND --- */
+        .controls {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 10px; z-index: 10;
+            background: rgba(255, 255, 255, 0.98); padding: 12px 20px;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .filter-btn {
+            padding: 8px 16px; background: #fff; border: 2px solid #e0e0e0;
+            border-radius: 6px; font-family: inherit; font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .filter-btn:hover { border-color: #ff4500; background: #fff5f2; }
+        .filter-btn.active { background: #ff4500; border-color: #ff4500; color: #fff; }
+
+        .legend {
+            position: absolute; bottom: 20px; left: 20px;
+            background: rgba(255, 255, 255, 0.98); padding: 16px 20px;
+            border-radius: 8px; border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); z-index: 10;
+        }
+        .legend h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; color: #6a6a6a; font-weight: 700; }
+        .legend-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+        .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+        /* --- INFO PANEL --- */
+        .info-panel {
+            position: absolute; top: 20px; right: 20px; width: 320px;
+            background: rgba(255, 255, 255, 0.98); border: 1px solid #e0e0e0;
+            border-radius: 12px; padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: none; max-height: 90vh; overflow-y: auto;
+        }
+        .info-panel.active { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        .panel-header { border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 15px; }
+        .info-panel h3 { margin: 0; font-size: 20px; color: #1a1a1a; line-height: 1.2; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #f8f9fa; padding: 10px; border-radius: 8px; }
+        .stat-label { display: block; font-size: 11px; color: #6a6a6a; margin-bottom: 4px; font-weight: 600; }
+        .stat-value { display: block; font-size: 14px; font-weight: 700; color: #1a1a1a; }
+
+        /* Role Tag Styles */
+        .role-tag { padding: 4px 8px; border-radius: 4px; font-size: 10px; text-transform: uppercase; color: white; background: #999; display: inline-block;}
+        .role-influential { background: #f1c40f; color: #2c3e50; }
+        .role-supportive { background: #27ae60; }
+        .role-controversial { background: #8e44ad; }
+        .role-critical { background: #c0392b; }
+        .role-neutral { background: #bdc3c7; color: #333; }
+
+        /* Top Subreddits List */
+        .top-subs-container h4 { font-size: 12px; color: #6a6a6a; margin-bottom: 10px; text-transform: uppercase; font-weight: 700;}
+        .top-subs-list { list-style: none; padding: 0; margin-bottom: 20px; }
+        .top-subs-list li { 
+            background: #f0f2f5; margin-bottom: 5px; padding: 6px 10px; 
+            border-radius: 4px; font-size: 12px; font-weight: 500; color: #333; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        
+        .radar-container { height: 180px; margin-top: 10px; }
+
+        /* --- D3 NETWORK STYLES --- */
+        .link { transition: stroke-opacity 0.2s; }
+        
+        /* INCREASED VISIBILITY FOR POSITIVE LINKS */
+        .link.positive { 
+            stroke: #11ec20; 
+            stroke-opacity: 0.4; /* Increased from 0.15 */
+        }
+        .link.neutral { 
+            stroke: #867e7e; 
+            stroke-opacity: 0.15; 
+        }
+        .link.negative { 
+            stroke: #c62828; 
+            stroke-opacity: 0.6; /* Slight reduction to balance green */
+        }
+
+        .node circle { stroke: #fff; stroke-width: 2.5px; cursor: pointer; transition: all 0.3s; }
+        .node text { font-family: 'IBM Plex Sans', sans-serif; fill: #1a1a1a; font-weight: 600; font-size: 11px; pointer-events: none; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+        
+        .faded { opacity: 0.1 !important; }
+        .hidden { display: none !important; }
+        
+        .active-link { 
+            stroke-opacity: 1 !important; 
+            stroke-width: 3px !important; 
+        }
+        .active-node circle { 
+            stroke: #ff4500; 
+            stroke-width: 4px; 
+            filter: drop-shadow(0 0 8px rgba(255, 69, 0, 0.5)); 
+        }
+    </style>
+</head>
+<body>
+
+<div id="network-container">
+    <div class="controls">
+        <button class="filter-btn active" data-filter="all">All Edges</button>
+        <button class="filter-btn" data-filter="negative">Conflicts Only</button>
+        <button class="filter-btn" data-filter="positive">Alliances Only</button>
+        <button class="filter-btn" data-filter="toxic">Toxic Clusters</button>
+    </div>
+    
+    <div class="legend">
+        <h4>Node Color: Civility</h4>
+        <div class="legend-item"><div class="legend-dot" style="background: #11ec20;"></div><span>Civil (&gt;95%)</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #867e7e;"></div><span>Mixed (82-95%)</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background: #c62828;"></div><span>Toxic (&lt;82%)</span></div>
+    </div>
+    
+    <div id="info-panel" class="info-panel">
+        <div class="panel-header">
+            <h3 id="panel-name">Cluster Name</h3>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-label">Dominant Role</span>
+                <span id="panel-role" class="role-tag role-neutral">--</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Size (Subs)</span>
+                <span class="stat-value" id="panel-size">--</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Internal Civility</span>
+                <span class="stat-value" id="panel-civility">--</span>
+            </div>
+             <div class="stat-box">
+                <span class="stat-label">PageRank Score</span>
+                <span class="stat-value" id="panel-pagerank">--</span>
+            </div>
+        </div>
+
+        <div class="top-subs-container">
+            <h4>Top Subreddits</h4>
+            <ul id="panel-top-subs" class="top-subs-list">
+                </ul>
+        </div>
+
+        <div class="radar-container">
+            <canvas id="radarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select("#network-container").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+const g = svg.append("g");
+
+svg.call(d3.zoom()
+    .scaleExtent([0.3, 5])
+    .on("zoom", (e) => g.attr("transform", e.transform)));
+
+let radarChartInstance = null;
+
+Promise.all([
+    d3.json('../data/nodes.json'),
+    d3.json('../data/edges.json')
+]).then(([nodes, edges]) => {
+
+    // --- 1. DATA PROCESSING ---
+    
+    // Scale for node size based on PageRank
+    // Note: PageRank in your data is small (e.g., 1e-05), so we log scale or sqrt it properly
+    const sizeScale = d3.scaleSqrt()
+        .domain(d3.extent(nodes, d => d.pagerank))
+        .range([15, 60]); // Increased base size slightly
+
+    // Color scale based on internal negativity
+    // Low negativity (0-5%) = Green, High (>20%) = Red
+    const nodeColor = chroma.scale(['#11ec20', '#bdc3c7', '#c62828'])
+        .domain([0, 10, 25]).mode('lab');
+
+    // --- 2. FORCE SIMULATION ---
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(edges).id(d => d.name).distance(300)) // Longer distance for clearer view
+        .force("charge", d3.forceManyBody().strength(-1000)) // Stronger repulsion
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collide", d3.forceCollide().radius(d => sizeScale(d.pagerank) + 30));
+
+    // --- 3. DRAWING ---
+
+    const link = g.append("g").selectAll("line").data(edges).enter().append("line")
+        .attr("class", d => {
+            if (d.sentiment > 0.8) return "link positive";
+            if (d.sentiment < 0.6) return "link negative";
+            return "link neutral";
+        })
+        .attr("stroke-width", d => {
+            // Thicker lines for strong sentiments
+            if (d.sentiment < 0.6) return 3; 
+            if (d.sentiment > 0.8) return 2.5;
+            return 1;
+        });
+
+    const node = g.append("g").selectAll("g").data(nodes).enter().append("g")
+        .attr("class", "node")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    node.append("circle")
+        .attr("r", d => sizeScale(d.pagerank))
+        .attr("fill", d => nodeColor(d.internal_negativity).hex());
+
+    node.append("text")
+        .attr("dy", d => sizeScale(d.pagerank) + 14)
+        .attr("text-anchor", "middle")
+        .text(d => d.name);
+
+    // --- 4. INTERACTION ---
+
+    node.on("click", (event, d) => {
+        event.stopPropagation();
+        showPanel(d);
+        highlightConnections(d);
+    });
+
+    svg.on("click", () => {
+        document.getElementById("info-panel").classList.remove("active");
+        resetHighlight();
+    });
+
+    function showPanel(d) {
+        const panel = document.getElementById("info-panel");
+        panel.classList.add("active");
+        
+        // Basic Info
+        document.getElementById("panel-name").innerText = d.name;
+        document.getElementById("panel-size").innerText = d.size ? d.size.toLocaleString() : "--";
+        
+        // Civility (100 - negativity)
+        const civility = (100 - d.internal_negativity);
+        document.getElementById("panel-civility").innerText = civility.toFixed(1) + "%";
+        
+        // PageRank (scientific notation is hard to read, display relative)
+        document.getElementById("panel-pagerank").innerText = (d.pagerank * 10000).toFixed(2);
+
+        // Determine Role
+        // Find the max among the pct_* fields
+        const roles = [
+            { id: 'Influential', val: d.pct_influential, css: 'role-influential' },
+            { id: 'Supportive', val: d.pct_supportive, css: 'role-supportive' },
+            { id: 'Controversial', val: d.pct_controversial, css: 'role-controversial' },
+            { id: 'Critical', val: d.pct_critical, css: 'role-critical' }
+        ];
+        // Sort descending
+        roles.sort((a,b) => b.val - a.val);
+        const topRole = roles[0];
+        
+        const roleEl = document.getElementById("panel-role");
+        roleEl.innerText = topRole.val > 0 ? topRole.id : "Neutral";
+        roleEl.className = "stat-value role-tag " + (topRole.val > 0 ? topRole.css : "role-neutral");
+
+        // Top Subreddits List
+        const listEl = document.getElementById("panel-top-subs");
+        listEl.innerHTML = ""; // Clear existing
+        if (d.top_subreddits && typeof d.top_subreddits === 'string') {
+            const subs = d.top_subreddits.split(',').slice(0, 5); // Take top 5
+            subs.forEach(sub => {
+                const li = document.createElement("li");
+                li.innerText = "r/" + sub.trim();
+                listEl.appendChild(li);
+            });
+        }
+
+        renderRadar(d);
+    }
+
+    function renderRadar(d) {
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        if (radarChartInstance) radarChartInstance.destroy();
+
+        // Normalize LIWC scores for better visualization
+        // These max values are approximate baselines for LIWC
+        const dataValues = [
+            (d.Anger / 0.02) * 100,
+            (d.Negemo / 0.04) * 100,
+            (d.Posemo / 0.06) * 100,
+            (d.Certain / 0.02) * 100,
+            (d.CogMech / 0.10) * 100,
+            (d.Social / 0.10) * 100
+        ].map(v => Math.min(100, Math.max(0, v)));
+
+        radarChartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Anger', 'Negemo', 'Posemo', 'Certainty', 'Cognitive', 'Social'],
+                datasets: [{
+                    label: 'Psychological Profile',
+                    data: dataValues,
+                    backgroundColor: 'rgba(255, 69, 0, 0.2)',
+                    borderColor: '#ff4500',
+                    pointBackgroundColor: '#ff4500',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        ticks: { display: false, max: 100, min: 0 },
+                        pointLabels: { font: { size: 10, weight: '600', family: 'IBM Plex Sans' } }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // --- 5. SEARCH & HIGHLIGHT HELPER ---
+    
+    // Create an index for fast lookup of connections
+    const linkedByIndex = {};
+    edges.forEach(d => {
+        linkedByIndex[`${d.source.index},${d.target.index}`] = 1;
+        linkedByIndex[`${d.target.index},${d.source.index}`] = 1;
+    });
+
+    function isConnected(a, b) {
+        return linkedByIndex[`${a.index},${b.index}`] || a.index === b.index;
+    }
+
+    function highlightConnections(selectedNode) {
+        node.classed("faded", d => !isConnected(d, selectedNode));
+        node.classed("active-node", d => d === selectedNode);
+        
+        link.classed("faded", d => d.source !== selectedNode && d.target !== selectedNode);
+        link.classed("active-link", d => d.source === selectedNode || d.target === selectedNode);
+    }
+    
+    function resetHighlight() {
+        node.classed("faded", false).classed("active-node", false);
+        link.classed("faded", false).classed("active-link", false);
+    }
+
+    // --- 6. FILTERS ---
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            // Reset base visibility first
+            resetHighlight();
+            
+            if (filter === 'all') {
+                link.classed('hidden', false);
+                node.classed('hidden', false);
+            } else if (filter === 'negative') {
+                link.classed('hidden', d => d.sentiment >= 0.6);
+                node.classed('hidden', false);
+            } else if (filter === 'positive') {
+                link.classed('hidden', d => d.sentiment <= 0.8);
+                node.classed('hidden', false);
+            } else if (filter === 'toxic') {
+                // Show nodes with high internal negativity (>15%)
+                const toxicNodes = new Set(nodes.filter(d => d.internal_negativity > 15).map(d => d.index));
+                
+                node.classed('hidden', d => !toxicNodes.has(d.index));
+                
+                // Show only links connected to these toxic nodes
+                link.classed('hidden', d => 
+                    !toxicNodes.has(d.source.index) && !toxicNodes.has(d.target.index)
+                );
+            }
+        });
+    });
+
+    // --- 7. SIMULATION TICKS ---
+
+    simulation.on("tick", () => {
+        link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+    }
+    function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+    }
+
+}).catch(err => {
+    console.error("Failed to load data:", err);
+    document.body.innerHTML = `<h3 style="text-align:center; margin-top: 50px; color: red">Error loading data. Check console.</h3>`;
+});
+</script>
+
+</body>
+</html>
