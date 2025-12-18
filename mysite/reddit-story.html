@@ -74,25 +74,56 @@ permalink: /
 
     <!-- CHAPTER 2 -->
     <h3 class="section-header text-center">The 40 continents of Reddit</h3>
-    <p>
+
+        <p>
+          Each subreddit is a <strong>300-dimensional</strong> embedding. That’s powerful, but it’s hard to “see”.
+          So before clustering, we used <strong>PCA</strong> as a sanity check.
+        </p>
+
+    <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      
+      <!-- PCA IMAGE -->
+      <figure class="media-frame" style="flex:1 1 380px;min-width:280px;margin:0;">
+        <img src="{{ '/assets/img/pca_variance.png' | relative_url }}" alt="PCA explained variance scree plot" loading="lazy" style="width:100%;height:auto;display:block;" />
+        <figcaption class="caption-center">
+          <strong>PCA check:</strong> the space has structure — then diminishing returns.
+        </figcaption>
+      </figure>
+
+      <!-- PCA TEXT -->
+      <div class="media-text" style="flex:1 1 380px;min-width:280px;padding:0 1rem;text-align:left;">
+        <p>
+          PCA is basically a compression lens: it builds new axes that capture the biggest differences between subreddits.
+          If the first few axes explain a lot, the landscape isn’t random it has shape.
+          If everything was flat, clustering would be guessing.
+        </p>
+        <p style="margin-top:0.5rem;">
+          PCA indicates that <strong>~90% of the information</strong> is captured by the first <strong>50 components</strong> (rather than the full 300).
+          We therefore project embeddings into this 50-dimensional space and use those reduced vectors as input to K‑Means in the next step.
+        </p>
+      </div>
+
+    </div>
+
+      <p style="margin-top:1.2rem;">
       We choose a clear goal: compress 50k+ communities into a map a human can hold in their head.
       We do this with <strong>K-Means</strong>, which groups subreddits into <strong>40 topic blocs</strong>
       (Politics, Music, Sports, NSFW, Tech, and so on).
     </p>
+
     <p>
       But there’s a real issue: algorithms don’t understand culture.
-      They don’t understand parody, irony, or subreddits that exist mainly to mock other subreddits.
+      They don’t understand parody, irony, or communities that exist mainly to mock other communities.
       So we do something honest: <strong>we manually correct a small set of edge cases</strong>.
-      Not to “cheat” the method — but to keep the map meaningful.
+      Not to “cheat” the method but to keep the map meaningful for a human reader.
     </p>
 
-    <!-- Replace with your cluster distribution / labeled continents image -->
     <div class="viz-frame" aria-label="Cluster network visualization">
       <iframe
         src="{{ '/assets/visualizations/continents.html' | relative_url }}"
         height="600"
         loading="lazy"
-        title="Cluster attacks visualization"
+        title="Reddit continents map"
       ></iframe>
     </div>
 
@@ -101,16 +132,11 @@ permalink: /
       The real story starts when we ask: <strong>if Reddit has continents… what are the roads between them?</strong>
     </p>
 
+
     <!-- CHAPTER 3 -->
     <h3 class="section-header text-center">If subreddits communicate, what are the roads?</h3>
     <p>
-      Our “roads” are <strong>hyperlinks</strong>. When subreddit A links to subreddit B, that is a form of attention.
-      Sometimes it’s supportive: <em>“look at this great post”</em>.
-      Sometimes it’s hostile: <em>“look at this disaster”</em>.
-    </p>
-    <p>
-      So each hyperlink is not just a connection — it has a <strong>tone</strong>.
-      If we track link tone at scale, we can see how attention (and conflict) travels across Reddit.
+      Our “roads” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it’s a form of attention — sometimes supportive, sometimes hostile — so each link is not just a connection but carries a <strong>tone</strong>. By tracking link tone at scale, we can see how attention (and conflict) travels across Reddit.
     </p>
     <div class="media-stack" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1.2rem;width:100%;">
 
@@ -123,7 +149,7 @@ permalink: /
 
         <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
           <h4> A link can be a gift. </h4>
-          <p> Sometimes a subreddit links to another community just to share something wholesome: “look at this—this restored my faith in people.” The comments don’t try to “win.” They add gratitude, jokes, and empathy.
+          <p> Sometimes a subreddit links to another community just to share something wholesome: “look at this restored my faith in people.” The comments don’t try to “win.” They add gratitude, jokes, and empathy.
 These are the links that quietly stitch Reddit together: attention used as signal-boosting, not attacking. </p>
         </div>
       </div>
@@ -145,8 +171,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      With that, we can ask the first “tone” question:
-      <strong>when subreddits link to each other, is Reddit mostly friendly… or mostly hostile?</strong>
+      This raises the core tone question: when one subreddit links to another, is it usually an attack or is it more often a peaceful share, a helpful recommendation, or constructive conversation?
     </p>
 
     <!-- CHAPTER 4 -->
@@ -154,8 +179,8 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
-        The surprising answer: most links are <strong>positive</strong>.
-        Even when communities cross topic boundaries, the default behavior is not war — it’s sharing.
+        The surprising answer: most links are <strong>not negative</strong>.
+        Even when communities cross topic boundaries, the default behavior is not war it’s sharing.
         Reddit is not a platform made of constant conflict. Conflict exists, but it is not the baseline.
       </p>
       </div>
@@ -169,8 +194,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      So the story isn’t “Reddit is always toxic.”
-      The real story is sharper: <strong>if negativity is not everywhere, where does it concentrate?</strong>
+      That raises a practical follow-up: if negativity clusters, does attention follow the same pattern? In other words are links and visibility concentrated in a handful of subreddits, or is attention broadly and evenly distributed across the site?
     </p>
 
     <!-- CHAPTER 5 -->
@@ -219,7 +243,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </p>
 
     <p style="margin-top:1.2rem;">
-      So the next question isn’t just “where is conflict?” — it’s:
+      So the next question isn’t just “where is conflict?” it’s:
       <strong>what role does each continent play in the network?</strong>
       Who are the amplifiers, the critics, the bridges, and the punching bags of Reddit?
     </p>
