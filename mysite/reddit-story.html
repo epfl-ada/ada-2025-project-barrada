@@ -12,7 +12,7 @@ permalink: /
   </div>
   <div class="hero-inner">
     <h1 class="hero-title animate-fade-up delay-1">
-      The Hidden Architecture of <span class="text-gradient">Reddit Conflict</span>
+      The Hidden Architecture of <span class="text-gradient">Reddit</span>
     </h1>
     <p class="hero-subtitle animate-fade-up delay-2">
       An analytical deep-dive into
@@ -35,75 +35,199 @@ permalink: /
   </div>
 </section>
 
-<section class="story-chapter" id="intro">  
+
+<section class="story-chapter" id="the-map">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center"> Introduction </h2>
+      <h2 class="section-title text-center">The Map: Continents and Roads</h2>
     </div>
 
-    <div class="split-layout">
-      <div class="text-block">
-        <p class="lead quote">
-          Reddit is a place where you can find the cure for a rare disease in one thread, and a heated debate about the aerodynamics of a lobster in the next.
-        </p>
-        <p>
-          To the outsider, Reddit looks like a mess. It is a cacophony of 57 million daily active users screaming into the void. It feels random. It feels chaotic.
-        </p>
-        <p>
-          But if you look past the memes and the arguments, <strong>is there a hidden order?</strong>
-        </p>
-        <p>
-          We didn't just read the threads; we mapped the invisible wires connecting them. By analyzing <strong>858,488 hyperlinks</strong>, we discovered that Reddit isn't just a collection of forums—it is a single, living brain with its own geography, psychology, and wars.
-        </p>
+    <!-- CHAPTER 1 -->
+    <h3 class="section-header text-center">How did we build the map of Reddit?</h3>
+    <p>
+      Reddit has <strong>50,000+</strong> subreddits. If we treat every subreddit as totally unique,
+      we get lost in details and we miss the big structure. So we start with a simple idea:
+      group similar communities into a smaller number of “continents”.
+    </p>
+    <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
+      <p>
+        To do that, we use <strong>subreddit embeddings</strong>: a 300-number fingerprint for every subreddit.
+        Two subreddits have similar fingerprints when <strong>similar users post in them</strong>.
+        That means the embeddings capture something powerful: not what a subreddit claims to be,
+        but what it shares with others through real user behavior.
+      </p>
       </div>
 
-      <div class="viz-container">
-        <figure class="media-frame rotate-slight">
-          <img src="assets/img/into_reddit_fighting.png" alt="Screenshot of r/Place chaos or a funny thread" />
-          <figcaption class="caption-center">
-            <strong> The Chaos.</strong> <br>
-          </figcaption>
-        </figure>
-      </div>
+      <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
+      <img src="{{ '/assets/img/into_reddit_fighting.png' | relative_url }}" alt="Reddit looks chaotic from the outside" loading="lazy" style="width:100%;height:auto;display:block;" />
+      <figcaption class="caption-center">
+        <strong>The problem:</strong> a giant list of subreddits feels like noise.
+      </figcaption>
+      </figure>
     </div>
 
-    <p>
-      We often think of subreddits as isolated islands. In reality, they travel in clusters. By grouping every participant into coordination blocs, we can see which coalitions launch attacks, which absorb them, and how quickly those assaults ripple outward.
+    <p style="margin-top:1.2rem;">
+      This is the moment the story becomes measurable: Reddit stops being a list of names and becomes a landscape.
+      So now we can ask: <strong>what does this landscape look like when we compress it into a human-scale map?</strong>
     </p>
-  </div>
-</section>
 
-<section class="story-chapter" id="clusters">
-  <div class="section-inner">
-    <div class="section-header">
-      <h2 class="section-title  text-center">How We Clustered the Chaos</h2>
-    </div>
+    <!-- CHAPTER 2 -->
+    <h3 class="section-header text-center">The 40 continents of Reddit</h3>
     <p>
-      To map the chaos, we analyzed the <strong>semantic DNA</strong> of over 51,000 subreddits using high-dimensional embedding vectors. We applied <strong>K-Means Clustering (K=40)</strong> to these normalized vectors, mathematically grouping communities not by what they claim to be, but by how their users actually interact and overlap.
+      We choose a clear goal: compress 50k+ communities into a map a human can hold in their head.
+      We do this with <strong>K-Means</strong>, which groups subreddits into <strong>40 topic blocs</strong>
+      (Politics, Music, Sports, NSFW, Tech, and so on).
     </p>
     <p>
-      However, algorithms struggle with irony. To ensure accuracy, we built a <strong>manual override system</strong> to reclassify edge cases, like distinguishing geopolitical news forums from the adult content subreddits they parody. The result is the "Digital Archipelago": 40 distinct, validated continents of thought that serve as the board for our analysis.
+      But there’s a real issue: algorithms don’t understand culture.
+      They don’t understand parody, irony, or subreddits that exist mainly to mock other subreddits.
+      So we do something honest: <strong>we manually correct a small set of edge cases</strong>.
+      Not to “cheat” the method — but to keep the map meaningful.
     </p>
+
+    <!-- Replace with your cluster distribution / labeled continents image -->
     <div class="viz-frame" aria-label="Cluster network visualization">
       <iframe
-        src="{{ '/assets/visualizations/network.html' | relative_url }}"
+        src="{{ '/assets/visualizations/continents.html' | relative_url }}"
         height="600"
         loading="lazy"
         title="Cluster attacks visualization"
       ></iframe>
     </div>
+
+    <p style="margin-top:1.2rem;">
+      Now we have the continents. But a map without movement is just geography.
+      The real story starts when we ask: <strong>if Reddit has continents… what are the roads between them?</strong>
+    </p>
+
+    <!-- CHAPTER 3 -->
+    <h3 class="section-header text-center">If subreddits communicate, what are the roads?</h3>
     <p>
-      The first thing you notice about this network is the color. It is overwhelmingly green. Most clusters are peaceful havens like <em>Lifestyle</em>, <em>Music</em>, and <em>Movies</em>.
+      Our “roads” are <strong>hyperlinks</strong>. When subreddit A links to subreddit B, that is a form of attention.
+      Sometimes it’s supportive: <em>“look at this great post”</em>.
+      Sometimes it’s hostile: <em>“look at this disaster”</em>.
     </p>
     <p>
-      The red links are concentrated arteries of conflict between hubs like <em>Politics</em> and <em>Meta-Commentary</em>. Conflict is not random&mdash;it is routed by a few blocs.
+      So each hyperlink is not just a connection — it has a <strong>tone</strong>.
+      If we track link tone at scale, we can see how attention (and conflict) travels across Reddit.
     </p>
+    <div class="media-stack" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1.2rem;width:100%;">
+
+      <!-- Row 1: image left, text on the right -->
+      <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;">
+        <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
+          <img src="{{ '/assets/img/reddit_positivity.png' | relative_url }}" alt="Example of a supportive link" loading="lazy" style="width:100%;height:auto;display:block;" />
+          <figcaption class="caption-center"><strong>Support:</strong> “Go see this.”</figcaption>
+        </figure>
+
+        <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
+          <h4> A link can be a gift. </h4>
+          <p> Sometimes a subreddit links to another community just to share something wholesome: “look at this—this restored my faith in people.” The comments don’t try to “win.” They add gratitude, jokes, and empathy.
+These are the links that quietly stitch Reddit together: attention used as signal-boosting, not attacking. </p>
+        </div>
+      </div>
+
+      <!-- Row 2: image right, text on the left -->
+      <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;">
+        <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
+          <h4> A link can also be a weapon </h4>
+          <p> Other times, a subreddit links to a post as a public callout: “look at this disaster.” 
+            The original topic becomes a proxy for a bigger culture-war argument, and the thread spirals into dunking, outrage, and tribal blame. </p>
+        </div>
+
+        <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
+          <img src="{{ '/assets/img/reddit_negativity.png' | relative_url }}" alt="Example of a hostile link" loading="lazy" style="width:100%;height:auto;display:block;" />
+          <figcaption class="caption-center"><strong>Attack:</strong> “Look at this mess.”</figcaption>
+        </figure>
+      </div>
+
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      With that, we can ask the first “tone” question:
+      <strong>when subreddits link to each other, is Reddit mostly friendly… or mostly hostile?</strong>
+    </p>
+
+    <!-- CHAPTER 4 -->
+    <h3 class="section-header text-center">How are most of the links?</h3>
+    <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
+      <p>
+        The surprising answer: most links are <strong>positive</strong>.
+        Even when communities cross topic boundaries, the default behavior is not war — it’s sharing.
+        Reddit is not a platform made of constant conflict. Conflict exists, but it is not the baseline.
+      </p>
+      </div>
+
+      <figure class="media-frame" style="flex:1.3667 1 320px;min-width:260px;margin:0;">
+      <img src="{{ '/assets/img/sentiment_distribution.png' | relative_url }}" alt="Positive vs negative link distribution" loading="lazy" style="width:100%;height:auto;display:block;" />
+      <figcaption class="caption-center">
+        <strong>Baseline:</strong> positivity dominates; negativity is the minority.
+      </figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      So the story isn’t “Reddit is always toxic.”
+      The real story is sharper: <strong>if negativity is not everywhere, where does it concentrate?</strong>
+    </p>
+
+    <!-- CHAPTER 5 -->
+    <h3 class="section-header text-center">Where does attention concentrate?</h3>
+
     <p>
-      Question: if the links aren’t random, who drives them? The answer lives in the roles inside each cluster.
+      At this point, “conflict” is still too vague. So we ask a sharper question:
+      <strong>who talks the most</strong>, and <strong>who gets talked about the most</strong>?
     </p>
+
+    <p>
+      The two plots below answer that directly. The left chart shows the subreddits that
+      <strong>send</strong> the most links (the loudest broadcasters). The right chart shows the subreddits that
+      <strong>receive</strong> the most links (the biggest magnets of attention).
+    </p>
+
+    <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
+        <img src="{{ '/assets/img/top_sources.png' | relative_url }}" alt="Top link sources" loading="lazy" style="width:100%;height:auto;display:block;" />
+        <figcaption class="caption-center">
+          <strong>Who speaks:</strong> a small set of communities produce a big share of outgoing links.
+        </figcaption>
+      </figure>
+
+      <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
+        <img src="{{ '/assets/img/top_targets.png' | relative_url }}" alt="Top link targets" loading="lazy" style="width:100%;height:auto;display:block;" />
+        <figcaption class="caption-center">
+          <strong>Who gets noticed:</strong> large “front-page” hubs attract links from everywhere.
+        </figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      The pattern is clear: attention on Reddit is <strong>not evenly distributed</strong>.
+      A few communities act like <strong>megaphones</strong> (they link out constantly),
+      while a few massive hubs (like broad Q&amp;A and general-interest subreddits) act like <strong>public squares</strong>
+      where everyone points, reacts, and piles in.
+    </p>
+
+    <p>
+      And this is where the story becomes interesting: these high-volume linkers are not always “bad,”
+      and these high-volume targets are not always “victims.”
+      Sometimes a community is a curator that boosts content.
+      Sometimes it is a watchdog that calls out others.
+      Sometimes it is a lightning rod that absorbs reactions simply because it is big.
+    </p>
+
+    <p style="margin-top:1.2rem;">
+      So the next question isn’t just “where is conflict?” — it’s:
+      <strong>what role does each continent play in the network?</strong>
+      Who are the amplifiers, the critics, the bridges, and the punching bags of Reddit?
+    </p>
+
 
   </div>
 </section>
+
 
 <section class="story-chapter" id="roles">
   <div class="section-inner">
@@ -133,7 +257,6 @@ permalink: /
               <p><strong>The Influential (8,923 subreddits, 13.3%)</strong> The establishment. Highest positivity (0.026) and lowest anger (0.007). Power here is civil—think r/AskReddit, r/news, r/todayilearned. Low certainty (0.007) hints at open-mindedness.</p>
               <p><strong>The Supportive (6,635 subreddits, 9.9%)</strong> The helpers. Positivity 0.026 with 13% lower negativity than Influential (0.012 vs 0.013). Lowest anger (0.005). Empathy-first spaces like r/relationship_advice, r/Depression, r/RandomKindness.</p>
             </div>
-
       </div>
     </div>
     <p style="margin-top: 4rem;">
