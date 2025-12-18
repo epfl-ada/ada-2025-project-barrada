@@ -251,226 +251,443 @@ These are the links that quietly stitch Reddit together: attention used as signa
 
   </div>
 </section>
-
-
 <section class="story-chapter" id="roles">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">Four Roles Inside Every Cluster</h2>
+      <h2 class="section-title text-center">The 4 roles</h2>
       <p>
-        Once the clusters are mapped, we can profile the voices driving them. Each bloc leans toward four archetypes—
-        Influential, Controversial, Supportive, and Critics—that shape how attacks and defenses unfold.
+        After mapping the continents, we zoom in on the <strong>style of voice</strong> each cluster tends to produce.
+        Four roles keep showing up across Reddit: <strong>Influential</strong>, <strong>Supportive</strong>, <strong>Controversial</strong>, and <strong>Critical</strong>.
       </p>
     </div>
 
-    <div class="roles-layout">
-      <div>
-        <div class="viz-frame" aria-label="Role composition visualization">
+    <!-- 1) PIE ROW: LEFT = PIE, RIGHT = EXPLANATION -->
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">Role distribution across Reddit</h3>
+
+    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <!-- LEFT: PIE -->
+      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+        <div class="viz-frame" aria-label="Role distribution pie chart">
           <iframe
             src="{{ '/assets/visualizations/roles_pie.html' | relative_url }}"
-            height="560"
+            height="520"
             loading="lazy"
-            title="Role composition visualization"
+            title="Role distribution"
+            style="width:100%;border:0;display:block;"
           ></iframe>
         </div>
       </div>
-      <div>
-            <div class="text-block">
-              <p style="margin-top: 3rem;"><strong>The Critics (594 subreddits, 0.9%)</strong> The attack dogs of Reddit. Anger is 3.3× higher than Influential subs (0.022 vs 0.007) and negemo is 0.036. These are confident takedown artists like r/SubredditDrama, r/Drama, r/ShitRedditSays.</p>
-              <p><strong>The Controversial (454 subreddits, 0.7%)</strong> Lightning rods for conflict. Anger at 0.013 and negemo 0.023 (67% of Critics). They don’t always start fights, but fights find them (r/The_Donald, r/KotakuInAction, r/conspiracy).</p>
-              <p><strong>The Influential (8,923 subreddits, 13.3%)</strong> The establishment. Highest positivity (0.026) and lowest anger (0.007). Power here is civil—think r/AskReddit, r/news, r/todayilearned. Low certainty (0.007) hints at open-mindedness.</p>
-              <p><strong>The Supportive (6,635 subreddits, 9.9%)</strong> The helpers. Positivity 0.026 with 13% lower negativity than Influential (0.012 vs 0.013). Lowest anger (0.005). Empathy-first spaces like r/relationship_advice, r/Depression, r/RandomKindness.</p>
-            </div>
+
+      <!-- RIGHT: TEXT -->
+      <div class="media-text" style="flex:0 1 380px;min-width:260px;padding:0 0.5rem;text-align:left;">
+        <p style="margin:0 0 0.8rem 0;">
+          This chart is the reality check: most communities are not built for conflict.
+        </p>
+        <p style="margin:0;">
+          The “loud” roles (Critical + Controversial) exist, but they’re a minority. That’s why Reddit can feel
+          both peaceful and chaotic: a small set of communities can generate a disproportionate amount of friction.
+        </p>
       </div>
     </div>
-    <p style="margin-top: 4rem;">
-      Only 1.6% of subreddits sit in conflict roles (Critical + Controversial). Toxicity is concentrated in a few specialist communities; most of Reddit is neutral or supportive.
-      </p>
-      <p>
-      Let’s explore the top clusters for each archetype and see whether specific topics dominate their behavior.
+
+    <p style="margin-top:1.4rem;">
+      Next we break the map role-by-role: <strong>who dominates each role</strong>, and what kind of behavior it creates.
     </p>
-    <div class="viz-frame" aria-label="Role composition visualization">
-        <iframe
-          src="{{ '/assets/visualizations/top_roles.html' | relative_url }}"
-          height="560"
+
+      <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
+      <h3 class="section-header text-center" style="margin-top:3rem;">Influential</h3>
+
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+        <!-- LEFT: VIZ -->
+        <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+        <div class="viz-frame" aria-label="Influential clusters visualization">
+          <iframe
+          src="{{ '/assets/visualizations/influential.html' | relative_url }}"
+          height="420"
           loading="lazy"
-          title="Role composition visualization"
-        ></iframe>
+          title="Influential clusters"
+          style="width:100%;border:0;display:block;"
+          ></iframe>
+        </div>
+        </div>
+
+        <!-- RIGHT: IMAGE + TEXT -->
+        <div class="role-col" style="flex:0 1 480px;min-width:320px;text-align:center;">
+        <img
+          src="{{ '/assets/img/influential.png' | relative_url }}"
+          alt="Influential role icon"
+          loading="lazy"
+          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+        />
+        <p style="margin:0;text-align:left;padding:0 0.5rem;">
+          <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
+          Their power is reach: they don’t need to be extreme to dominate the flow of links.
+        </p>
+      </div>
     </div>
-    <p style="margin-top: 3rem;"> 
-      The Influential are the largest group, spanning broad-interest hubs like <strong>News</strong> and <strong>AskReddit</strong>.
-      The Supportive cluster is dominated by mental health and advice forums, reflecting their empathetic nature.
-      Controversial roles are often found in politically charged or meta-commentary communities.
-      Critics congregate in drama-centric and politics subreddits, where conflict is a central theme.
+
+    <p style="margin-top:1.2rem;">
+      If Influential clusters are where attention concentrates, Supportive clusters are where attention turns into care.
     </p>
-    <p>
-      who does the critical attacks do they attack outside their own cluster or inside?
+
+
+    <!-- ROLE 2: SUPPORTIVE (IMAGE LEFT, VIZ RIGHT) -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">Supportive</h3>
+
+    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <!-- LEFT: IMAGE + TEXT -->
+      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+        <img
+          src="{{ '/assets/img/supportive.png' | relative_url }}"
+          alt="Supportive role icon"
+          loading="lazy"
+          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+        />
+        <p style="margin:0;text-align:left;padding:0 0.5rem;">
+          <strong>The helpers.</strong> These clusters turn participation into support: advice, empathy, coping, recovery,
+          and practical help. Their outbound links tend to uplift or guide, not to punish.
+        </p>
+      </div>
+
+      <!-- RIGHT: VIZ -->
+      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+        <div class="viz-frame" aria-label="Supportive clusters visualization">
+          <iframe
+            src="{{ '/assets/visualizations/supportive.html' | relative_url }}"
+            height="420"
+            loading="lazy"
+            title="Supportive clusters"
+            style="width:100%;border:0;display:block;"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      But not every community exists to help or inform. Some are built to attract arguments—or become magnets for them.
+    </p>
+
+
+    <!-- ROLE 3: CONTROVERSIAL (VIZ LEFT, IMAGE RIGHT) -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">Controversial</h3>
+
+    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <!-- LEFT: VIZ -->
+      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+        <div class="viz-frame" aria-label="Controversial clusters visualization">
+          <iframe
+            src="{{ '/assets/visualizations/controversial.html' | relative_url }}"
+            height="420"
+            loading="lazy"
+            title="Controversial clusters"
+            style="width:100%;border:0;display:block;"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- RIGHT: IMAGE + TEXT -->
+      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+        <img
+          src="{{ '/assets/img/controversial.png' | relative_url }}"
+          alt="Controversial role icon"
+          loading="lazy"
+          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+        />
+        <p style="margin:0;text-align:left;padding:0 0.5rem;">
+          <strong>The lightning rods.</strong> They don’t always start fights, but fights find them.
+          Threads here turn into battlegrounds, and links often carry “look at this” energy—supportive or hostile.
+        </p>
+      </div>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      The last role is different: it’s not just “where fights happen,” but “where fights are produced.”
+    </p>
+
+
+    <!-- ROLE 4: CRITICAL (IMAGE LEFT, VIZ RIGHT) -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">Critical</h3>
+
+    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+      <!-- LEFT: IMAGE + TEXT -->
+      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+        <img
+          src="{{ '/assets/img/critical.png' | relative_url }}"
+          alt="Critical role icon"
+          loading="lazy"
+          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+        />
+        <p style="margin:0;text-align:left;padding:0 0.5rem;">
+          <strong>The takedown specialists.</strong> These clusters are built around critique, mockery, and drama.
+          Their links often function like callouts: attention used as a weapon.
+        </p>
+      </div>
+
+      <!-- RIGHT: VIZ -->
+      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+        <div class="viz-frame" aria-label="Critical clusters visualization">
+          <iframe
+            src="{{ '/assets/visualizations/critical.html' | relative_url }}"
+            height="420"
+            loading="lazy"
+            title="Critical clusters"
+            style="width:100%;border:0;display:block;"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:2rem;">
+      Now we can connect roles back to network behavior:
+      <strong>when Critical clusters attack, do they mostly attack outside their own continent… or do they fight inside it?</strong>
     </p>
   </div>
 </section>
 
-<section class="story-chapter" id="echo">
+
+<section class="story-chapter" id="network">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">Echo Chambers & Isolation</h2>
+      <h2 class="section-title text-center">The Network Fabric</h2>
     </div>
 
-    <h3 class="text-center">Do comfort zones make Reddit meaner?</h3>
+    <h3 class="text-center">If topics are continents… what makes a place powerful?</h3>
 
     <p>
-      The default fear is simple: if communities stay inside their own bubbles, they become hostile to outsiders.
-      So we start with the most direct test: compare how positive links are when subreddits interact
-      <em>within</em> the same topic cluster versus <em>across</em> clusters.
+      Up to now, we treated Reddit like geography: continents (topics) and roads (hyperlinks).
+      But a map still doesn’t tell you <em>who matters</em>. Power is not about being “right” or “loud” —
+      it’s about position: who sits at the center, who acts as a bridge, and who everyone points at.
     </p>
 
-    <!-- Quick results table -->
-    <div style="display:flex;justify-content:center;margin:1rem 0;">
-      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Interaction type</th>
-            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Positive links</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">Within-cluster</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>93.6%</strong></td>
-          </tr>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">Cross-cluster</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>88.9%</strong></td>
-          </tr>
-          <tr>
-            <td style="padding:10px;">Homophily bonus</td>
-            <td style="padding:10px;text-align:right;"><strong>+4.7%</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p>
+      This is where the network layer comes in. We build the subreddit graph and compute centrality:
+      prestige (PageRank), bridges (betweenness), and the different ways attention concentrates.
+    </p>
 
-    <div class="viz-frame" aria-label="Echo chamber visualization">
+    <!-- Swap to your own asset name (PNG or iframe). -->
+    <div class="viz-frame" aria-label="Network centrality visualization">
       <iframe
-        src="{{ '/assets/visualizations/echo.html' | relative_url }}"
+        src="{{ '/assets/visualizations/centrality.html' | relative_url }}"
         height="560"
         loading="lazy"
-        title="Echo chambers visualization"
+        title="Network centrality visualization"
+        style="width:100%;border:0;display:block;"
       ></iframe>
     </div>
 
-    <p>
-      Yes, Reddit has comfort zones: communities are slightly kinder to their own “neighbors”.
-      But the doom story doesn’t survive contact with the data: even across clusters, links are positive
-      almost 9 times out of 10. Echo effects exist, but they’re not automatically toxic.
-      That forces the next question: <strong>what actually creates isolation?</strong>
-    </p>
-
-    <h3 class="text-center">The Certainty Trap (that doesn’t exist)</h3>
-
-    <p>
-      A common assumption is that isolation is ideological: confident, dogmatic communities should form tighter bubbles.
-      We tested this by correlating a linguistic certainty score (certainty minus tentativeness) with cluster insularity.
-      If the story were true, the relationship should be strong and significant.
-    </p>
-
-    <!-- Printed stats in a small grid -->
-    <div style="display:flex;justify-content:center;margin:1rem 0;">
-      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Test</th>
-            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Result</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">Spearman correlation (certainty vs insularity)</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>r = 0.074</strong></td>
-          </tr>
-          <tr>
-            <td style="padding:10px;">Significance</td>
-            <td style="padding:10px;text-align:right;"><strong>p = 0.65</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p>
-      The hypothesis fails. The most insular clusters are not especially “certain” in their language.
-      Isolation here is not a psychological defect; it’s usually structural and functional
-      (language barriers, niche specificity, platform rules, self-sufficiency).
-      So if isolation isn’t driven by dogma, we need a stricter definition of an “echo chamber”.
-    </p>
-
-    <h3 class="text-center">The Purity Principle</h3>
-
-    <p>
-      We define echo chambers structurally, not emotionally. Our purity metric measures how tightly
-      a semantic topic cluster aligns with a single network community. A perfect score (1.0) would mean:
-      “this topic doesn’t just share interests — it behaves like a sealed ecosystem”.
-    </p>
-
-    <!-- Top echo chambers table -->
-    <div style="display:flex;justify-content:center;margin:1rem 0;">
-      <table style="border-collapse:collapse;min-width:520px;max-width:720px;width:100%;font-size:0.95rem;">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:10px;border-bottom:2px solid #ddd;">Top echo chambers (purity)</th>
-            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">Purity</th>
-            <th style="text-align:right;padding:10px;border-bottom:2px solid #ddd;">n subreddits</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">Japanese</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>91.8%</strong></td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">146</td>
-          </tr>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">NSFW</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>78.1%</strong></td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">728</td>
-          </tr>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">Music</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>73.2%</strong></td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">325</td>
-          </tr>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #eee;">My Little Pony</td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;"><strong>72.5%</strong></td>
-            <td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">74</td>
-          </tr>
-          <tr>
-            <td style="padding:10px;">Football</td>
-            <td style="padding:10px;text-align:right;"><strong>71.8%</strong></td>
-            <td style="padding:10px;text-align:right;">214</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p>
-      These are real echo chambers by structure. But here’s the part people usually get wrong:
-      <strong>high purity doesn’t automatically mean toxicity.</strong> Japanese is the cleanest example —
-      it’s extremely pure, yet one of the most internally civil clusters (only <strong>0.19%</strong> internal negativity).
-      Isolation can be peaceful when it’s built on shared interest rather than shared outrage.
-    </p>
-
-    <p>
-      So the real problem isn’t “echo chambers exist”. The real problem is:
-      <strong>what type of isolation is it?</strong>
+    <p style="margin-top:1.2rem;">
+      The takeaway is simple: Reddit is not flat. A small set of hubs shape discovery,
+      and a smaller set of bridges connect otherwise unrelated areas.
+      So the next question is unavoidable:
+      <strong>when conflict happens, does it follow these power lines?</strong>
     </p>
   </div>
 </section>
 
+
+<section class="story-chapter" id="rivalries">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Rivalries and Fault Lines</h2>
+    </div>
+
+    <h3 class="text-center">Who hates whom?</h3>
+
+    <p>
+      “Toxicity” is a useless word if you can’t point to a direction.
+      So we stop talking about vibes and we measure pairwise relationships:
+      which continents consistently send negative links to which other continents.
+    </p>
+
+    <p>
+      Most continent-to-continent relationships are positive. The interesting part is the minority:
+      repeat matchups that happen again and again — the same sources, the same targets.
+      That’s not random conflict. That’s a fault line.
+    </p>
+
+    <!-- Replace with your rivalry / cluster-pair plot (heatmap or ranked pairs). -->
+    <div class="viz-frame" aria-label="Cluster rivalry map">
+      <iframe
+        src="{{ '/assets/visualizations/rivalries.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Cluster rivalry map"
+        style="width:100%;border:0;display:block;"
+      ></iframe>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      Rivalries answer “who attacks whom.” But they still don’t answer a nastier question:
+      <strong>do communities mostly attack outsiders… or do they also eat their own?</strong>
+    </p>
+  </div>
+</section>
+
+
+<section class="story-chapter" id="civility">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Cannibals vs Monks</h2>
+    </div>
+
+    <h3 class="text-center">Do some continents fight mostly inside their own borders?</h3>
+
+    <p>
+      External conflict is the headline — internal conflict is the culture.
+      We measure internal negativity as: how often subreddits link negatively to others
+      <em>within the same continent</em>.
+    </p>
+
+    <p>
+      This separates two very different worlds:
+      communities that export negativity outward versus communities that also turn it inward.
+      If a continent is internally hostile, moderation and identity wars aren’t side effects —
+      they’re the operating system.
+    </p>
+
+    <!-- Replace with your internal-negativity / internal-conflict plot. -->
+    <div class="viz-frame" aria-label="Internal conflict visualization">
+      <iframe
+        src="{{ '/assets/visualizations/internal_conflict.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Internal conflict visualization"
+        style="width:100%;border:0;display:block;"
+      ></iframe>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      Now we know where conflict lives (rivalries) and whether it’s cultural (internal fighting).
+      The next step is power: <strong>who is getting hit the most?</strong>
+    </p>
+  </div>
+</section>
+
+
+<section class="story-chapter" id="flows">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Punching Bags and Bullies</h2>
+    </div>
+
+    <h3 class="text-center">Who absorbs the hits… and who exports them?</h3>
+
+    <p>
+      Not every target is a victim, and not every attacker is “evil.”
+      But the network lets us compute something concrete:
+      <strong>net negativity flow</strong> — how much negativity a continent receives minus how much it sends.
+    </p>
+
+    <p>
+      This instantly reveals two populations:
+      the punching bags (net receivers) and the exporters (net senders).
+      It’s the difference between “controversial because you’re visible” and “aggressive because that’s the point.”
+    </p>
+
+    <!-- Replace with your net flow / toxicity flow plot. -->
+    <div class="viz-frame" aria-label="Net toxicity flow visualization">
+      <iframe
+        src="{{ '/assets/visualizations/toxicity_flow.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Net toxicity flow visualization"
+        style="width:100%;border:0;display:block;"
+      ></iframe>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      But even this doesn’t settle the core moral story people assume.
+      So we ask the one question that flips the narrative:
+      <strong>do attacks mostly punch down… or punch up?</strong>
+    </p>
+  </div>
+</section>
+
+
+<section class="story-chapter" id="power-game">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">The Power Game</h2>
+    </div>
+
+    <h3 class="text-center">David vs Goliath: do small communities attack the big ones?</h3>
+
+    <p>
+      The default myth is bullying: powerful communities crushing weaker ones.
+      The network gives a clean test. For each negative link, compare the source’s PageRank to the target’s.
+    </p>
+
+    <p>
+      If the source is bigger than the target, that’s punching down.
+      If the source is smaller than the target, that’s insurgency: punching up.
+      This is one of the few times “power” becomes a number you can actually use.
+    </p>
+
+    <!-- Replace with your punching-up vs punching-down visualization. -->
+    <div class="viz-frame" aria-label="Punching up vs down visualization">
+      <iframe
+        src="{{ '/assets/visualizations/punching_up.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Punching up vs down visualization"
+        style="width:100%;border:0;display:block;"
+      ></iframe>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      One last network question before we switch layers:
+      <strong>does hate spread?</strong>
+      Not philosophically — mechanically.
+    </p>
+  </div>
+</section>
+
+
+<section class="story-chapter" id="contagion">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title text-center">Contagion</h2>
+    </div>
+
+    <h3 class="text-center">If a community gets attacked, does it start attacking back?</h3>
+
+    <p>
+      Here we test a simple feedback loop: communities that receive more negative links,
+      do they emit more negative links later (or in general)?
+      If the relationship exists, toxicity isn’t just located — it’s contagious.
+    </p>
+
+    <!-- Replace with your correlation / scatter plot for incoming vs outgoing negativity. -->
+    <div class="viz-frame" aria-label="Toxicity contagion visualization">
+      <iframe
+        src="{{ '/assets/visualizations/contagion.html' | relative_url }}"
+        height="560"
+        loading="lazy"
+        title="Toxicity contagion visualization"
+        style="width:100%;border:0;display:block;"
+      ></iframe>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      At this point, the network layer has done its job: we know <em>where</em> attention flows,
+      <em>who</em> holds power, and <em>how</em> conflict concentrates.
+      The next layer is the one people care about most:
+      <strong>what does conflict “sound” like?</strong>
+    </p>
+
+    <p>
+      That’s where we switch from behavior to language — and introduce the LIWC layer.
+      </p>
+  </div>
+</section>
 
 
 <section class="story-section">
   <div class="section-inner">
     <p class="story-outro">
-      Each visualization is live-linked to the underlying dataset so you can rerun the story with your own
-      inputs. Feed it a different spark and the invisible brain reshapes itself in minutes.
+      You’ve now seen Reddit as geography (continents), traffic (roads), structure (centrality),
+      and conflict dynamics (rivalries, internal fighting, flows, power).
+      Next comes the language layer: the psychological signature that separates criticism, trolling,
+      and ordinary disagreement — without guessing.
       <a href="{{ '/about/' | relative_url }}">Learn more about the methodology &rarr;</a>
     </p>
   </div>
