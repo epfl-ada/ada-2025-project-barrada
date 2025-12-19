@@ -2,141 +2,166 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The Landscape of Isolation</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 5 Isolated Ecosystems</title>
     <style>
-        body { font-family: "Helvetica Neue", sans-serif; background: #fff; padding: 20px; text-align: center; }
-        h2 { font-family: Georgia, serif; color: #2c3e50; }
-        .subtitle { font-style: italic; color: #666; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
-        
-        #chart { width: 100%; max-width: 1000px; height: 650px; margin: 0 auto; position: relative; }
-        
-        .axis-label { font-size: 12px; font-weight: bold; fill: #aaa; text-transform: uppercase; letter-spacing: 1px; }
-        .axis line { stroke: #eee; stroke-dasharray: 4; }
-        .axis path { display: none; }
-        .axis text { fill: #999; font-size: 10px; }
-
-        .bubble { stroke: #fff; stroke-width: 1.5px; cursor: pointer; transition: fill 0.3s; }
-        .bubble:hover { stroke: #333; stroke-width: 2px; }
-
-        .tooltip {
-            position: absolute; background: rgba(255,255,255,0.98); border: 1px solid #333;
-            padding: 10px; font-size: 12px; pointer-events: none; opacity: 0; 
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.15); text-align: left; z-index: 10;
-            border-radius: 4px;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fff;
+            padding: 30px 40px;
         }
         
-        /* Quadrant Labels */
-        .q-label { font-size: 18px; font-weight: 800; fill: #eee; text-anchor: middle; pointer-events: none; }
+        .chart-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .bar-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .bar-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .bar-value {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 16px;
+        }
+        
+        .bar-track {
+            height: 32px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .bar-item:nth-child(2) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 80%); }
+        .bar-item:nth-child(3) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 60%); }
+        .bar-item:nth-child(4) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 40%); }
+        .bar-item:nth-child(5) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 20%); }
+        
+        .description {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        
+        @keyframes slideIn {
+            from { width: 0; }
+        }
     </style>
 </head>
 <body>
-
-    <h2>The Landscape of Isolation</h2>
-
-    <div id="chart"></div>
-    <div class="tooltip" id="tooltip"></div>
-
+    <div class="chart-container">
+        <div class="chart-title">Top 5 Most Isolated Ecosystems</div>
+        
+        <div class="bar-item">
+            <div class="bar-label">
+                <span class="bar-name">Japanese</span>
+                <span class="bar-value">91.8%</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: 91.8%;" data-width="91.8"></div>
+            </div>
+            <div class="description">Isolated by language, but highly peaceful</div>
+        </div>
+        
+        <div class="bar-item">
+            <div class="bar-label">
+                <span class="bar-name">NSFW</span>
+                <span class="bar-value">78.1%</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: 78.1%;" data-width="78.1"></div>
+            </div>
+            <div class="description">Self-contained because mainstream subs ban them</div>
+        </div>
+        
+        <div class="bar-item">
+            <div class="bar-label">
+                <span class="bar-name">Music</span>
+                <span class="bar-value">73.2%</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: 73.2%;" data-width="73.2"></div>
+            </div>
+            <div class="description">Fans rarely venture outside their genre</div>
+        </div>
+        
+        <div class="bar-item">
+            <div class="bar-label">
+                <span class="bar-name">My Little Pony</span>
+                <span class="bar-value">72.5%</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: 72.5%;" data-width="72.5"></div>
+            </div>
+            <div class="description">Tight-knit fandom with complete ecosystem</div>
+        </div>
+        
+        <div class="bar-item">
+            <div class="bar-label">
+                <span class="bar-name">Football</span>
+                <span class="bar-value">71.8%</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width: 71.8%;" data-width="71.8"></div>
+            </div>
+            <div class="description">Team fandom creates parallel universe</div>
+        </div>
+    </div>
+    
     <script>
-        const margin = {top: 40, right: 40, bottom: 50, left: 60},
-              width = 1000 - margin.left - margin.right,
-              height = 600 - margin.top - margin.bottom;
-
-        const svg = d3.select("#chart").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-        async function init() {
-            try {
-                const nodes = await d3.json('../data/nodes.json');
-                
-                const data = nodes.filter(d => d.size > 25);
-
-                const x = d3.scaleLinear()
-                    .domain([0, d3.max(data, d => d.insularity || 0) * 1.1])
-                    .range([0, width]);
-
-                const y = d3.scaleLinear()
-                    .domain([d3.min(data, d => (100-d.internal_negativity)) - 5, 100])
-                    .range([height, 0]);
-
-                const r = d3.scaleSqrt()
-                    .domain([0, d3.max(data, d => d.size)])
-                    .range([5, 35]); 
-
-                svg.append("text").attr("class", "q-label").attr("x", width*0.15).attr("y", height*0.1).text("OPEN SOCIETIES").style("fill", "#e3f2fd");
-                svg.append("text").attr("class", "q-label").attr("x", width*0.85).attr("y", height*0.1).text("THE MONKS").style("fill", "#e8f5e9");
-                svg.append("text").attr("class", "q-label").attr("x", width*0.15).attr("y", height*0.9).text("THE CANNIBALS").style("fill", "#ffebee");
-
-                svg.append("g").attr("class", "axis")
-                    .attr("transform", `translate(0,${height})`)
-                    .call(d3.axisBottom(x).tickSize(-height).ticks(8));
-                
-                svg.append("g").attr("class", "axis")
-                    .call(d3.axisLeft(y).tickSize(-width).ticks(8));
-
-                svg.append("text").attr("class", "axis-label")
-                    .attr("x", width/2).attr("y", height + 40)
-                    .text("Insularity (Self-Linking %)");
-
-                svg.append("text").attr("class", "axis-label")
-                    .attr("transform", "rotate(-90)").attr("x", -height/2).attr("y", -40)
-                    .text("Internal Civility (Positive %)");
-
-                const simulation = d3.forceSimulation(data)
-                    .force("x", d3.forceX(d => x(d.insularity || 0)).strength(0.8))
-                    .force("y", d3.forceY(d => y(100 - d.internal_negativity)).strength(0.8)) 
-                    .force("collide", d3.forceCollide(d => r(d.size) + 2).iterations(4))
-                    .stop();
-
-                // Run simulation manually to stabilize before rendering
-                for (let i = 0; i < 120; ++i) simulation.tick();
-
-                // Draw Nodes
-                const node = svg.selectAll(".bubble")
-                    .data(data)
-                    .join("circle")
-                    .attr("class", "bubble")
-                    .attr("cx", d => d.x)
-                    .attr("cy", d => d.y)
-                    .attr("r", d => r(d.size))
-                    .style("fill", d => {
-                        const civil = 100 - d.internal_negativity;
-                        if (civil < 90) return "#c0392b";
-                        if ((d.insularity || 0) > 30) return "#27ae60";
-                        return "#2980b9"; // Open = Blue
-                    })
-                    .style("opacity", 0.8)
-                    .on("mouseover", (event, d) => {
-                        d3.select("#tooltip").style("opacity", 1)
-                            .html(`<strong>${d.name}</strong><br>
-                                   Size: ${d.size} subs<br>
-                                   Insularity: ${(d.insularity||0).toFixed(1)}%<br>
-                                   Civility: ${(100-d.internal_negativity).toFixed(1)}%`)
-                            .style("left", (event.pageX + 10) + "px")
-                            .style("top", (event.pageY - 28) + "px");
-                    })
-                    .on("mouseout", () => d3.select("#tooltip").style("opacity", 0));
-
-                svg.selectAll(".label")
-                    .data(data.filter(d => d.size > 800 || (d.insularity > 40 && d.size > 200)))
-                    .join("text")
-                    .attr("x", d => d.x)
-                    .attr("y", d => d.y + 3)
-                    .text(d => d.name)
-                    .attr("text-anchor", "middle")
-                    .style("font-size", "10px")
-                    .style("font-weight", "bold")
-                    .style("fill", "#fff")
-                    .style("pointer-events", "none")
-                    .style("text-shadow", "0px 1px 2px rgba(0,0,0,0.8)");
-
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        init();
+        // Animate bars on load
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach((bar, index) => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 100 * index);
+            });
+        });
     </script>
 </body>
 </html>

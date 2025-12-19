@@ -92,14 +92,8 @@ permalink: /
 
       <!-- PCA TEXT -->
       <div class="media-text" style="flex:1 1 380px;min-width:280px;padding:0 1rem;text-align:left;">
-        <p>
-          PCA is basically a compression lens: it builds new axes that capture the biggest differences between subreddits.
-          If the first few axes explain a lot, the landscape isn’t random it has shape.
-          If everything was flat, clustering would be guessing.
-        </p>
         <p style="margin-top:0.5rem;">
-          PCA indicates that <strong>~90% of the information</strong> is captured by the first <strong>50 components</strong> (rather than the full 300).
-          We therefore project embeddings into this 50-dimensional space and use those reduced vectors as input to K‑Means in the next step.
+              We used PCA to verify the data has structure—90% of variance captured in 50 dimensions—then applied K-Means clustering.
         </p>
       </div>
 
@@ -186,9 +180,8 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
-        The surprising answer: most links are <strong>not negative</strong>.
-        Even when communities cross topic boundaries, the default behavior is not war it’s sharing.
-        Reddit is not a platform made of constant conflict. Conflict exists, but it is not the baseline.
+        The surprising answer: most links are not negative. Even when communities cross topic boundaries, the default behavior is not war—it's sharing. Reddit is not a platform made of constant conflict.
+        Within-cluster links: 93.6% positive. Cross-cluster links: 88.9% positive. The echo chamber bonus is real but small—only +4.7 percentage points.
       </p>
       </div>
 
@@ -709,21 +702,17 @@ These are the links that quietly stitch Reddit together: attention used as signa
         
         <p style="margin: 1.5rem 0 0 0;">
           <strong>1. Meta-Commentary (+24,821)</strong><br>
-          The platform's biggest bully by far. Receives 4,051 negative links but sends 28,872. Their culture is "constructive criticism"—documenting drama and calling out bad posts. They are aggressive by design.
+          Sends 28,872 negative links, receives 4,051. Aggressive by design—their culture is documenting drama and calling out bad posts.
         </p>
         
         <p style="margin: 1rem 0 0 0;">
           <strong>2. Politics/Activism (+3,448)</strong><br>
-          Sends 8,217 negative links, receives 4,769. Activist communities export outrage. This isn't bullying—it's advocacy. Calling out injustice requires negative links.
+          Exports outrage as advocacy. Calling out injustice requires negative links.
         </p>
         
         <p style="margin: 1rem 0 0 0;">
           <strong>3. Shitposting (+2,422)</strong><br>
-          Sends 7,913, receives 5,491. Trolling communities export more than they import. This IS bullying—it's the entire point.
-        </p>
-
-        <p style="margin-top: 2rem;">
-          Meta-Commentary is Reddit's biggest bully, but also its #2 "Cannibal." They attack everyone, including themselves. This isn't hypocrisy—it's consistency. Their culture is critical analysis.
+          Trolling by design. This IS bullying—it's the entire point.
         </p>
       </div>
 
@@ -733,21 +722,17 @@ These are the links that quietly stitch Reddit together: attention used as signa
         
         <p style="margin: 1.5rem 0 0 0;">
           <strong>1. Memes (-9,601)</strong><br>
-          Receives 11,241 negative links, sends only 1,640. A 6.9× imbalance. Humor attracts counter-mockery. Meme communities are easy targets—anyone can critique a joke.
+          Receives 11,241, sends 1,640. A 6.9× imbalance. Humor attracts counter-mockery.
         </p>
         
         <p style="margin: 1rem 0 0 0;">
           <strong>2. Help/Advice (-7,963)</strong><br>
-          Receives 11,589 negative links, sends 3,626. A 3.2× imbalance. This is Reddit's cruelty: attacking people trying to be constructive. The negativity comes from meta-commentary calling out bad advice.
+          Receives 11,589, sends 3,626. A 3.2× imbalance. Attacked for trying to be constructive.
         </p>
         
         <p style="margin: 1rem 0 0 0;">
           <strong>3. Lifestyle (-3,686)</strong><br>
-          Receives 3,941, sends 255. A staggering 15.5× imbalance. Lifestyle communities are punching bags precisely because they're non-confrontational. They don't fight back.
-        </p>
-
-        <p style="margin-top: 2rem;">
-          The most civil clusters (Lifestyle, Science, Help/Advice) are disproportionate victims. Constructive communities are soft targets—they don't develop defensive mechanisms because conflict isn't their culture.
+          Receives 3,941, sends 255. A 15.5× imbalance. Non-confrontational communities don't fight back.
         </p>
       </div>
 
@@ -756,28 +741,24 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <!-- Insight section -->
     <div style="max-width: 800px; margin: 4rem auto 0 auto;">
       
-      <h4 style="margin-bottom: 0.5rem;">Why do they attack the big guys?</h4>
+      <p>
+        The punching bags are mainstream hubs—visible, generic, easy to mock. Being big on Reddit is a curse. Attackers are smaller niche communities who define themselves through opposition. Hostility becomes branding.
+      </p>
+
+      <p style="margin-top: 1.5rem;">
+        Meta-Commentary's net aggression (+24,821) is 2.6× larger than the biggest victim's deficit (Memes: -9,601). Hate concentrates as it flows—a few aggressive communities create negative links that disperse across many victims.
+      </p>
+
+      <h4 style="margin-top: 2.5rem; margin-bottom: 0.5rem;">The Contagion Effect</h4>
       
       <p>
-        Notice a pattern? The "Punching Bags" are almost always the massive, mainstream communities. Help/Advice, Memes, Lifestyle—these are Reddit's "generic" hubs. They're visible, accessible, and easy to mock.
-      </p>
-
-      <p>
-        Being big on Reddit is a curse. As a community grows, it loses specificity. It becomes a generic target: "Reddit is full of normies asking dumb questions." The larger you are, the easier you are to dismiss.
-      </p>
-
-      <p>
-        Meanwhile, the attackers are smaller, niche communities desperate to differentiate themselves. They define their identity through opposition: "We're not like those casuals." Hostility becomes branding.
-      </p>
-
-      <p style="margin-top: 2rem;">
-        Meta-Commentary's net aggression (+24,821) is 2.6× larger than the biggest victim's deficit (Memes: -9,601). This suggests hate concentrates as it flows through Reddit—a few aggressive communities create negative links that disperse across many victim communities.
+        Being attacked makes you attack others (r=0.42, p<0.001). <strong>Toxicity is infectious.</strong> But some resist: Help/Advice receives 11,589 negative links yet only sends 3,626. Strong positive identity acts as immunity.
       </p>
 
     </div>
 
     <p style="margin-top:3rem;">
-      But even this doesn't settle the core moral story people assume. So we ask the one question that flips the narrative: <strong>do attacks mostly punch down… or punch up?</strong>
+      But even this doesn't settle the core moral story. So we ask the one question that flips the narrative: <strong>do attacks mostly punch down… or punch up?</strong>
     </p>
 
   </div>
@@ -824,17 +805,11 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <h4 style="margin-bottom: 0.5rem;">The Insurgency Revelation</h4>
     
     <p>
-      73.9% of attacks punch UP. This shatters the bullying narrative. Reddit isn't a platform where powerful communities crush the weak—it's a platform where weak communities attack the powerful.
+      <strong>73.9% of attacks punch UP.</strong> This shatters the bullying narrative. Reddit isn't a platform where powerful communities crush the weak—it's a platform where weak communities attack the powerful.
     </p>
 
     <p>
-      Every moral panic about online toxicity assumes the powerful abuse the powerless. But Reddit's structure is the opposite. Small, extreme political communities attack mainstream politics. Niche trolling communities raid large, popular subreddits. Fringe conspiracy communities attack established science subreddits.
-    </p>
-
-    <h4 style="margin-bottom: 0.5rem;">Why do they punch up?</h4>
-
-    <p>
-      Low-PageRank attackers are ideologically extreme. They see mainstream communities as corrupt establishment. They are status-seeking—attacking popular targets is the fastest way to gain attention. They are resentful—small communities develop grievances against large ones.
+      Low-PageRank attackers are ideologically extreme, status-seeking, and resentful. They see mainstream communities as corrupt establishment. Attacking popular targets is the fastest way to gain attention.
     </p>
 
     <p>
@@ -842,9 +817,8 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </p>
 
     <p style="margin-top:3rem;">
-      We've now mapped external conflict: who attacks whom across communities. But external conflict is only the headline. The real culture of a community reveals itself when we look inward. <strong>What happens when communities turn their energy on themselves?</strong>
+      We've mapped external conflict. But the real culture reveals itself when communities turn their energy inward. <strong>What happens when they attack themselves?</strong>
     </p>
-
   </div>
 </section>
 
@@ -856,25 +830,18 @@ These are the links that quietly stitch Reddit together: attention used as signa
       <h2 class="section-title text-center">Cannibals vs Monks</h2>
     </div>
 
-      <h3 style="margin-top: 0;">External conflict is the headline. Internal conflict is the culture.</h3>
-      <p>
-        We've seen how communities treat their neighbors. But how do they treat <em>themselves</em>?
-      </p>
-      <p>
-        When a community turns its energy inward, two things can happen:
-      </p>
-      <ul style="line-height: 1.6; margin-bottom: 1.5rem;">
-        <li><strong>Civil War:</strong> The internal links are hostile. The community is eating itself alive.</li>
-        <li><strong>Peace:</strong> The internal links are supportive. But this peace comes in two flavors:</li>
-      </ul>
-      <p>
-        You can be at peace because you are open to the world (<strong>Open Societies</strong>), or you can be at peace because you have locked the doors and ignored everyone else (<strong>Isolation</strong>).
-      </p>
-      <p>
-        To visualize this, we mapped Reddit as a physical geography.
-      </p>
-    </div>
+  <h3 style="margin-top: 0;">External conflict is the headline. Internal conflict is the culture.</h3>
+    <p>
+      We've seen how communities treat their neighbors. But how do they treat <em>themselves</em>?
+    </p>
 
+    <p>
+      When communities turn inward, they either fight themselves (<strong>Cannibals</strong>) or maintain peace. But peace comes in two flavors: <strong>Open Societies</strong> stay connected to the world while remaining civil internally, or <strong>Monks</strong> who isolate themselves entirely, locked away but content.
+    </p>
+
+    <p>
+      We mapped this as a physical geography:
+    </p>
     <div style="margin: 3rem auto; max-width: 900px;">
       <img 
         src="{{ '/assets/img/isolation.png' | relative_url }}" 
@@ -927,40 +894,29 @@ These are the links that quietly stitch Reddit together: attention used as signa
   </div>
 
   <div style="max-width: 800px; margin: 4rem auto;">
+    <h3>The Purity Principle: Isolation ≠ Toxicity</h3>
+    <p>
+      Echo chambers are assumed toxic. But the most isolated communities are the most civil.
+    </p>
     
-    <div style="margin-bottom: 3rem;">
-      <h3>The Purity Principle: Isolation ≠ Toxicity</h3>
-      <p>
-        We often assume that "Echo Chambers" are dangerous places where radicalization happens. 
-        But the data shows that the "Purest" (most isolated) communities are actually the most civil.
-      </p>
-      
-      <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
-        <h4 style="margin-top: 0; font-size: 0.9rem; text-transform: uppercase; color: #888;">Top 5 Isolated Ecosystems</h4>
-        <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.6;">
-          <li><strong>Japanese (91.8% Pure):</strong> Isolated by language, but highly peaceful.</li>
-          <li><strong>NSFW (78.1% Pure):</strong> Self-contained because mainstream subs ban them.</li>
-          <li><strong>Music (73.2% Pure):</strong> Fans rarely venture outside their specific genre tastes.</li>
-          <li><strong>My Little Pony (72.5% Pure):</strong> A tight-knit fandom that has built its own complete world.</li>
-          <li><strong>Football (71.8% Pure):</strong> Team fandom creates a parallel universe.</li>
-        </ul>
+    <!-- BAR CHART IFRAME -->
+    <div style="margin: 2rem auto; max-width: 900px;">
+      <div style="width: 100%; height: 550px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <iframe
+          src="{{ 'assets/visualizations/isolation.html' | relative_url }}"
+          width="100%"
+          height="100%"
+          style="border: none;"
+          title="Top 5 Isolated Ecosystems"
+          scrolling="no"
+        ></iframe>
       </div>
     </div>
-
-    <div>
-      <h3>Why are they isolated?</h3>
-      <p>
-        It isn't about dogmatism or hating the outside world. It is about <strong>Function</strong>.
-      </p>
-      <p>
-        Isolation is a symptom of <strong>Self-Sufficiency</strong>.
-        If you are discussing <em>Football</em> scores or <em>My Little Pony</em> art, you don't need to link to a Politics subreddit. You have everything you need right there.
-      </p>
-      <p>
-        Communities dealing with complex, interdisciplinary topics (like <em>Health</em> or <em>Science</em>) <strong>must</strong> link broadly to survive. 
-        Hobbyists can afford to be Monks.
-      </p>
-    </div>
+    
+    <p style="margin-top: 2rem;">
+      Isolation stems from self-sufficiency, not dogmatism. Football fans and hobbyists don't need external links. Science and health communities must link broadly to survive.
+    </p>
+  </div>
 
     <div style="max-width: 800px; margin: 3rem auto 0 auto;">
   
