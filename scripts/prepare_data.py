@@ -9,7 +9,7 @@ class VisualizationDataPrep:
     Generates JSON files for: Network, Insurgency, Toxicity, Echo, Roles, Power
     """
     
-    def __init__(self, data_dir="data/processed", output_dir="docs/site/assets/data"):
+    def __init__(self, data_dir="data/processed", output_dir="docs/assets/data"):
         self.data_dir = Path(data_dir)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -198,14 +198,15 @@ class VisualizationDataPrep:
             print(f"WARNING: {rq16_file} not found.")
             return {}
         
-        df = pd.read_csv(rq16_file)
+        df = pd.read_csv(rq16_file, index_col=0)  # ← Read cluster names as index
         
         # Top 10 victims (negative net flow)
         victims = df.nsmallest(10, 'net_toxicity_flow')
         victims_list = []
-        for idx, row in victims.iterrows():
+        for cluster_name in victims.index:  # ← Iterate over index (cluster names)
+            row = victims.loc[cluster_name]
             victims_list.append({
-                "cluster": str(idx),
+                "cluster": str(cluster_name),
                 "hate_import": int(row['hate_import']),
                 "hate_export": int(row['hate_export']),
                 "net_flow": int(row['net_toxicity_flow'])
@@ -214,9 +215,10 @@ class VisualizationDataPrep:
         # Top 10 bullies (positive net flow)
         bullies = df.nlargest(10, 'net_toxicity_flow')
         bullies_list = []
-        for idx, row in bullies.iterrows():
+        for cluster_name in bullies.index:  # ← Iterate over index (cluster names)
+            row = bullies.loc[cluster_name]
             bullies_list.append({
-                "cluster": str(idx),
+                "cluster": str(cluster_name),
                 "hate_import": int(row['hate_import']),
                 "hate_export": int(row['hate_export']),
                 "net_flow": int(row['net_toxicity_flow'])
@@ -233,7 +235,7 @@ class VisualizationDataPrep:
         
         print(f"Created {output_path}")
         return output
-    
+        
     def create_echo_json(self):
         """Create echo chamber scatter data (RQ6)"""
         print("\nCreating echo.json...")
@@ -397,8 +399,50 @@ class VisualizationDataPrep:
         with open(output_path, 'w') as f:
             json.dump(bridges_data, f, indent=2)
         
-        print(f"✓ Created {output_path}")
+        print(f"Created {output_path}")
         return bridges_data
+    
+    def create_quadrant_json(self):
+        """Create roles_scatter.json for Interactive Quadrant Map"""
+        print("\nCreating roles_scatter.json...")
+        
+        final_df_path = self.data_dir / "final_dataset.csv"
+        
+        if not final_df_path.exists():
+             print(f"WARNING: {final_df_path} not found. Skipping quadrant map.")
+             return []
+
+        df = pd.read_csv(final_df_path)
+        
+        df_top = df.nlargest(200, 'total_links').copy()
+        
+        export_df = df_top[[
+            'subreddit', 
+            'pos_out_ratio',     
+            'neg_in_ratio',   
+            'total_links',      
+            'avg_out_sentiment', 
+            'role_critical',      
+            'role_controversial',
+            'role_supportive',
+            'role_influential'
+        ]].copy()
+        
+        export_df.columns = [
+            'name', 'x', 'y', 'size', 'sentiment', 
+            'is_crit', 'is_cont', 'is_supp', 'is_inf'
+        ]
+        
+        export_df = export_df.fillna(0)
+        
+        data = export_df.to_dict(orient='records')
+        
+        output_path = self.output_dir / "roles_scatter.json"
+        with open(output_path, 'w') as f:
+            json.dump(data, f)
+            
+        print(f"Created {output_path} with {len(data)} nodes")
+        return data
     
     def run_all(self):
         """Run all JSON generation tasks"""
@@ -413,6 +457,7 @@ class VisualizationDataPrep:
         self.create_roles_json()
         self.create_power_json()
         self.create_bridges_json()
+        self.create_quadrant_json()
         
         print("All JSON files created successfully!")
         print(f"Output directory: {self.output_dir}")

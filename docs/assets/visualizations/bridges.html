@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bridge Builder's Dictionary</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* ACADEMIC STYLE CSS */
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .chart-container {
+            background: #fff;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+            border-left: 4px solid #e67e22; /* Orange for Bridges */
+            padding-left: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bar {
+            fill: #e67e22;
+            opacity: 0.8;
+            transition: width 0.5s;
+        }
+        .bar:hover { opacity: 1; }
+
+        .axis text { font-size: 11px; fill: #555; }
+        .axis path, .axis line { display: none; } /* Clean look */
+        
+        .value-label {
+            font-size: 10px;
+            fill: #e67e22;
+            font-weight: bold;
+        }
+
+        /* Narrative Box */
+        .insight-box {
+            background: #f9f9f9;
+            border-left: 3px solid #e67e22;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555;
+            max-width: 800px;
+            margin-top: -20px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Fig 5. The Bridge Builder's Dictionary</h2>
+    <div class="subtitle">
+        What predicts <strong>Betweenness Centrality</strong>? While power is built on formal authority, 
+        network bridges are built on informal, social, and hesitant language.
+    </div>
+
+    <div class="insight-box">
+        <strong>Key Insight:</strong> High-betweenness communities act as "social glue." 
+        Their language is characterized by <em>Non-fluencies</em> ("um", "uh"), 
+        <em>Fillers</em> ("you know"), and <em>Social</em> terms ("Friends", "Family"). 
+        Unlike the confident "Influencers," Bridges speak the language of uncertainty and connection.
+    </div>
+
+    <div id="linguistic-chart" class="chart-container">
+        <div class="section-title">Linguistic Predictors (Correlation)</div>
+    </div>
+
+    <div id="structural-chart" class="chart-container">
+        <div class="section-title">Structural Predictors (Correlation)</div>
+    </div>
+
+    <script>
+        const MARGIN = {top: 20, right: 50, bottom: 20, left: 160};
+        const WIDTH = 800 - MARGIN.left - MARGIN.right;
+        const HEIGHT_LIWC = 300 - MARGIN.top - MARGIN.bottom;
+        const HEIGHT_STRUCT = 250 - MARGIN.top - MARGIN.bottom;
+
+        async function init() {
+            try {
+                const data = await d3.json('../data/bridges.json');
+                
+                createBarChart("#linguistic-chart", data.liwc_features, HEIGHT_LIWC);
+                createBarChart("#structural-chart", data.overall_features, HEIGHT_STRUCT);
+
+            } catch (error) {
+                console.error(error);
+                document.body.innerHTML += `<p style='color:red'>Error loading ../data/bridges.json</p>`;
+            }
+        }
+
+        function createBarChart(selector, dataset, height) {
+            const svg = d3.select(selector)
+                .append("svg")
+                .attr("width", WIDTH + MARGIN.left + MARGIN.right)
+                .attr("height", height + MARGIN.top + MARGIN.bottom)
+                .append("g")
+                .attr("transform", `translate(${MARGIN.left},${MARGIN.top})`);
+
+            // X Scale
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(dataset, d => d.correlation) * 1.1])
+                .range([0, WIDTH]);
+
+            // Y Scale
+            const y = d3.scaleBand()
+                .domain(dataset.map(d => d.feature))
+                .range([0, height])
+                .padding(0.4);
+
+            // Draw Bars
+            svg.selectAll(".bar")
+                .data(dataset)
+                .join("rect")
+                .attr("class", "bar")
+                .attr("x", 0)
+                .attr("y", d => y(d.feature))
+                .attr("height", y.bandwidth())
+                .attr("width", 0) // Animate from 0
+                .transition().duration(1000)
+                .attr("width", d => x(d.correlation));
+
+            // Y Axis (Labels)
+            svg.append("g")
+                .attr("class", "axis")
+                .call(d3.axisLeft(y).tickSize(0))
+                .selectAll("text")
+                .style("font-weight", "500")
+                .style("font-size", "12px");
+
+            // Value Labels (Numbers)
+            svg.selectAll(".value-label")
+                .data(dataset)
+                .join("text")
+                .attr("class", "value-label")
+                .attr("x", d => x(d.correlation) + 5)
+                .attr("y", d => y(d.feature) + y.bandwidth() / 2)
+                .attr("dy", "0.35em")
+                .text(d => d.correlation.toFixed(3))
+                .style("opacity", 0)
+                .transition().delay(800).duration(500).style("opacity", 1);
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Power Formula</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* ACADEMIC STYLE CSS */
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        /* GRID LAYOUT */
+        #dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .chart-panel {
+            background: #fff;
+            /* No border for cleaner academic look, just spacing */
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #333;
+        }
+
+        /* AXIS & LABELS */
+        .axis text {
+            font-size: 10px;
+            color: #666;
+        }
+        .axis path, .axis line {
+            stroke: #ddd;
+        }
+        
+        /* ZERO LINE */
+        .zero-line {
+            stroke: #333;
+            stroke-width: 1.5px;
+        }
+
+        .bar-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .bar-value {
+            font-size: 10px;
+            fill: #fff; /* Text inside bars */
+            font-weight: bold;
+        }
+        
+        .bar-value.outside {
+            fill: #333; /* Text outside bars for small values */
+        }
+
+        .legend {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+        }
+        .legend-item { display: flex; align-items: center; }
+        .legend-box { width: 12px; height: 12px; margin-right: 6px; }
+
+    </style>
+</head>
+<body>
+
+    <h2>Fig 4. The Formula for Influence</h2>
+    <div class="subtitle">
+        Pearson correlations with PageRank across 4,031 established subreddits. 
+        Positive values indicate factors that <strong>build power</strong>; negative values indicate factors that <strong>reduce it</strong>.
+    </div>
+
+    <div id="dashboard">
+        <div id="structural-chart" class="chart-panel"></div>
+        <div id="linguistic-chart" class="chart-panel"></div>
+        <div id="toxicity-chart" class="chart-panel"></div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-box" style="background: #27ae60;"></div>
+            <span>Builds Power (Positive Correlation)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-box" style="background: #c0392b;"></div>
+            <span>Reduces Power (Negative Correlation)</span>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const MARGIN = {top: 20, right: 40, bottom: 20, left: 140};
+        const WIDTH = 500 - MARGIN.left - MARGIN.right;
+        const HEIGHT = 300 - MARGIN.top - MARGIN.bottom;
+
+        // Palette
+        const COLOR_POS = "#27ae60"; // Green
+        const COLOR_NEG = "#c0392b"; // Red
+
+        async function initDashboard() {
+            try {
+                const data = await d3.json('../data/power.json');
+
+                // Render the three charts
+                createDivergingBarChart("#structural-chart", "Structural Predictors", data.overall_features);
+                createDivergingBarChart("#linguistic-chart", "Linguistic Predictors", data.liwc_features);
+                createDivergingBarChart("#toxicity-chart", "Toxicity & Role Predictors", data.toxicity_features);
+
+            } catch (error) {
+                console.error("Error loading data:", error);
+                document.body.innerHTML += `<p style='color:red; text-align:center;'>Error: ${error.message}. Ensure '../data/power.json' exists.</p>`;
+            }
+        }
+
+        function createDivergingBarChart(selector, title, dataset) {
+            // Sort by correlation magnitude for cleaner look
+            // OR keep them as is if your Python script sorted them. 
+            // Let's sort by raw correlation to show strongest positive at top, strongest negative at bottom
+            dataset.sort((a, b) => b.correlation - a.correlation);
+
+            const container = d3.select(selector);
+            
+            // Add Title
+            container.append("div")
+                .attr("class", "chart-title")
+                .text(title);
+
+            const svg = container.append("svg")
+                .attr("width", WIDTH + MARGIN.left + MARGIN.right)
+                .attr("height", HEIGHT + MARGIN.top + MARGIN.bottom)
+                .append("g")
+                .attr("transform", `translate(${MARGIN.left},${MARGIN.top})`);
+
+            // X Scale: Symmetrical domain (-1 to 1) or adaptive
+            // For PageRank correlations, raw structural are high (0.8), others are lower (0.2)
+            // We'll use adaptive max to make the bars visible
+            const maxVal = d3.max(dataset, d => Math.abs(d.correlation));
+            const x = d3.scaleLinear()
+                .domain([-maxVal, maxVal])
+                .range([0, WIDTH]);
+
+            // Y Scale
+            const y = d3.scaleBand()
+                .domain(dataset.map(d => d.feature))
+                .range([0, HEIGHT])
+                .padding(0.3);
+
+            // Add Axes
+            // We only need the zero line really, but let's add a light grid
+            svg.append("g")
+                .attr("class", "axis")
+                .attr("transform", `translate(0,${HEIGHT})`)
+                .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".2f")))
+                .call(g => g.select(".domain").remove()); // Hide bottom line
+
+            // Zero Line
+            svg.append("line")
+                .attr("class", "zero-line")
+                .attr("x1", x(0))
+                .attr("x2", x(0))
+                .attr("y1", 0)
+                .attr("y2", HEIGHT);
+
+            // Draw Bars
+            svg.selectAll(".bar")
+                .data(dataset)
+                .join("rect")
+                .attr("class", "bar")
+                .attr("x", d => d.correlation > 0 ? x(0) : x(d.correlation))
+                .attr("y", d => y(d.feature))
+                .attr("width", d => Math.abs(x(d.correlation) - x(0)))
+                .attr("height", y.bandwidth())
+                .attr("fill", d => d.correlation > 0 ? COLOR_POS : COLOR_NEG);
+
+            // Add Y-Axis Labels (Feature Names)
+            // We position them differently depending on bar direction or fixed left?
+            // Fixed left is cleanest for academic charts.
+            svg.append("g")
+                .attr("class", "axis")
+                .call(d3.axisLeft(y).tickSize(0))
+                .selectAll("text")
+                .attr("class", "bar-label")
+                .style("text-anchor", "end")
+                .attr("x", -10);
+
+            // Add Value Labels
+            svg.selectAll(".value-label")
+                .data(dataset)
+                .join("text")
+                .attr("class", d => Math.abs(x(d.correlation) - x(0)) > 30 ? "bar-value" : "bar-value outside")
+                .attr("x", d => {
+                    const barWidth = Math.abs(x(d.correlation) - x(0));
+                    if (d.correlation > 0) {
+                        return barWidth > 30 ? x(d.correlation) - 5 : x(d.correlation) + 5;
+                    } else {
+                        return barWidth > 30 ? x(d.correlation) + 5 : x(d.correlation) - 5;
+                    }
+                })
+                .attr("y", d => y(d.feature) + y.bandwidth() / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", d => {
+                    const barWidth = Math.abs(x(d.correlation) - x(0));
+                    if (d.correlation > 0) return barWidth > 30 ? "end" : "start";
+                    return barWidth > 30 ? "start" : "end";
+                })
+                .text(d => d3.format(".2f")(d.correlation));
+        }
+
+        initDashboard();
+
+    </script>
+</body>
+</html>

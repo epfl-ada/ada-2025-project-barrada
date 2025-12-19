@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Role Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'IBM Plex Sans', sans-serif; margin: 0; overflow: hidden; background: #fff; }
+        
+        #chart { width: 100vw; height: 100vh; position: relative; }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #333;
+            color: #000;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .axis text { font-size: 11px; fill: #444; }
+        .axis-label { font-size: 12px; fill: #000; font-weight: 400; }
+        
+        /* Quadrant Labels */
+        .quad-label { 
+            font-size: 12px; 
+            fill: black; 
+            opacity: 0.8;
+            pointer-events: none; 
+            font-family: sans-serif;
+        }
+        
+        .median-line {
+            stroke: grey;
+            stroke-width: 1.5px;
+            stroke-dasharray: 6,4;
+            opacity: 0.5;
+        }
+
+        .node circle { 
+            stroke: #666; 
+            stroke-width: 0.5px; 
+            transition: all 0.2s; 
+            cursor: pointer; 
+        }
+        
+        .node:hover circle { 
+            stroke: #000; 
+            stroke-width: 1.5px; 
+            fill-opacity: 1; 
+        }
+
+        .node text {
+            font-size: 10px;
+            font-weight: 700;
+            fill: #000;
+            pointer-events: none;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chart"></div>
+<div id="tooltip" class="tooltip"></div>
+
+<script>
+    async function init() {
+        const data = await d3.json('../data/roles_scatter.json');
+        
+        // Sort: Draw big ones first, small on top
+        data.sort((a, b) => b.size - a.size);
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const margin = {top: 60, right: 60, bottom: 60, left: 60};
+
+        const zoom = d3.zoom()
+            .scaleExtent([0.8, 5])
+            .on("zoom", (event) => g.attr("transform", event.transform));
+
+        const svg = d3.select("#chart").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(zoom);
+
+        const g = svg.append("g");
+
+        // --- Scales ---
+        const xExtent = d3.extent(data, d => d.x);
+        const yExtent = d3.extent(data, d => d.y);
+        const xPad = (xExtent[1] - xExtent[0]) * 0.05;
+        const yPad = (yExtent[1] - yExtent[0]) * 0.05;
+
+        const x = d3.scaleLinear()
+            .domain([xExtent[0] - xPad, xExtent[1] + xPad])
+            .range([margin.left, width - margin.right]);
+
+        const y = d3.scaleLinear()
+            .domain([yExtent[0] - yPad, yExtent[1] + yPad])
+            .range([height - margin.bottom, margin.top]);
+
+        // FIX 1: Smaller Bubbles
+        const r = d3.scaleSqrt()
+            .domain([0, d3.max(data, d => d.size)])
+            .range([2, 15]); // Max radius reduced to 15px
+        
+        // FIX 2: Flipped Colors (Standard RdBu: Red=Low, Blue=High)
+        const color = d3.scaleSequential(d3.interpolateRdBu)
+            .domain([d3.min(data, d => d.sentiment), d3.max(data, d => d.sentiment)]);
+
+        // --- Medians ---
+        const xMed = d3.median(data, d => d.x);
+        const yMed = d3.median(data, d => d.y);
+
+        g.append("line").attr("class", "median-line")
+            .attr("x1", x(xMed)).attr("y1", margin.top)
+            .attr("x2", x(xMed)).attr("y2", height - margin.bottom);
+
+        g.append("line").attr("class", "median-line")
+            .attr("x1", margin.left).attr("y1", y(yMed))
+            .attr("x2", width - margin.right).attr("y2", y(yMed));
+
+        // --- Quadrant Labels (Fixed) ---
+        const labelsGroup = svg.append("g"); 
+        
+        labelsGroup.append("text").attr("class", "quad-label")
+            .attr("x", width - margin.right).attr("y", height - margin.bottom - 5)
+            .attr("text-anchor", "end")
+            .html("Controversial<tspan x='" + (width - margin.right) + "' dy='1.2em'>Influential</tspan>");
+
+        labelsGroup.append("text").attr("class", "quad-label")
+            .attr("x", margin.left).attr("y", margin.top + 15)
+            .attr("text-anchor", "start")
+            .html("Critical<tspan x='" + margin.left + "' dy='1.2em'>Controversial</tspan>");
+
+        labelsGroup.append("text").attr("class", "quad-label")
+            .attr("x", width - margin.right).attr("y", margin.top + 15)
+            .attr("text-anchor", "end")
+            .html("Supportive &<tspan x='" + (width - margin.right) + "' dy='1.2em'>Influential</tspan>");
+
+        labelsGroup.append("text").attr("class", "quad-label")
+            .attr("x", margin.left).attr("y", height - margin.bottom - 5)
+            .attr("text-anchor", "start")
+            .html("Niche &<tspan x='" + margin.left + "' dy='1.2em'>Self-Contained</tspan>");
+
+        // --- Axes ---
+        g.append("g").attr("class", "axis")
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(d3.axisBottom(x));
+        
+        g.append("text").attr("class", "axis-label")
+            .attr("x", width / 2).attr("y", height - 20)
+            .attr("text-anchor", "middle")
+            .text("Positive Outgoing Ratio (← Less | More →)");
+
+        g.append("g").attr("class", "axis")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(y));
+
+        g.append("text").attr("class", "axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2).attr("y", 20)
+            .attr("text-anchor", "middle")
+            .text("Negative Incoming Ratio (← Less | More →)");
+
+        // --- Points ---
+        const nodes = g.selectAll(".node")
+            .data(data)
+            .join("g")
+            .attr("class", "node")
+            .attr("transform", d => `translate(${x(d.x)},${y(d.y)})`);
+
+        nodes.append("circle")
+            .attr("r", d => r(d.size))
+            .attr("fill", d => color(d.sentiment))
+            .attr("fill-opacity", 0.6);
+
+        // --- Labels (Top 10) ---
+        const top10 = [...data].sort((a,b) => b.size - a.size).slice(0, 10);
+        const top10Names = new Set(top10.map(d => d.name));
+
+        nodes.filter(d => top10Names.has(d.name))
+            .append("text")
+            .attr("dy", 3)
+            .attr("dx", d => r(d.size) + 3)
+            .text(d => d.name);
+
+        // --- Tooltip ---
+        const tooltip = d3.select("#tooltip");
+        nodes.on("mouseover", (event, d) => {
+            tooltip.style("opacity", 1)
+                .html(`<strong>r/${d.name}</strong><br>Links: ${d.size}<br>Pos Out: ${d.x.toFixed(2)}<br>Neg In: ${d.y.toFixed(2)}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        }).on("mouseout", () => tooltip.style("opacity", 0));
+    }
+
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Insurgency Index (David vs. Goliath)</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- BASE STYLES --- */
+        :root {
+            --color-insurgency: #2c3e50; /* Dark Blue - The Crowd */
+            --color-bullying: #e74c3c;   /* Red - The aggressors */
+            --bg-color: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: "IBM Plex Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h2 {
+            font-family: "Merriweather", serif;
+            color: var(--color-insurgency);
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 50px;
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        /* --- LAYOUT CONTAINER --- */
+        .viz-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            max-width: 1100px;
+            width: 100%;
+            flex-wrap: wrap; /* Responsive wrapping on smaller screens */
+        }
+
+        /* --- WAFFLE CHART GRID --- */
+        #waffle-chart {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            width: 420px; /* Fixed width for the grid */
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .block {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .block:hover {
+            transform: scale(1.15);
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .block.insurgency { background-color: var(--color-insurgency); }
+        .block.bullying { background-color: var(--color-bullying); }
+
+        /* --- NARRATIVE PANEL (RIGHT SIDE) --- */
+        .narrative-panel {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding-top: 10px;
+        }
+
+        .stat-group {
+            padding-left: 20px;
+            border-left: 4px solid #eee;
+        }
+
+        .stat-group.insurgency { border-left-color: var(--color-insurgency); }
+        .stat-group.bullying { border-left-color: var(--color-bullying); }
+        
+        .stat-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .big-number {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .stat-desc strong { color: #222; }
+        .stat-desc em { color: #777; display: block; margin-top: 8px; font-size: 14px; }
+
+        /* --- VERDICT BOX --- */
+        .verdict-box {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(44, 62, 80, 0.15);
+        }
+        .verdict-box strong { color: #f1c40f; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* --- TOOLTIP --- */
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Fig 6. The "David vs. Goliath" Dynamic</h2>
+    <div class="subtitle">
+        Analyzing the direction of hostility across 82,210 inter-community attacks. Does power "punch down" (Bullying), or does the crowd "punch up" (Insurgency)?
+    </div>
+
+    <div class="viz-container">
+        <div id="waffle-chart"></div>
+
+        <div class="narrative-panel">
+            
+            <div class="stat-group insurgency">
+                <div class="stat-label" style="color: var(--color-insurgency);">THE INSURGENCY (Majority)</div>
+                <div class="big-number" style="color: var(--color-insurgency);" id="insurgency-pct">73.9%</div>
+                <div class="stat-desc">
+                    <strong>Punching Up:</strong> Attacks flowing from low-influence communities towards high-influence targets.
+                    <em>Example: Small partisan subreddits attacking r/news or r/worldnews.</em>
+                </div>
+            </div>
+
+            <div class="stat-group bullying">
+                <div class="stat-label" style="color: var(--color-bullying);">TRADITIONAL BULLYING (Minority)</div>
+                <div class="big-number" style="color: var(--color-bullying);" id="bullying-pct">26.1%</div>
+                <div class="stat-desc">
+                    <strong>Punching Down:</strong> Attacks flowing from powerful, established communities towards smaller, weaker ones.
+                </div>
+            </div>
+
+            <div class="verdict-box">
+                <strong>Verdict:</strong> The "bullying" narrative is statistically inverted on Reddit. Toxicity is primarily a populist phenomenon—a tool used by the "crowd" to challenge established power centers, rather than a tool of the powerful to suppress the weak.
+            </div>
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        async function initVisualization() {
+            try {
+                // 1. Fetch Data
+                // Ensure docs/site/assets/data/insurgency.json exists.
+                // Expected format: { "insurgency_pct": 73.9, "bullying_pct": 26.1, "total_attacks": 82210 }
+                let data;
+                try {
+                    data = await d3.json('../assets/data/insurgency.json');
+                } catch (e) {
+                    console.warn("Could not load insurgency.json, using fallback data based on analysis logs.");
+                    // Fallback data based on your previous analysis results
+                    data = { insurgency_pct: 73.9, bullying_pct: 26.1 };
+                }
+                 
+                const insurgencyPct = data.insurgency_pct;
+                const bullyingPct = data.bullying_pct;
+
+                // 2. Update Text Elements
+                // Using d3.format for clean percentage display
+                const fmt = d3.format(".1f");
+                d3.select("#insurgency-pct").text(fmt(insurgencyPct) + "%");
+                d3.select("#bullying-pct").text(fmt(bullyingPct) + "%");
+
+                // 3. Generate Waffle Grid Data (100 blocks representing 100%)
+                const gridData = [];
+                // Calculate how many blocks out of 100 belong to insurgency
+                const cutoffIndex = Math.round(insurgencyPct);
+
+                for (let i = 0; i < 100; i++) {
+                    const isInsurgency = i < cutoffIndex;
+                    gridData.push({
+                        id: i,
+                        type: isInsurgency ? 'insurgency' : 'bullying',
+                        // Tooltip label
+                        label: isInsurgency ? `Insurgency Attack (Punching Up)` : `Bullying Attack (Punching Down)`
+                    });
+                }
+
+                // 4. Render the Chart using D3
+                const chartContainer = d3.select("#waffle-chart");
+                const tooltip = d3.select("#tooltip");
+
+                chartContainer.selectAll(".block")
+                    .data(gridData)
+                    .join("div")
+                    .attr("class", d => `block ${d.type}`)
+                    .on("mouseover", (event, d) => {
+                        tooltip.style("opacity", 1)
+                            .html(d.label)
+                            // Position tooltip slightly above cursor
+                            .style("left", (event.pageX + 15) + "px")
+                            .style("top", (event.pageY - 35) + "px");
+                    })
+                    .on("mousemove", (event) => {
+                         tooltip
+                            .style("left", (event.pageX + 15) + "px")
+                            .style("top", (event.pageY - 35) + "px");
+                    })
+                    .on("mouseout", () => tooltip.style("opacity", 0));
+
+                // 5. Entrance Animation (Waterfall effect)
+                chartContainer.selectAll(".block")
+                    .style("opacity", 0)
+                    .style("transform", "translateY(20px) scale(0.8)")
+                    .transition()
+                    // Stagger delay based on index for waterfall look
+                    .delay((d, i) => i * 8) 
+                    .duration(500)
+                    .ease(d3.easeBackOut.overshoot(1.2))
+                    .style("opacity", 1)
+                    .style("transform", "translateY(0) scale(1)");
+
+            } catch (error) {
+                console.error("Critical error initializing visualization:", error);
+                document.body.innerHTML = `<p style='color:#c0392b; text-align:center; margin-top:50px;'>Error loading visualization. Please check console.</p>`;
+            }
+        }
+
+        // Initialize when DOM is ready
+        initVisualization();
+    </script>
+</body>
+</html>

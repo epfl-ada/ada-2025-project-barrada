@@ -97,7 +97,7 @@ class ResearchQuestions:
                       for col in df.columns]
         
         csv_path = self.rq_analysis_dir / f"{method_name}.csv"
-        df.to_csv(csv_path, index=False)
+        df.to_csv(csv_path, index=True)
         self.all_rq_results[method_name] = df
         return df
 

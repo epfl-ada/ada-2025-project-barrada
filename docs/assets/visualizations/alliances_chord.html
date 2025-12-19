@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Circle of Trust</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { 
+            margin: 0; 
+            background-color: #ffffff; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 10px 14px;
+            font: 12px sans-serif;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 100;
+            max-width: 250px;
+        }
+        .tooltip strong { color: #000; font-weight: 700; }
+        .tooltip-sub { color: #666; font-size: 11px; margin-top: 4px; }
+
+        path { transition: opacity 0.3s ease; cursor: pointer; }
+        text { font-size: 11px; fill: #444; pointer-events: none; font-weight: 600; }
+
+        /* Interaction States */
+        .faded { opacity: 0.1 !important; }
+        .highlighted { opacity: 1 !important; stroke: #333; stroke-width: 0.5px; }
+    </style>
+</head>
+<body>
+
+<div id="chart"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+    // --- ALLIANCE DATA ---
+    const alliances = [
+        {"source":"Politics/Activism","target":"Lifestyle/Home","links":658},
+        {"source":"Shitpost","target":"Art/Imaginary","links":133},
+        {"source":"Trading","target":"Entertainment Mixed","links":37},
+        {"source":"YouTube/Gaming Content","target":"Art/Imaginary","links":22},
+        {"source":"NSFW-Fetish","target":"Mix","links":79},
+        {"source":"Sports/American","target":"Games","links":57},
+        {"source":"Memes/Cute/Funny","target":"Celebrities/Models","links":15},
+        {"source":"Technology/Hardware","target":"Celebrities/Models","links":22},
+        {"source":"Japanese","target":"Esports/Online Games","links":32},
+        {"source":"Science/Academia","target":"Games","links":39},
+        {"source":"Lifestyle","target":"Entertainment Mixed","links":80},
+        {"source":"YouTuber Personalities","target":"Memes/Cute/Funny","links":23},
+        {"source":"Geographic/Countries","target":"My Little Pony","links":28},
+        {"source":"Lifestyle/Outdoor","target":"Games","links":62},
+        {"source":"Art/Imaginary","target":"Gaming-AAA Titles","links":17},
+        {"source":"Music","target":"Games","links":63},
+        {"source":"Movies/TV/Comics","target":"Football","links":26},
+        {"source":"Help/Advice/Q&A","target":"Personal/Community","links":770},
+        {"source":"Entertainment Mixed","target":"Trading","links":48},
+        {"source":"Personal/Community","target":"Japanese","links":100}
+    ];
+
+    // --- CONFIGURATION ---
+    const width = 740;
+    const height = 740;
+    const outerRadius = Math.min(width, height) * 0.5 - 120;
+    const innerRadius = outerRadius - 20;
+
+    const svg = d3.select("#chart").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+    // 1. Prepare Data
+    const names = Array.from(new Set(alliances.flatMap(d => [d.source, d.target]))).sort();
+    const index = new Map(names.map((name, i) => [name, i]));
+    const matrix = Array.from(index, () => new Array(names.length).fill(0));
+    
+    alliances.forEach(({source, target, links}) => {
+        matrix[index.get(source)][index.get(target)] += links;
+    });
+
+    // 2. Layout
+    const chord = d3.chord()
+        .padAngle(0.04)
+        .sortSubgroups(d3.descending);
+    const chords = chord(matrix);
+
+    // 3. Color Scale (Pastel/Soothing colors for Friendship)
+    const color = d3.scaleOrdinal(d3.schemeSet3).domain(names);
+
+    // 4. Draw Outer Arcs (Clusters)
+    const group = svg.append("g")
+        .selectAll("g")
+        .data(chords.groups)
+        .join("g");
+
+    const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+
+    group.append("path")
+        .attr("fill", d => color(names[d.index]))
+        .attr("d", arc)
+        .attr("stroke", "#fff")
+        .on("mouseover", fadeOthers)
+        .on("mouseout", restoreAll);
+
+    // 5. Draw Labels
+    group.append("text")
+        .each(d => { d.angle = (d.startAngle + d.endAngle) / 2; })
+        .attr("dy", "0.35em")
+        .attr("transform", d => `
+            rotate(${(d.angle * 180 / Math.PI - 90)})
+            translate(${outerRadius + 10})
+            ${d.angle > Math.PI ? "rotate(180)" : ""}
+        `)
+        .attr("text-anchor", d => d.angle > Math.PI ? "end" : "start")
+        .text(d => names[d.index]);
+
+    // 6. Draw Ribbons (Support)
+    const ribbon = d3.ribbon().radius(innerRadius);
+
+    svg.append("g")
+        .attr("fill-opacity", 0.65)
+        .selectAll("path")
+        .data(chords)
+        .join("path")
+        .attr("class", "ribbon")
+        .attr("d", ribbon)
+        .attr("fill", d => color(names[d.source.index])) // Color based on SUPPORTER
+        .on("mouseover", function(event, d) {
+            d3.select(this).classed("highlighted", true);
+            const sourceName = names[d.source.index];
+            const targetName = names[d.target.index];
+            
+            d3.select("#tooltip").style("opacity", 1)
+                .html(`
+                    <div style="font-size:13px; margin-bottom:4px;">
+                        <span style="color:${color(sourceName)}">●</span> <strong>${sourceName}</strong>
+                        <span style="color:#999; margin:0 4px;">🤝</span> 
+                        <strong>${targetName}</strong>
+                    </div>
+                    <div class="tooltip-sub">Support: ${d.source.value.toLocaleString()} links</div>
+                `)
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 25) + "px");
+        })
+        .on("mouseout", function() {
+            d3.select(this).classed("highlighted", false);
+            d3.select("#tooltip").style("opacity", 0);
+        });
+
+    // --- INTERACTION ---
+    function fadeOthers(event, d) {
+        const i = d.index;
+        svg.selectAll(".ribbon")
+           .classed("faded", r => r.source.index !== i && r.target.index !== i)
+           .classed("highlighted", r => r.source.index === i || r.target.index === i);
+        group.select("path").classed("faded", g => g.index !== i);
+    }
+
+    function restoreAll() {
+        svg.selectAll(".ribbon").classed("faded", false).classed("highlighted", false);
+        group.select("path").classed("faded", false);
+    }
+
+</script>
+</body>
+</html>
