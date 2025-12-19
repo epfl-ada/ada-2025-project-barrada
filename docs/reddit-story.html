@@ -252,6 +252,8 @@ These are the links that quietly stitch Reddit together: attention used as signa
 
   </div>
 </section>
+
+
 <section class="story-chapter" id="roles">
   <div class="section-inner">
     <div class="section-header">
@@ -776,7 +778,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <!-- Hero Image -->
     <div style="max-width: 800px; margin: 2rem auto;">
       <img 
-        src="{{ '/assets/img/davidvsgolliah.jpg' | relative_url }}" 
+        src="{{ '/assets/img/david_vs_goliath.png' | relative_url }}" 
         alt="David vs Goliath" 
         style="width:100%; height:auto; display:block; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);"
       />
@@ -822,7 +824,6 @@ These are the links that quietly stitch Reddit together: attention used as signa
   </div>
 </section>
 
-
 <section class="story-chapter" id="civility">
   <div class="section-inner">
     
@@ -830,7 +831,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
       <h2 class="section-title text-center">Cannibals vs Monks</h2>
     </div>
 
-  <h3 style="margin-top: 0;">External conflict is the headline. Internal conflict is the culture.</h3>
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">External conflict is the headline. Internal conflict is the culture.</h3>
     <p>
       We've seen how communities treat their neighbors. But how do they treat <em>themselves</em>?
     </p>
@@ -842,7 +843,8 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <p>
       We mapped this as a physical geography:
     </p>
-    <div style="margin: 3rem auto; max-width: 900px;">
+
+    <div style="margin: 3rem auto; max-width: 900px; width:100%;">
       <img 
         src="{{ '/assets/img/isolation.png' | relative_url }}" 
         alt="The Archipelago of Reddit Map" 
@@ -853,88 +855,122 @@ These are the links that quietly stitch Reddit together: attention used as signa
       </p>
     </div>
 
-    <div style="max-width: 800px; margin: 4rem auto;">
-    <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">A Tour of the Islands</h3>
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">A Tour of the Islands</h3>
+
+      <!-- ISLAND 1: TEXT LEFT, IMAGE RIGHT -->
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:2rem;">
+        <div class="media-text" style="flex:1 1 520px;min-width:300px;padding:0 1rem;text-align:left;">
+          <h4 style="margin:0 0 0.6rem 0;">The Monks (Top Right)</h4>
+          <p style="margin:0;">
+            Peaceful, isolated islands in the clouds. These communities ignore the outside world,
+            not out of hate, but out of contentment. They are self-sufficient.
+            <br>
+            <em>(e.g., Hobbies, Niche Interests, My Little Pony)</em>
+          </p>
+        </div>
+
+        <div class="role-col" style="flex:0 1 320px;min-width:260px;text-align:center;">
+          <img
+            src="{{ '/assets/img/snoo_monk.png' | relative_url }}"
+            alt="Monks island icon"
+            loading="lazy"
+            style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto;"
+          />
+          <p style="margin:0.8rem 0 0 0;color:#666;font-size:0.95rem;">
+            Quiet. Self-contained. Civil.
+          </p>
+        </div>
+      </div>
+
+      <!-- ISLAND 2: IMAGE LEFT, TEXT RIGHT -->
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:3rem;">
+        <div class="role-col" style="flex:0 1 320px;min-width:260px;text-align:center;">
+          <img
+            src="{{ '/assets/img/snoo_openminded.png' | relative_url }}"
+            alt="Open societies island icon"
+            loading="lazy"
+            style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto;"
+          />
+          <p style="margin:0.8rem 0 0 0;color:#666;font-size:0.95rem;">
+            Connected. High-traffic. Stable.
+          </p>
+        </div>
+
+        <div class="media-text" style="flex:1 1 520px;min-width:300px;padding:0 1rem;text-align:left;">
+          <h4 style="margin:0 0 0.6rem 0;">Open Societies (Top Left)</h4>
+          <p style="margin:0;">
+            Bustling, connected cities. These are the hubs of the network. They trade links constantly
+            with the outside world while maintaining high internal civility.
+            <br>
+            <em>(e.g., Games, Entertainment, Science)</em>
+          </p>
+        </div>
+      </div>
+
+      <!-- ISLAND 3: TEXT LEFT, IMAGE RIGHT -->
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:3rem;">
+        <div class="media-text" style="flex:1 1 520px;min-width:300px;padding:0 1rem;text-align:left;">
+          <h4 style="margin:0 0 0.6rem 0;">The Cannibals (Bottom Left)</h4>
+          <p style="margin:0;">
+            Dark, war-torn lands. These communities are defined by high internal conflict.
+            They don't just fight outsiders; they fight themselves.
+            <br>
+            <em>(e.g., Politics/Extremism, Meta-Commentary)</em>
+          </p>
+        </div>
+
+        <div class="role-col" style="flex:0 1 320px;min-width:260px;text-align:center;">
+          <img
+            src="{{ '/assets/img/snoo_cannibal.png' | relative_url }}"
+            alt="Cannibals island icon"
+            loading="lazy"
+            style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto;"
+          />
+          <p style="margin:0.8rem 0 0 0;color:#666;font-size:0.95rem;">
+            High heat. High drama. Self-conflict.
+          </p>
+        </div>
+      </div>
+
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">The Purity Principle: Isolation ≠ Toxicity</h3>
+
+      <p>
+        Echo chambers are assumed toxic. But the most isolated communities are the most civil.
+      </p>
+      
+      <!-- BAR CHART IFRAME -->
+      <div style="margin: 2rem auto; max-width: 900px;">
+        <div style="width: 100%; height: 550px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+          <iframe
+            src="{{ '/assets/visualizations/isolation.html' | relative_url }}"
+            width="100%"
+            height="100%"
+            style="border: none;"
+            title="Top 5 Isolated Ecosystems"
+            scrolling="no"
+          ></iframe>
+        </div>
+      </div>
+      
+      <p style="margin-top: 2rem;">
+        Isolation stems from self-sufficiency, not dogmatism. Football fans and hobbyists don't need external links. Science and health communities must link broadly to survive.
+      </p>
+
+      <h3 class="section-header text-center" style="margin-top:2.5rem;">The Takeaway: Isolation isn't inherently bad.</h3>
     
-    <div style="display: flex; align-items: flex-start; margin-bottom: 2rem;">
-      <div style="font-size: 2rem; margin-right: 1.5rem; flex-shrink: 0;">🕊️</div>
-      <div>
-        <h4 style="margin: 0 0 0.5rem 0;">The Monks (Top Right)</h4>
-        <p style="margin: 0;">
-          Peaceful, isolated islands in the clouds. These communities ignore the outside world, not out of hate, but out of contentment. They are self-sufficient.
-          <br>
-          <em>(e.g., Hobbies, Niche Interests, My Little Pony)</em>
-        </p>
-      </div>
-    </div>
+      <p>
+        The most peaceful places on Reddit are often the most isolated. 
+        Conversely, some of the most connected places are the most toxic.
+      </p>
 
-    <div style="display: flex; align-items: flex-start; margin-bottom: 2rem;">
-      <div style="font-size: 2rem; margin-right: 1.5rem; flex-shrink: 0;">🏙️</div>
-      <div>
-        <h4 style="margin: 0 0 0.5rem 0;">Open Societies (Top Left)</h4>
-        <p style="margin: 0;">
-          Bustling, connected cities. These are the hubs of the network. They trade links constantly with the outside world while maintaining high internal civility.
-          <br>
-          <em>(e.g., Games, Entertainment, Science)</em>
-        </p>
-      </div>
-    </div>
+      <p style="margin-top: 2rem;">
+        We have now mapped the <strong>Structure</strong>, the <strong>Power</strong>, the <strong>Conflict</strong>, and the <strong>Isolation</strong>. 
+        But structure is only the container. To understand the <em>soul</em> of Reddit, we must look at the content itself.
+      </p>
 
-    <div style="display: flex; align-items: flex-start; margin-bottom: 2rem;">
-      <div style="font-size: 2rem; margin-right: 1.5rem; flex-shrink: 0;">🌋</div>
-      <div>
-        <h4 style="margin: 0 0 0.5rem 0;">The Cannibals (Bottom Left)</h4>
-        <p style="margin: 0;">
-          Dark, war-torn lands. These communities are defined by high internal conflict. They don't just fight outsiders; they fight themselves.
-          <br>
-          <em>(e.g., Politics/Extremism, Meta-Commentary)</em>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div style="max-width: 800px; margin: 4rem auto;">
-    <h3>The Purity Principle: Isolation ≠ Toxicity</h3>
-    <p>
-      Echo chambers are assumed toxic. But the most isolated communities are the most civil.
-    </p>
-    
-    <!-- BAR CHART IFRAME -->
-    <div style="margin: 2rem auto; max-width: 900px;">
-      <div style="width: 100%; height: 550px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-        <iframe
-          src="{{ 'assets/visualizations/isolation.html' | relative_url }}"
-          width="100%"
-          height="100%"
-          style="border: none;"
-          title="Top 5 Isolated Ecosystems"
-          scrolling="no"
-        ></iframe>
-      </div>
-    </div>
-    
-    <p style="margin-top: 2rem;">
-      Isolation stems from self-sufficiency, not dogmatism. Football fans and hobbyists don't need external links. Science and health communities must link broadly to survive.
-    </p>
-  </div>
-
-    <div style="max-width: 800px; margin: 3rem auto 0 auto;">
-  
-  <h3 style="margin-top: 0;">The Takeaway: Isolation isn't inherently bad.</h3>
-  
-    <p>
-      The most peaceful places on Reddit are often the most isolated. 
-      Conversely, some of the most connected places are the most toxic.
-    </p>
-
-    <p style="margin-top: 2rem;">
-      We have now mapped the <strong>Structure</strong>, the <strong>Power</strong>, the <strong>Conflict</strong>, and the <strong>Isolation</strong>. 
-      But structure is only the container. To understand the <em>soul</em> of Reddit, we must look at the content itself.
-    </p>
-
-    <p style="margin-top: 1rem; font-size: 1.1rem; font-weight: 500;">
-      <strong>Next: The Language of the Hive Mind.</strong>
-    </p>
+      <p style="margin-top: 1rem; font-size: 1.1rem; font-weight: 500;">
+        <strong>Next: The Language of the Hive Mind.</strong>
+      </p>
 
   </div>
 </section>
