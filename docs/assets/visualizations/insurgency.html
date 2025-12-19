@@ -201,11 +201,9 @@
         async function initVisualization() {
             try {
                 // 1. Fetch Data
-                // Ensure docs/site/assets/data/insurgency.json exists.
-                // Expected format: { "insurgency_pct": 73.9, "bullying_pct": 26.1, "total_attacks": 82210 }
                 let data;
                 try {
-                    data = await d3.json('../assets/data/insurgency.json');
+                    data = await d3.json('../data/insurgency.json');
                 } catch (e) {
                     console.warn("Could not load insurgency.json, using fallback data based on analysis logs.");
                     // Fallback data based on your previous analysis results
