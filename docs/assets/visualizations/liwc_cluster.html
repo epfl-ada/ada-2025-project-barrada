@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cluster Explorer</title>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Layout */
+    .app {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .left {
+      position: relative;
+      flex: 1 1 auto;
+      border-right: 1px solid #eaeaea;
+      background: #fff;
+    }
+
+    .right {
+      width: 360px;
+      flex: 0 0 360px;
+      background: rgba(255,255,255,0.98);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* Top controls (centered over left panel) */
+    .controls {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-width: calc(100% - 40px);
+    }
+
+    .controls label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6a6a6a;
+      white-space: nowrap;
+    }
+
+    .controls select {
+      width: min(420px, 42vw);
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      outline: none;
+      background: #fff;
+      cursor: pointer;
+    }
+    .controls select:focus {
+      border-color: #ff4500;
+      box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.12);
+    }
+
+    .controls button {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      background: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .controls button:hover {
+      border-color: #ff4500;
+      background: #fff5f2;
+    }
+
+    /* Legend (bottom-left on left panel) */
+    .legend {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 10;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      width: 220px;
+    }
+    .legend h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      color: #6a6a6a;
+      font-weight: 800;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+    .legend-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    /* Right panel styling */
+    .panel-header {
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .panel-header h3 {
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-box {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #edf0f2;
+    }
+    .stat-label {
+      display: block;
+      font-size: 11px;
+      color: #6a6a6a;
+      margin-bottom: 4px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .stat-value {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      color: #1a1a1a;
+    }
+
+    .role-tag {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      display: inline-block;
+      color: #fff;
+      background: #999;
+    }
+    .role-influential { background: #f1c40f; color: #2c3e50; }
+    .role-supportive { background: #27ae60; }
+    .role-controversial { background: #8e44ad; }
+    .role-critical { background: #c0392b; }
+    .role-neutral { background: #bdc3c7; color: #333; }
+
+    .radar-container {
+      height: 210px;
+      background: #fff;
+      border: 1px solid #edf0f2;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    /* D3 styles */
+    svg { width: 100%; height: 100%; display: block; }
+    .link { transition: stroke-opacity 0.15s, stroke-width 0.15s; }
+    .link.positive { stroke: #11ec20; stroke-opacity: 0.35; }
+    .link.neutral  { stroke: #867e7e; stroke-opacity: 0.15; }
+    .link.negative { stroke: #c62828; stroke-opacity: 0.55; }
+
+    .node circle {
+      stroke: #fff;
+      stroke-width: 2.5px;
+      cursor: pointer;
+      transition: transform 0.15s, stroke 0.15s;
+    }
+    .node text {
+      font-family: 'IBM Plex Sans', sans-serif;
+      fill: #1a1a1a;
+      font-weight: 800;
+      font-size: 11px;
+      pointer-events: none;
+      paint-order: stroke;
+      stroke: #fff;
+      stroke-width: 3px;
+    }
+
+    .center-node circle {
+      stroke: #ff4500 !important;
+      stroke-width: 4px !important;
+      filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.35));
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- LEFT: connections graph -->
+    <div class="left" id="left">
+      <div class="controls">
+        <label for="clusterSelect">Cluster</label>
+        <select id="clusterSelect"></select>
+        <button id="goBtn">Go</button>
+      </div>
+
+      <div class="legend">
+        <h4>Node Color: Civility</h4>
+        <div class="legend-item"><div class="legend-dot" style="background:#11ec20;"></div><span>Civil (&gt;95%)</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#bdc3c7;"></div><span>Mixed</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#c62828;"></div><span>Toxic</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: details only -->
+    <div class="right" id="right">
+      <div class="panel-header">
+        <h3 id="panel-name">Pick a cluster</h3>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-label">Dominant Role</span>
+          <span id="panel-role" class="role-tag role-neutral">--</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Size (Subs)</span>
+          <span class="stat-value" id="panel-size">--</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Internal Civility</span>
+          <span class="stat-value" id="panel-civility">--</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">PageRank Score</span>
+          <span class="stat-value" id="panel-pagerank">--</span>
+        </div>
+      </div>
+
+      <div class="radar-container">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------
+    // Global state
+    // ----------------------------
+    let nodesAll = [];
+    let edgesRaw = [];     // NEVER mutated by D3
+    let nodeByName = new Map();
+
+    let svg, g;
+    let currentSimulation = null;
+    let radarChartInstance = null;
+
+    // Build the left SVG once
+    function initSVG() {
+      const left = document.getElementById("left");
+      const width = left.clientWidth;
+      const height = left.clientHeight;
+
+      svg = d3.select("#left")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      g = svg.append("g");
+
+      // zoom/pan
+      svg.call(
+        d3.zoom()
+          .scaleExtent([0.3, 5])
+          .on("zoom", (e) => g.attr("transform", e.transform))
+      );
+
+      // keep SVG responsive on resize
+      window.addEventListener("resize", () => {
+        const w = left.clientWidth;
+        const h = left.clientHeight;
+        svg.attr("width", w).attr("height", h);
+
+        // re-render current selection if any
+        const current = document.getElementById("panel-name").innerText;
+        if (nodeByName.has(current)) renderEgo(current);
+      });
+    }
+
+    // ----------------------------
+    // Data loading
+    // ----------------------------
+    Promise.all([
+      d3.json("../data/nodes.json"),
+      d3.json("../data/edges.json")
+    ]).then(([nodes, edges]) => {
+      nodesAll = nodes;
+      nodeByName = new Map(nodesAll.map(n => [n.name, n]));
+
+      // Keep edgesRaw immutable and string-based
+      edgesRaw = edges.map(e => ({
+        ...e,
+        sourceName: e.source,  // expected to be node name
+        targetName: e.target
+      }));
+
+      initSVG();
+      initPicker(nodesAll);
+
+      // default: pick the top pagerank node if available, else first
+      const defaultNode = [...nodesAll].sort((a,b) => (b.pagerank ?? 0) - (a.pagerank ?? 0))[0] || nodesAll[0];
+      if (defaultNode) {
+        document.getElementById("clusterSelect").value = defaultNode.name;
+        renderEgo(defaultNode.name);
+      }
+    }).catch(err => {
+      console.error("Failed to load data:", err);
+      document.body.innerHTML = `
+        <div style="padding:40px;font-family:IBM Plex Sans,sans-serif;">
+          <h2 style="color:#c62828;">Error loading data</h2>
+          <p style="margin-top:10px;color:#444;">Check that <code>../data/nodes.json</code> and <code>../data/edges.json</code> exist and match expected fields.</p>
+        </div>
+      `;
+    });
+
+    function initPicker(nodes) {
+      const select = document.getElementById("clusterSelect");
+      select.innerHTML = "";
+
+      nodes
+        .map(d => d.name)
+        .sort((a,b) => a.localeCompare(b))
+        .forEach(name => {
+          const opt = document.createElement("option");
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        });
+
+      const go = () => {
+        const name = select.value;
+        if (!nodeByName.has(name)) return;
+        renderEgo(name);
+      };
+
+      document.getElementById("goBtn").addEventListener("click", go);
+
+      // optional: instantly update on selection change (keeps Go button too)
+      select.addEventListener("change", go);
+    }
+
+    // ----------------------------
+    // Core: render ego network (left) + details (right)
+    // ----------------------------
+    function renderEgo(centerName) {
+      const center = nodeByName.get(centerName);
+      if (!center) return;
+
+      // STOP old sim + CLEAR old drawing (prevents “superposed” visuals)
+      if (currentSimulation) currentSimulation.stop();
+      g.selectAll("*").remove();
+
+      // 1) Node dedupe map (FIXES "two selected clusters")
+      const nodeMap = new Map();
+      nodeMap.set(centerName, center);
+
+      // 2) Neighbor set
+      const neighbors = new Set();
+      for (const e of edgesRaw) {
+        const s = e.sourceName;
+        const t = e.targetName;
+        if (s === centerName) neighbors.add(t);
+        else if (t === centerName) neighbors.add(s);
+      }
+
+      // 3) Add neighbors once
+      neighbors.forEach(n => {
+        const nd = nodeByName.get(n);
+        if (nd) nodeMap.set(n, nd);
+      });
+
+      const egoNodes = Array.from(nodeMap.values());
+
+      // 4) Filter edges touching center (and within nodeMap)
+      const egoEdges0 = edgesRaw
+        .filter(e => {
+          const s = e.sourceName;
+          const t = e.targetName;
+          return (
+            (s === centerName && nodeMap.has(t)) ||
+            (t === centerName && nodeMap.has(s))
+          );
+        })
+        .map(e => ({ ...e })); // copy (so forceLink can mutate safely)
+
+      // OPTIONAL edge dedupe (keeps graph clean if duplicates exist)
+      const edgeMap = new Map();
+      for (const e of egoEdges0) {
+        // treat as directed key; if you want undirected, sort the pair
+        const key = `${e.sourceName}→${e.targetName}|${e.sentiment ?? ""}`;
+        if (!edgeMap.has(key)) edgeMap.set(key, e);
+      }
+      const egoEdges = Array.from(edgeMap.values());
+
+      // Right panel update
+      showPanel(center);
+
+      // Left graph render
+      renderGraph(egoNodes, egoEdges, centerName);
+    }
+
+    function renderGraph(egoNodes, egoEdges, centerName) {
+      const left = document.getElementById("left");
+      const width = left.clientWidth;
+      const height = left.clientHeight;
+
+      // Scales
+      const prExtent = d3.extent(egoNodes, d => d.pagerank ?? 0);
+      const sizeScale = d3.scaleSqrt()
+        .domain(prExtent[0] === prExtent[1] ? [0, prExtent[1] || 1] : prExtent)
+        .range([14, 48]);
+
+      // Internal negativity -> color
+      const nodeColor = chroma.scale(['#11ec20', '#bdc3c7', '#c62828'])
+        .domain([0, 10, 25])
+        .mode('lab');
+
+      // Convert edge endpoints from names to node objects (for simulation only)
+      const byNameLocal = new Map(egoNodes.map(n => [n.name, n]));
+      const simEdges = egoEdges.map(e => ({
+        ...e,
+        source: byNameLocal.get(e.sourceName),
+        target: byNameLocal.get(e.targetName)
+      })).filter(e => e.source && e.target);
+
+      // Draw links
+      const link = g.append("g")
+        .selectAll("line")
+        .data(simEdges, d => `${d.sourceName}→${d.targetName}|${d.sentiment ?? ""}`)
+        .enter()
+        .append("line")
+        .attr("class", d => {
+          const s = d.sentiment ?? 0.7;
+          if (s > 0.8) return "link positive";
+          if (s < 0.6) return "link negative";
+          return "link neutral";
+        })
+        .attr("stroke-width", d => {
+          const s = d.sentiment ?? 0.7;
+          if (s < 0.6) return 3;
+          if (s > 0.8) return 2.5;
+          return 1.2;
+        });
+
+      // Draw nodes
+      const node = g.append("g")
+        .selectAll("g")
+        .data(egoNodes, d => d.name)
+        .enter()
+        .append("g")
+        .attr("class", d => `node ${d.name === centerName ? "center-node" : ""}`)
+        .call(
+          d3.drag()
+            .on("start", (event, d) => {
+              if (!event.active) currentSimulation.alphaTarget(0.2).restart();
+              d.fx = d.x; d.fy = d.y;
+            })
+            .on("drag", (event, d) => {
+              d.fx = event.x; d.fy = event.y;
+            })
+            .on("end", (event, d) => {
+              if (!event.active) currentSimulation.alphaTarget(0);
+              d.fx = null; d.fy = null;
+            })
+        );
+
+      node.append("circle")
+        .attr("r", d => sizeScale(d.pagerank ?? 0) * (d.name === centerName ? 1.08 : 1))
+        .attr("fill", d => nodeColor(d.internal_negativity ?? 0).hex());
+
+      node.append("text")
+        .attr("dy", d => sizeScale(d.pagerank ?? 0) + 14)
+        .attr("text-anchor", "middle")
+        .text(d => d.name);
+
+      // Click any node to re-center (and update dropdown)
+      node.on("click", (event, d) => {
+        event.stopPropagation();
+        document.getElementById("clusterSelect").value = d.name;
+        renderEgo(d.name);
+      });
+
+      // Simulation
+      currentSimulation = d3.forceSimulation(egoNodes)
+        .force("link", d3.forceLink(simEdges).distance(220).strength(0.9))
+        .force("charge", d3.forceManyBody().strength(-700))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collide", d3.forceCollide().radius(d => sizeScale(d.pagerank ?? 0) + 26));
+
+      currentSimulation.on("tick", () => {
+        link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+      });
+    }
+
+    // ----------------------------
+    // Right panel (details only)
+    // ----------------------------
+    function showPanel(d) {
+      document.getElementById("panel-name").innerText = d.name ?? "--";
+      document.getElementById("panel-size").innerText = (d.size != null)
+        ? Number(d.size).toLocaleString()
+        : "--";
+
+      const civ = 100 - Number(d.internal_negativity ?? 0);
+      document.getElementById("panel-civility").innerText = isFinite(civ) ? `${civ.toFixed(1)}%` : "--";
+
+      const pr = Number(d.pagerank ?? 0);
+      document.getElementById("panel-pagerank").innerText = isFinite(pr) ? (pr * 10000).toFixed(2) : "--";
+
+      // Role
+      const roles = [
+        { id: 'Influential',    val: Number(d.pct_influential ?? 0),   css: 'role-influential' },
+        { id: 'Supportive',    val: Number(d.pct_supportive ?? 0),    css: 'role-supportive' },
+        { id: 'Controversial', val: Number(d.pct_controversial ?? 0), css: 'role-controversial' },
+        { id: 'Critical',      val: Number(d.pct_critical ?? 0),      css: 'role-critical' }
+      ].sort((a,b) => b.val - a.val);
+
+      const topRole = roles[0];
+      const roleEl = document.getElementById("panel-role");
+      roleEl.innerText = topRole.val > 0 ? topRole.id : "Neutral";
+      roleEl.className = "role-tag " + (topRole.val > 0 ? topRole.css : "role-neutral");
+
+      renderRadar(d);
+    }
+
+    function renderRadar(d) {
+      const ctx = document.getElementById("radarChart").getContext("2d");
+      if (radarChartInstance) radarChartInstance.destroy();
+
+      // Safe getters (your JSON fields must match these names)
+      const Anger   = Number(d.Anger   ?? d.LIWC_Anger   ?? 0);
+      const Negemo  = Number(d.Negemo  ?? d.LIWC_Negemo  ?? 0);
+      const Posemo  = Number(d.Posemo  ?? d.LIWC_Posemo  ?? 0);
+      const Certain = Number(d.Certain ?? d.LIWC_Certain ?? 0);
+      const CogMech = Number(d.CogMech ?? d.LIWC_CogMech ?? 0);
+      const Social  = Number(d.Social  ?? d.LIWC_Social  ?? 0);
+
+      // Normalize to 0..100 with rough caps (adjust to your real ranges if needed)
+      const values = [
+        (Anger   / 0.02) * 100,
+        (Negemo  / 0.04) * 100,
+        (Posemo  / 0.06) * 100,
+        (Certain / 0.02) * 100,
+        (CogMech / 0.10) * 100,
+        (Social  / 0.10) * 100
+      ].map(v => Math.min(100, Math.max(0, v)));
+
+      radarChartInstance = new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["Anger", "Negemo", "Posemo", "Certainty", "Cognitive", "Social"],
+          datasets: [{
+            label: "Psychological Profile",
+            data: values,
+            backgroundColor: "rgba(255, 69, 0, 0.18)",
+            borderColor: "#ff4500",
+            pointBackgroundColor: "#ff4500",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              ticks: { display: false, max: 100, min: 0 },
+              grid: { color: "rgba(0,0,0,0.06)" },
+              angleLines: { color: "rgba(0,0,0,0.06)" },
+              pointLabels: {
+                font: { size: 10, weight: "700", family: "IBM Plex Sans" },
+                color: "#333"
+              }
+            }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

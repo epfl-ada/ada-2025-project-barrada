@@ -980,11 +980,177 @@ permalink: /
   </div>
 </section>
 
+<section class="story-chapter" id="liwc">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <h2 class="section-title text-center">The Language of Reddit</h2>
+    </div>
+
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">
+      LIWC shows what attention sounds like.
+    </h3>
+
+    <p>
+      Up to now, we mapped Reddit as geography (continents), traffic (links), power (PageRank, betweenness),
+      and conflict (rivalries, punching bags, insurgency).
+      The missing layer is <strong>voice</strong>: the psychological style communities use when they point at each other.
+    </p>
+
+    <p>
+      We add that layer using <strong>LIWC</strong> (Linguistic Inquiry and Word Count).
+      It turns text into stable signals like anger, anxiety, certainty, pronouns (“we” vs “they”), and social focus.
+      This is not mind-reading. It’s measuring patterns in word choice at scale.
+    </p>
+
+    <!-- CHAPTER 1 -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">Four roles, four voices</h3>
+
+    <p>
+      The network roles weren’t just structural — they are linguistic types.
+      We compute the <strong>relative lift</strong> of key LIWC features inside each role compared to the global baseline.
+    </p>
+
+    <div style="margin: 2rem auto; max-width: 1000px;">
+      <img
+        src="{{ '/assets/img/liwc_lift_per_role.png' | relative_url }}"
+        alt="LIWC relative lift by role"
+        loading="lazy"
+        style="width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"
+      />
+      <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+        <strong>Role fingerprints:</strong> LIWC dimensions elevated in each role (relative lift vs global mean).
+      </p>
+    </div>
+
+    <div style="display:flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+      <div style="flex: 1 1 240px; padding: 1.2rem; border: 1px solid #eee; border-radius: 12px; background: #fff;">
+        <h4 style="margin-top:0;">Critical</h4>
+        <p style="margin:0;">
+          Outrage + outgroup focus. Elevated <strong>anger</strong>, <strong>anxiety</strong>, <strong>sadness</strong>,
+          and <strong>“they”</strong>, with higher <strong>certainty</strong> confident condemnation, not hesitation.
+        </p>
+      </div>
+
+      <div style="flex: 1 1 240px; padding: 1.2rem; border: 1px solid #eee; border-radius: 12px; background: #fff;">
+        <h4 style="margin-top:0;">Controversial</h4>
+        <p style="margin:0;">
+          Conflict magnets. Similar direction to Critical, but lower intensity:
+          they attract fights, absorb heat, and keep threads unstable.
+        </p>
+      </div>
+
+      <div style="flex: 1 1 240px; padding: 1.2rem; border: 1px solid #eee; border-radius: 12px; background: #fff;">
+        <h4 style="margin-top:0;">Influential</h4>
+        <p style="margin:0;">
+          The baseline voice of “average Reddit.” Most features sit near the global mean:
+          influence is driven more by position than by emotional tone.
+        </p>
+      </div>
+
+      <div style="flex: 1 1 240px; padding: 1.2rem; border: 1px solid #eee; border-radius: 12px; background: #fff;">
+        <h4 style="margin-top:0;">Supportive</h4>
+        <p style="margin:0;">
+          Low heat, high care. Lower anger and slightly more tentative language:
+          help sounds cautious, not combative.
+        </p>
+      </div>
+    </div>
+
+
+    <!-- CHAPTER 2 -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">
+      The Asymmetry Paradox: how you speak vs how people speak about you
+    </h3>
+
+    <p>
+      Roles describe group averages. But at the subreddit level, there’s a more personal question:
+      does a community’s tone match what it receives?
+      Below, we compare outgoing anger (how a subreddit talks) to incoming anger (how others talk about it).
+    </p>
+
+    <div style="margin: 2rem auto; max-width: 700px;">
+      <img
+      src="{{ '/assets/img/liwc_anger.png' | relative_url }}"
+      alt="Anger asymmetry: outgoing vs incoming"
+      loading="lazy"
+      style="width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"
+      />
+      <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+      <strong>Asymmetry:</strong> outgoing anger (blue) vs incoming anger (red) for high-anger targets.
+      </p>
+    </div>
+
+    <p style="margin-top:1.2rem;">
+      This is the language version of your network story: some communities are <strong>exporters</strong> of heat,
+      others are <strong>lightning rods</strong> that absorb it.
+      Tone doesn’t just spread — it accumulates.
+    </p>
+
+    <!-- CHAPTER 3 -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">The Bridge Builder’s dictionary</h3>
+
+    <p>
+      Finally, we asked what makes a community a true connector — a bridge between islands.
+      Betweenness correlates with a surprisingly human style: <strong>informal</strong>, <strong>social</strong>,
+      and slightly <strong>anxious</strong>. Bridges sound like regular people, not institutions.
+    </p>
+    <figure style="width:100%; height:360px; margin:0; border-radius:12px; overflow:hidden; background:white;">
+      <iframe
+        src="{{ '/assets/visualizations/bridges.html' | relative_url }}"
+        width="100%"
+        height="100%"
+        style="border: none; display:block;"
+        loading="lazy"
+        title="Top LIWC correlates of betweenness"
+        scrolling="no"
+      ></iframe>
+      <figcaption class="caption-center" style="margin-top:0.5rem;">
+        <strong>Bridges:</strong> language markers that rise with betweenness.
+      </figcaption>
+    </figure>
+    <p>
+      Bridges don’t win by certainty. They win by being accessible:
+      casual speech, agreement cues, social framing, and everyday topics.
+    </p>
+
+  </div>
+</section>
+
+
+<section class="story-chapter" id="conclusion">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <h2 class="section-title text-center">Conclusion</h2>
+    </div>
+
+    <h3 class="section-header text-center" style="margin-top:2.5rem;">
+      What the map and language together reveal
+    </h3>
+
+
+    <figure style="width:100%; height:700px; margin:0; border-radius:12px; overflow:hidden; background:white;">
+      <iframe
+        src="{{ '/assets/visualizations/liwc_cluster.html' | relative_url }}"
+        width="100%"
+        height="100%"
+        style="border: none; display:block;"
+        loading="lazy"
+        title="Top LIWC correlates of betweenness"
+        scrolling="no"
+      ></iframe>
+    </figure>
+
+  </div>
+</section>
+
+
 
 <section class="story-section">
   <div class="section-inner">
     <p class="story-outro">
-      You've now seen Reddit as geography (continents), traffic (roads), structure (centrality),
+      You’ve now seen Reddit as geography (continents), traffic (roads), structure (centrality),
       and conflict dynamics (rivalries, internal fighting, flows, power).
       Next comes the language layer: the psychological signature that separates criticism, trolling,
       and ordinary disagreement — without guessing.
