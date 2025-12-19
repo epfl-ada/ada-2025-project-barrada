@@ -210,8 +210,8 @@
                     data = { insurgency_pct: 73.9, bullying_pct: 26.1 };
                 }
                  
-                const insurgencyPct = data.insurgency_pct;
-                const bullyingPct = data.bullying_pct;
+                const insurgencyPct = data.insurgency_pct * 100;
+                const bullyingPct = data.bullying_pct * 100;
 
                 // 2. Update Text Elements
                 // Using d3.format for clean percentage display
