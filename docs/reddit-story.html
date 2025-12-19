@@ -20,7 +20,7 @@ permalink: /
       <span class="data-highlight">67,180 </span> subreddits.
     </p>
     <p class="hero-description animate-fade-up delay-3">
-      What does Reddit's collective mind look like when one examined through different lenses ? Let's follow the data as it fans out across roles, subreddits, and emotional beats to try to unravel it's secrets.
+      What does Reddit's collective mind look like when examined through different lenses ? Let's follow the data as it fans out across the different subreddits, roles, and emotional beats to try to unravel it's secrets.
     </p>
     <div class="hero-actions animate-fade-up delay-4">
       <a class="hero-cta" href="#the-map">
@@ -102,14 +102,14 @@ permalink: /
       <p style="margin-top:1.2rem;">
       We choose a clear goal: compress 50k+ communities into a map a human can hold in their head.
       We do this with <strong>K-Means</strong>, which groups subreddits into <strong>40 topic blocs</strong>
-      (Politics, Music, Sports, NSFW, Tech, and so on).
+      (Politics, Music, Sports, Tech, and so on).
     </p>
 
     <p>
-      But there’s a real issue: algorithms don’t understand culture.
-      They don’t understand parody, irony, or communities that exist mainly to mock other communities.
-      So we do something honest: <strong>we manually correct a small set of edge cases</strong>.
-      Not to “cheat” the method but to keep the map meaningful for a human reader.
+      In doing so we encounter a big issue: algorithms don't understand human culture.
+      They don't understand parody, irony, or communities that exist mainly to mock other communities.
+      So we have to interfere to capture some of the details that get lost in the algorithm: <strong>we manually correct a small set of edge cases</strong>.
+      Not to “cheat” the system but to keep the map meaningful for a human reader.
     </p>
 
     <div style="height: 600px; overflow: hidden; background: white;">
@@ -129,15 +129,15 @@ permalink: /
     </p>
 
     <p style="margin-top:1.2rem;">
-      Now we have the continents. But a map without movement is just geography.
-      The real story starts when we ask: <strong>if Reddit has continents… what are the roads between them?</strong>
+      Now we have the continents. But a still map with no movement is cannot describe the ever moving nature of reddit's threads.
+      The real story starts when we ask: <strong>if Reddit has continents… what are the paths that connect them?</strong>
     </p>
 
 
     <!-- CHAPTER 3 -->
-    <h3 class="section-header text-center">If subreddits communicate, what are the roads?</h3>
+    <h3 class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
     <p>
-      Our “roads” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it’s a form of attention — sometimes supportive, sometimes hostile — so each link is not just a connection but carries a <strong>tone</strong>. By tracking link tone at scale, we can see how attention (and conflict) travels across Reddit.
+      Our “paths” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it's a form of communication that can be either friendly, hostile or just neutral so each link is not just a connection but carries a specific <strong>tone</strong>. By tracking link tone at scale, we can track how both attention and conflicts travel across Reddit.
     </p>
     <div class="media-stack" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1.2rem;width:100%;">
 
@@ -149,18 +149,20 @@ permalink: /
         </figure>
 
         <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
-          <h4> A link can be a gift. </h4>
-          <p> Sometimes a subreddit links to another community just to share something wholesome: “look at this restored my faith in people.” The comments don’t try to “win.” They add gratitude, jokes, and empathy.
-These are the links that quietly stitch Reddit together: attention used as signal-boosting, not attacking. </p>
+          <h4> Uplifting links</h4>
+          <p> Sometimes a subreddit links to another community simply to share something positive or noteworthy. 
+            The conversation that follows isn't about winning or competing, it simply adds gratitude, empathy, or humor. 
+            These links quietly weave Reddit's web, using attention to amplify and celebrate rather than to attack. </p>
         </div>
       </div>
 
       <!-- Row 2: image right, text on the left -->
       <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;">
         <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
-          <h4> A link can also be a weapon </h4>
-          <p> Other times, a subreddit links to a post as a public callout: “look at this disaster.” 
-            The original topic becomes a proxy for a bigger culture-war argument, and the thread spirals into dunking, outrage, and tribal blame. </p>
+          <h4> Provocative links </h4>
+          <p> Other links point to content as a form of critique or callout. 
+            The original post can serve as a proxy for a wider cultural debate, and the discussion often escalates into mockery or even outrage. 
+            These links show how conflict and scrutiny spread across the platform. </p>
         </div>
 
         <figure class="media-frame" style="flex:1 1 320px;min-width:260px;margin:0;">
@@ -172,7 +174,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      This raises the core tone question: when one subreddit links to another, is it usually an attack or is it more often a peaceful share, a helpful recommendation, or constructive conversation?
+      This raises the core tone question: when one subreddit links to another, is it usually an attack or is it more often a peaceful share / a positive recommendation?
     </p>
 
     <!-- CHAPTER 4 -->
@@ -180,8 +182,9 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
-        The surprising answer: most links are not negative. Even when communities cross topic boundaries, the default behavior is not war—it's sharing. Reddit is not a platform made of constant conflict.
-        Within-cluster links: 93.6% positive. Cross-cluster links: 88.9% positive. The echo chamber bonus is real but small—only +4.7 percentage points.
+        The answer may surprise you: negative links are rare. Even across different topic communities, most links are positive or neutral.
+        Within-cluster links are 93.6% positive or neutral, and cross-cluster links are 88.9% positive or neutral.
+        Negative links are the exception, showing that Reddit's discussion threads are generally collaborative rather than combative.
       </p>
       </div>
 
@@ -194,16 +197,13 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      That raises a practical follow-up: if negativity clusters, does attention follow the same pattern? In other words are links and visibility concentrated in a handful of subreddits, or is attention broadly and evenly distributed across the site?
+      Now that we have a better understanding of the links between subreddits, we can turn to a new question: how is the activity distributed across the platform? 
+      Are most of the interactions concentrated in a handful of communities, or is engagement spread out more evenly
     </p>
 
     <!-- CHAPTER 5 -->
-    <h3 class="section-header text-center">Where does attention concentrate?</h3>
+    <h3 class="section-header text-center">Where do most interactions concentrate?</h3>
 
-    <p>
-      At this point, “conflict” is still too vague. So we ask a sharper question:
-      <strong>who talks the most</strong>, and <strong>who gets talked about the most</strong>?
-    </p>
 
     <p>
       The two plots below answer that directly. The left chart shows the subreddits that
@@ -228,22 +228,25 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      The pattern is clear: attention on Reddit is <strong>not evenly distributed</strong>.
+      The pattern is clear: interactions on Reddit are <strong>not evenly distributed</strong>.
       A few communities act like <strong>megaphones</strong> (they link out constantly),
-      while a few massive hubs (like broad Q&amp;A and general-interest subreddits) act like <strong>public squares</strong>
+      while a few massive hubs (like broad Q&amp;A and general interest subreddits) act like <strong>public squares</strong>
       where everyone points, reacts, and piles in.
     </p>
 
     <p>
-      And this is where the story becomes interesting: these high-volume linkers are not always “bad,”
-      and these high-volume targets are not always “victims.”
+      But volume alone doesn't tell us the whole story. High activity doesn't inherently mean a community is dominating or being attacked. 
+      The same patterns of linking can reflect very different roles depending on context.
+
+      And this is where the story becomes interesting: these high-volume linkers are not always “bad”,
+      and these high-volume targets are not always “victims”.
       Sometimes a community is a curator that boosts content.
       Sometimes it is a watchdog that calls out others.
       Sometimes it is a lightning rod that absorbs reactions simply because it is big.
     </p>
 
     <p style="margin-top:1.2rem;">
-      So the next question isn’t just “where is conflict?” it’s:
+      So the next question isn't just “where is conflict?” it's:
       <strong>who are the actors driving it?</strong>
       <strong>what role does each continent play in the network?</strong>
       Who are the amplifiers, the critics, the bridges, and the punching bags of Reddit?
@@ -290,7 +293,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
         </p>
         <p style="margin:0;">
           This chart is the reality check. While the “loud” roles (Critical + Controversial) exist, they are a minority compared to the vast "Supportive" clusters. 
-          That’s why Reddit can feel both peaceful and chaotic: a small set of communities generate a disproportionate amount of the friction.
+          That's why Reddit can feel both peaceful and chaotic: a small set of communities generate a disproportionate amount of the friction.
         </p>
       </div>
     </div>
@@ -328,7 +331,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
         />
         <p style="margin:0;text-align:left;padding:0 0.5rem;">
           <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
-          Their power is reach: they don’t need to be extreme to dominate the flow of links.
+          Their power is reach: they don't need to be extreme to dominate the flow of links.
           The "Help/Advice/Q&A" cluster is the most influential on Reddit (83.5%), followed closely by "Lifestyle" and "Tech."
         </p>
       </div>
@@ -392,7 +395,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
           style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
         />
         <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The lightning rods.</strong> They don’t always start fights, but fights find them.
+          <strong>The lightning rods.</strong> They don't always start fights, but fights find them.
           Threads here turn into battlegrounds, and links often carry “look at this” energy—supportive or hostile.
           Unsurprisingly, <strong>Politics/Extremism</strong> takes the top spot. 
           Interestingly, <strong>Meta-Commentary</strong> (subreddits that talk <em>about</em> Reddit) is the second most controversial. 
@@ -402,7 +405,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     </div>
 
     <p style="margin-top:1.2rem;">
-      The last role is different: it’s not just “where fights happen,” but “where fights are produced.”
+      The last role is different: it's not just “where fights happen,” but “where fights are produced.”
     </p>
 
 
@@ -455,7 +458,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
     <p>
       Up to now, we treated Reddit like a flat map: continents (<strong>topics</strong>) and roads (<strong>hyperlinks</strong>).But power is not distributed evenly.
       Power is not about being “right” or “loud”,
-      it’s about position: who sits at the center, who acts as a bridge, and who everyone points at
+      it's about position: who sits at the center, who acts as a bridge, and who everyone points at
     </p>
 
     <p>
@@ -979,7 +982,7 @@ These are the links that quietly stitch Reddit together: attention used as signa
 <section class="story-section">
   <div class="section-inner">
     <p class="story-outro">
-      You’ve now seen Reddit as geography (continents), traffic (roads), structure (centrality),
+      You've now seen Reddit as geography (continents), traffic (roads), structure (centrality),
       and conflict dynamics (rivalries, internal fighting, flows, power).
       Next comes the language layer: the psychological signature that separates criticism, trolling,
       and ordinary disagreement — without guessing.
