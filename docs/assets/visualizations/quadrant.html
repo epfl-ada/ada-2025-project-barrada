@@ -106,16 +106,13 @@
             .domain([yExtent[0] - yPad, yExtent[1] + yPad])
             .range([height - margin.bottom, margin.top]);
 
-        // FIX 1: Smaller Bubbles
         const r = d3.scaleSqrt()
             .domain([0, d3.max(data, d => d.size)])
             .range([2, 15]); // Max radius reduced to 15px
         
-        // FIX 2: Flipped Colors (Standard RdBu: Red=Low, Blue=High)
         const color = d3.scaleSequential(d3.interpolateRdBu)
             .domain([d3.min(data, d => d.sentiment), d3.max(data, d => d.sentiment)]);
 
-        // --- Medians ---
         const xMed = d3.median(data, d => d.x);
         const yMed = d3.median(data, d => d.y);
 
@@ -127,7 +124,6 @@
             .attr("x1", margin.left).attr("y1", y(yMed))
             .attr("x2", width - margin.right).attr("y2", y(yMed));
 
-        // --- Quadrant Labels (Fixed) ---
         const labelsGroup = svg.append("g"); 
         
         labelsGroup.append("text").attr("class", "quad-label")
@@ -150,7 +146,6 @@
             .attr("text-anchor", "start")
             .html("Niche &<tspan x='" + margin.left + "' dy='1.2em'>Self-Contained</tspan>");
 
-        // --- Axes ---
         g.append("g").attr("class", "axis")
             .attr("transform", `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x));
@@ -170,7 +165,6 @@
             .attr("text-anchor", "middle")
             .text("Negative Incoming Ratio (← Less | More →)");
 
-        // --- Points ---
         const nodes = g.selectAll(".node")
             .data(data)
             .join("g")
@@ -182,7 +176,6 @@
             .attr("fill", d => color(d.sentiment))
             .attr("fill-opacity", 0.6);
 
-        // --- Labels (Top 10) ---
         const top10 = [...data].sort((a,b) => b.size - a.size).slice(0, 10);
         const top10Names = new Set(top10.map(d => d.name));
 
@@ -192,7 +185,6 @@
             .attr("dx", d => r(d.size) + 3)
             .text(d => d.name);
 
-        // --- Tooltip ---
         const tooltip = d3.select("#tooltip");
         nodes.on("mouseover", (event, d) => {
             tooltip.style("opacity", 1)

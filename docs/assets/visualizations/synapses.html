@@ -95,10 +95,8 @@
 
         /* --- INTERACTION STATES --- */
         
-        /* Faded State (Background) */
         .faded { opacity: 0.05 !important; }
         
-        /* Active/Hover State */
         .node.active circle {
             stroke: #333;
             stroke-width: 3px;
@@ -186,9 +184,8 @@
             const width = 950;
             const height = 950;
             const radius = width / 2;
-            const innerRadius = radius - 140; // Space for labels and role arcs
+            const innerRadius = radius - 140;
 
-            // COLORS
             const roleColors = {
                 "Influential": "#f1c40f",
                 "Supportive": "#27ae60",
@@ -204,14 +201,11 @@
                 .append("g");
 
             try {
-                // LOAD DATA
                 const [nodes, edges] = await Promise.all([
                     d3.json('../data/nodes.json'),
                     d3.json('../data/edges.json')
                 ]);
 
-                // 1. DATA PROCESSING: HIERARCHY
-                // We group clusters by their DOMINANT ROLE for the circle sectors
                 const hierarchyData = {
                     name: "root",
                     children: [
@@ -225,10 +219,8 @@
 
                 const roleIdx = { "Influential":0, "Supportive":1, "Controversial":2, "Critical":3, "Neutral":4 };
 
-                // Map nodes to hierarchy
                 const nodeMap = new Map();
                 nodes.forEach(n => {
-                    // Calculate dominant role
                     const r = [
                         {id: "Influential", val: n.pct_influential},
                         {id: "Supportive", val: n.pct_supportive},
@@ -236,7 +228,6 @@
                         {id: "Critical", val: n.pct_critical}
                     ].sort((a,b) => b.val - a.val)[0];
                     
-                    // Threshold: Must have at least 5% in that role, else Neutral
                     const role = r.val > 5 ? r.id : "Neutral";
                     
                     const nodeObj = {
@@ -250,24 +241,18 @@
                     hierarchyData.children[roleIdx[role]].children.push(nodeObj);
                 });
 
-                // Remove empty categories
                 hierarchyData.children = hierarchyData.children.filter(c => c.children.length > 0);
 
-                // 2. LAYOUT: CLUSTER (Radial)
                 const cluster = d3.cluster()
                     .size([360, innerRadius]);
 
                 const root = d3.hierarchy(hierarchyData)
-                    .sort((a, b) => a.data.name.localeCompare(b.data.name)); // Alphabetical within role
+                    .sort((a, b) => a.data.name.localeCompare(b.data.name));
 
                 cluster(root);
 
-                // Map leaves for link lookup
                 const leaves = root.leaves();
                 leaves.forEach(l => nodeMap.set(l.data.name, l));
-
-                // 3. LAYOUT: LINKS (Bundle)
-                // Filter small links to prevent browser crash
                 const bundleLinks = edges
                     .filter(e => e.value > 30) 
                     .map(e => {
@@ -283,16 +268,11 @@
                         }
                     }).filter(d => d);
 
-                // Line generator with BUNDLING (Beta = 0.85 makes them tight like nerves)
                 const line = d3.lineRadial()
                     .curve(d3.curveBundle.beta(0.85))
                     .radius(d => d.y)
                     .angle(d => d.x / 180 * Math.PI);
 
-                // 4. DRAWING
-
-                // A. Role Arcs (Background Sectors)
-                // We need to calculate start/end angles for each Role parent
                 const roleArcs = root.children.map(child => {
                     const childLeaves = child.leaves();
                     return {
@@ -316,7 +296,6 @@
                     .attr("class", "role-arc")
                     .style("fill", d => d.color);
 
-                // Role Labels
                 svg.append("g").selectAll("text")
                     .data(roleArcs)
                     .join("text")
@@ -337,7 +316,6 @@
                     .text(d => d.name)
                     .style("fill", d => d.color);
 
-                // B. Links
                 const linkGroup = svg.append("g").selectAll("path")
                     .data(bundleLinks)
                     .join("path")
@@ -345,7 +323,6 @@
                     .attr("d", d => line(d.source.path(d.target)))
                     .style("stroke-width", d => Math.max(0.5, Math.min(d.value / 400, 3)));
 
-                // C. Nodes
                 const nodeGroup = svg.append("g").selectAll("g")
                     .data(leaves)
                     .join("g")
@@ -366,7 +343,6 @@
                     .attr("transform", d => d.x >= 180 ? "rotate(180)" : null)
                     .text(d => d.data.name);
 
-                // --- INTERACTION LOGIC ---
                 let isLocked = false;
 
                 function mouseover(event, d) {
@@ -383,9 +359,7 @@
                     event.stopPropagation();
                     
                     if (isLocked) {
-                        // If already locked, reset first
                         reset();
-                        // If clicking same node, unlock. If different, highlight new one.
                         if (d3.select(this).classed("clicked-node")) {
                             isLocked = false;
                             return;
@@ -394,10 +368,9 @@
                     
                     isLocked = true;
                     highlight(d);
-                    d3.select(this).classed("clicked-node", true); // Mark as active
+                    d3.select(this).classed("clicked-node", true);
                 }
 
-                // Global click to unlock
                 d3.select("body").on("click", () => {
                     if (isLocked) {
                         isLocked = false;
@@ -405,21 +378,15 @@
                     }
                 });
 
-                // --- HELPER FUNCTIONS ---
-
                 function highlight(d) {
-                    // Fade Everything
                     nodeGroup.classed("faded", true);
                     linkGroup.classed("faded", true);
                     d3.selectAll(".role-arc").classed("faded", true);
 
-                    // Unfade Current Node
-                    // Find the visual element corresponding to data 'd'
                     nodeGroup.filter(n => n === d)
                         .classed("faded", false)
                         .classed("active", true);
 
-                    // Find Connected Links & Neighbors
                     const connected = new Set();
                     connected.add(d.data.name);
 
@@ -430,14 +397,12 @@
                             connected.add(l.source.data.name);
                             connected.add(l.target.data.name);
                         })
-                        .raise(); // Bring lines to front
+                        .raise(); 
 
-                    // Unfade Neighbors
                     nodeGroup.filter(n => connected.has(n.data.name))
                         .classed("faded", false)
                         .classed("active", true);
                         
-                    // Tooltip
                     const tooltip = d3.select("#tooltip");
                     tooltip.style("opacity", 1)
                         .html(`<strong>${d.data.name}</strong><br>

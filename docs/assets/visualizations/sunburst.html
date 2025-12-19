@@ -146,8 +146,8 @@
 
         // Color Scale for Civility (Green -> Red)
         const colorScale = d3.scaleLinear()
-            .domain([75, 88, 95, 100]) // Domain based on Civility %
-            .range(["#c0392b", "#e67e22", "#f1c40f", "#2ecc71"]) // Red, Orange, Yellow, Green
+            .domain([75, 88, 95, 100])
+            .range(["#c0392b", "#e67e22", "#f1c40f", "#2ecc71"])
             .clamp(true);
 
         const svg = d3.select("#sunburst")
@@ -173,9 +173,7 @@
             try {
                 const nodes = await d3.json('../data/nodes.json');
 
-                // 1. PROCESS DATA INTO HIERARCHY
-                // We need to group clusters by their "Dominant Role"
-                
+                // 1. PROCESS DATA INTO HIERARCHY                
                 const hierarchyData = {
                     name: "Reddit",
                     children: [
@@ -187,14 +185,12 @@
                     ]
                 };
 
-                // Helper to find index of role in hierarchyData
                 const roleMap = {
                     "Influential": 0, "Supportive": 1, 
                     "Controversial": 2, "Critical": 3, "Neutral": 4
                 };
 
                 nodes.forEach(node => {
-                    // Determine dominant role
                     const roles = [
                         { id: 'Influential', val: node.pct_influential },
                         { id: 'Supportive', val: node.pct_supportive },
@@ -203,41 +199,34 @@
                     ];
                     roles.sort((a,b) => b.val - a.val);
                     
-                    // Threshold: If top role is < 5%, class as Neutral
                     let domRole = roles[0].val > 5 ? roles[0].id : "Neutral";
                     
                     // Create child node
                     const child = {
                         name: node.name,
-                        value: node.size, // Size by number of subreddits
+                        value: node.size, 
                         civility: 100 - node.internal_negativity,
-                        // Store detailed stats for tooltip
                         top_subs: node.top_subreddits
                     };
 
                     hierarchyData.children[roleMap[domRole]].children.push(child);
                 });
 
-                // Remove empty role categories
                 hierarchyData.children = hierarchyData.children.filter(c => c.children.length > 0);
 
-                // 2. BUILD HIERARCHY
                 const root = d3.hierarchy(hierarchyData)
                     .sum(d => d.value)
                     .sort((a, b) => b.value - a.value);
 
                 partition(root);
 
-                // 3. RENDER
                 const path = svg.selectAll("path")
-                    .data(root.descendants().filter(d => d.depth)) // Hide root circle
+                    .data(root.descendants().filter(d => d.depth)) 
                     .join("path")
                     .attr("d", arc)
                     .style("fill", d => {
-                        // If leaf (Cluster), color by Civility
                         if (d.depth === 2) return colorScale(d.data.civility);
                         
-                        // If parent (Role), color by average of children
                         if (d.depth === 1) {
                             const avgCivility = d3.mean(d.children, c => c.data.civility);
                             return colorScale(avgCivility);
@@ -247,19 +236,14 @@
                     .on("mouseover", mouseover)
                     .on("mouseleave", mouseleave)
                     .on("click", click);
-
-                // 4. INTERACTION FUNCTIONS
                 
                 function mouseover(event, d) {
-                    // Dim all paths
                     svg.selectAll("path").style("opacity", 0.3);
                     
-                    // Highlight ancestors
                     svg.selectAll("path")
                         .filter(node => d.ancestors().indexOf(node) >= 0)
                         .style("opacity", 1);
 
-                    // Update Info Center
                     const percentage = ((d.value / root.value) * 100).toFixed(1);
                     const name = d.data.name;
                     let desc = "";
@@ -275,7 +259,6 @@
                     d3.select("#label-desc").html(desc);
                     d3.select("#explanation").style("opacity", 1);
                     
-                    // Update Breadcrumbs
                     const sequence = d.ancestors().map(d => d.data.name).reverse();
                     d3.select("#breadcrumbs").text(sequence.join(" > "));
                 }

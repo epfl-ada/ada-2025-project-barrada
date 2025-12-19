@@ -51,29 +51,24 @@
             try {
                 const nodes = await d3.json('../data/nodes.json');
                 
-                // Filter small noisy clusters
                 const data = nodes.filter(d => d.size > 25);
 
-                // Scales
                 const x = d3.scaleLinear()
                     .domain([0, d3.max(data, d => d.insularity || 0) * 1.1])
                     .range([0, width]);
 
-                // Civility usually 75-100%, zoom in
                 const y = d3.scaleLinear()
                     .domain([d3.min(data, d => (100-d.internal_negativity)) - 5, 100])
                     .range([height, 0]);
 
                 const r = d3.scaleSqrt()
                     .domain([0, d3.max(data, d => d.size)])
-                    .range([5, 35]); // Bubble size
+                    .range([5, 35]); 
 
-                // Background Quadrant Labels
                 svg.append("text").attr("class", "q-label").attr("x", width*0.15).attr("y", height*0.1).text("OPEN SOCIETIES").style("fill", "#e3f2fd");
                 svg.append("text").attr("class", "q-label").attr("x", width*0.85).attr("y", height*0.1).text("THE MONKS").style("fill", "#e8f5e9");
                 svg.append("text").attr("class", "q-label").attr("x", width*0.15).attr("y", height*0.9).text("THE CANNIBALS").style("fill", "#ffebee");
 
-                // Axes
                 svg.append("g").attr("class", "axis")
                     .attr("transform", `translate(0,${height})`)
                     .call(d3.axisBottom(x).tickSize(-height).ticks(8));
@@ -81,7 +76,6 @@
                 svg.append("g").attr("class", "axis")
                     .call(d3.axisLeft(y).tickSize(-width).ticks(8));
 
-                // Axis Labels
                 svg.append("text").attr("class", "axis-label")
                     .attr("x", width/2).attr("y", height + 40)
                     .text("Insularity (Self-Linking %)");
@@ -90,14 +84,13 @@
                     .attr("transform", "rotate(-90)").attr("x", -height/2).attr("y", -40)
                     .text("Internal Civility (Positive %)");
 
-                // Force Simulation
                 const simulation = d3.forceSimulation(data)
-                    .force("x", d3.forceX(d => x(d.insularity || 0)).strength(0.8)) // Strong pull to X position
-                    .force("y", d3.forceY(d => y(100 - d.internal_negativity)).strength(0.8)) // Strong pull to Y position
-                    .force("collide", d3.forceCollide(d => r(d.size) + 2).iterations(4)) // Prevent overlap
+                    .force("x", d3.forceX(d => x(d.insularity || 0)).strength(0.8))
+                    .force("y", d3.forceY(d => y(100 - d.internal_negativity)).strength(0.8)) 
+                    .force("collide", d3.forceCollide(d => r(d.size) + 2).iterations(4))
                     .stop();
 
-                // Run simulation manually to stabilize before rendering (Static-ish look)
+                // Run simulation manually to stabilize before rendering
                 for (let i = 0; i < 120; ++i) simulation.tick();
 
                 // Draw Nodes
@@ -110,8 +103,8 @@
                     .attr("r", d => r(d.size))
                     .style("fill", d => {
                         const civil = 100 - d.internal_negativity;
-                        if (civil < 90) return "#c0392b"; // Toxic = Red
-                        if ((d.insularity || 0) > 30) return "#27ae60"; // Isolated = Green
+                        if (civil < 90) return "#c0392b";
+                        if ((d.insularity || 0) > 30) return "#27ae60";
                         return "#2980b9"; // Open = Blue
                     })
                     .style("opacity", 0.8)
@@ -126,7 +119,6 @@
                     })
                     .on("mouseout", () => d3.select("#tooltip").style("opacity", 0));
 
-                // Labels for big nodes
                 svg.selectAll(".label")
                     .data(data.filter(d => d.size > 800 || (d.insularity > 40 && d.size > 200)))
                     .join("text")

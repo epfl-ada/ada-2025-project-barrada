@@ -24,7 +24,6 @@
             position: relative;
         }
 
-        /* --- CONTROLS & LEGEND --- */
         .controls {
             position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 10px; z-index: 10;
@@ -51,7 +50,6 @@
         .legend-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
         .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
 
-        /* --- INFO PANEL --- */
         .info-panel {
             position: absolute; top: 20px; right: 20px; width: 320px;
             background: rgba(255, 255, 255, 0.98); border: 1px solid #e0e0e0;
@@ -70,7 +68,6 @@
         .stat-label { display: block; font-size: 11px; color: #6a6a6a; margin-bottom: 4px; font-weight: 600; }
         .stat-value { display: block; font-size: 14px; font-weight: 700; color: #1a1a1a; }
 
-        /* Role Tag Styles */
         .role-tag { padding: 4px 8px; border-radius: 4px; font-size: 10px; text-transform: uppercase; color: white; background: #999; display: inline-block;}
         .role-influential { background: #f1c40f; color: #2c3e50; }
         .role-supportive { background: #27ae60; }
@@ -78,7 +75,6 @@
         .role-critical { background: #c0392b; }
         .role-neutral { background: #bdc3c7; color: #333; }
 
-        /* Top Subreddits List */
         .top-subs-container h4 { font-size: 12px; color: #6a6a6a; margin-bottom: 10px; text-transform: uppercase; font-weight: 700;}
         .top-subs-list { list-style: none; padding: 0; margin-bottom: 20px; }
         .top-subs-list li { 
@@ -89,13 +85,11 @@
         
         .radar-container { height: 180px; margin-top: 10px; }
 
-        /* --- D3 NETWORK STYLES --- */
         .link { transition: stroke-opacity 0.2s; }
         
-        /* INCREASED VISIBILITY FOR POSITIVE LINKS */
         .link.positive { 
             stroke: #11ec20; 
-            stroke-opacity: 0.4; /* Increased from 0.15 */
+            stroke-opacity: 0.4;
         }
         .link.neutral { 
             stroke: #867e7e; 
@@ -103,7 +97,7 @@
         }
         .link.negative { 
             stroke: #c62828; 
-            stroke-opacity: 0.6; /* Slight reduction to balance green */
+            stroke-opacity: 0.6; 
         }
 
         .node circle { stroke: #fff; stroke-width: 2.5px; cursor: pointer; transition: all 0.3s; }
@@ -199,26 +193,18 @@ Promise.all([
 
     // --- 1. DATA PROCESSING ---
     
-    // Scale for node size based on PageRank
-    // Note: PageRank in your data is small (e.g., 1e-05), so we log scale or sqrt it properly
     const sizeScale = d3.scaleSqrt()
         .domain(d3.extent(nodes, d => d.pagerank))
-        .range([15, 60]); // Increased base size slightly
+        .range([15, 60]); 
 
-    // Color scale based on internal negativity
-    // Low negativity (0-5%) = Green, High (>20%) = Red
     const nodeColor = chroma.scale(['#11ec20', '#bdc3c7', '#c62828'])
         .domain([0, 10, 25]).mode('lab');
 
-    // --- 2. FORCE SIMULATION ---
-
     const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(edges).id(d => d.name).distance(300)) // Longer distance for clearer view
-        .force("charge", d3.forceManyBody().strength(-1000)) // Stronger repulsion
+        .force("link", d3.forceLink(edges).id(d => d.name).distance(300))
+        .force("charge", d3.forceManyBody().strength(-1000))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collide", d3.forceCollide().radius(d => sizeScale(d.pagerank) + 30));
-
-    // --- 3. DRAWING ---
 
     const link = g.append("g").selectAll("line").data(edges).enter().append("line")
         .attr("class", d => {
@@ -249,8 +235,6 @@ Promise.all([
         .attr("text-anchor", "middle")
         .text(d => d.name);
 
-    // --- 4. INTERACTION ---
-
     node.on("click", (event, d) => {
         event.stopPropagation();
         showPanel(d);
@@ -270,15 +254,14 @@ Promise.all([
         document.getElementById("panel-name").innerText = d.name;
         document.getElementById("panel-size").innerText = d.size ? d.size.toLocaleString() : "--";
         
-        // Civility (100 - negativity)
+        // Civility
         const civility = (100 - d.internal_negativity);
         document.getElementById("panel-civility").innerText = civility.toFixed(1) + "%";
         
-        // PageRank (scientific notation is hard to read, display relative)
+        // PageRank
         document.getElementById("panel-pagerank").innerText = (d.pagerank * 10000).toFixed(2);
 
         // Determine Role
-        // Find the max among the pct_* fields
         const roles = [
             { id: 'Influential', val: d.pct_influential, css: 'role-influential' },
             { id: 'Supportive', val: d.pct_supportive, css: 'role-supportive' },
@@ -312,8 +295,6 @@ Promise.all([
         const ctx = document.getElementById('radarChart').getContext('2d');
         if (radarChartInstance) radarChartInstance.destroy();
 
-        // Normalize LIWC scores for better visualization
-        // These max values are approximate baselines for LIWC
         const dataValues = [
             (d.Anger / 0.02) * 100,
             (d.Negemo / 0.04) * 100,
@@ -385,7 +366,6 @@ Promise.all([
             
             const filter = btn.dataset.filter;
             
-            // Reset base visibility first
             resetHighlight();
             
             if (filter === 'all') {
@@ -398,12 +378,10 @@ Promise.all([
                 link.classed('hidden', d => d.sentiment <= 0.8);
                 node.classed('hidden', false);
             } else if (filter === 'toxic') {
-                // Show nodes with high internal negativity (>15%)
                 const toxicNodes = new Set(nodes.filter(d => d.internal_negativity > 15).map(d => d.index));
                 
                 node.classed('hidden', d => !toxicNodes.has(d.index));
                 
-                // Show only links connected to these toxic nodes
                 link.classed('hidden', d => 
                     !toxicNodes.has(d.source.index) && !toxicNodes.has(d.target.index)
                 );

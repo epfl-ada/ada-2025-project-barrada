@@ -46,7 +46,6 @@
             max-width: 1200px;
         }
 
-        /* DONUT CHART STYLES */
         #donut-container {
             flex: 1;
             min-width: 300px;
@@ -67,12 +66,11 @@
             fill: #777;
         }
 
-        /* BAR CHARTS STYLES */
         #details-container {
             flex: 1;
             min-width: 300px;
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2x2 grid */
+            grid-template-columns: 1fr 1fr; 
             gap: 20px;
         }
 
@@ -158,10 +156,8 @@
             try {
                 const data = await d3.json('../data/roles.json');
                 
-                // 1. Draw Donut Chart
                 drawDonut(data.distribution);
 
-                // 2. Draw 4 Detail Panels
                 const roles = ["Influential", "Supportive", "Controversial", "Critical"];
                 roles.forEach(role => {
                     if (data.top_by_role[role]) {
@@ -188,11 +184,8 @@
                 .append("g")
                 .attr("transform", `translate(${width/2}, ${height/2})`);
 
-            // Convert object to array for D3
-            // Ensure "Neutral" is last so it doesn't dominate visually if sorted by size
             const dataArray = Object.entries(distData).map(([key, value]) => ({key, value}));
             
-            // Sort: Specific roles first, Neutral last
             dataArray.sort((a, b) => {
                 if (a.key === "Neutral") return 1;
                 if (b.key === "Neutral") return -1;
@@ -244,8 +237,6 @@
                 .attr("dy", "15px")
                 .text("All Subreddits");
             
-            // Static Legend
-            // (Optional: You can add a legend below if needed, but the chart is interactive)
         }
 
         function drawDetailPanel(role, clusterList) {
@@ -272,7 +263,7 @@
             // X Scale
             const maxVal = d3.max(clusterList, d => d.pct);
             const x = d3.scaleLinear()
-                .domain([0, maxVal * 1.2]) // Add headroom
+                .domain([0, maxVal * 1.2])
                 .range([0, width]);
 
             // Y Scale
@@ -290,7 +281,7 @@
                 .attr("width", d => x(d.pct))
                 .attr("height", y.bandwidth())
                 .attr("fill", COLORS[role])
-                .attr("rx", 3); // Rounded corners
+                .attr("rx", 3);
 
             // Labels (Cluster Names)
             svg.selectAll(".bar-label")

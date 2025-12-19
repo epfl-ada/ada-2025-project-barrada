@@ -48,7 +48,6 @@
 <div class="tooltip" id="tooltip"></div>
 
 <script>
-    // --- DATA ---
     const rivalries = [
         {"source":"Politics/Activism","target":"Personal/Community","links":546},
         {"source":"Shitpost","target":"Politics/extremism","links":1226},
@@ -72,7 +71,6 @@
         {"source":"Esports/Online Games","target":"Entertainment Mixed","links":33}
     ];
 
-    // --- CONFIGURATION ---
     const width = 740;
     const height = 740;
     const outerRadius = Math.min(width, height) * 0.5 - 120;
@@ -83,7 +81,6 @@
         .attr("height", height)
         .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
-    // 1. Prepare Data
     const names = Array.from(new Set(rivalries.flatMap(d => [d.source, d.target]))).sort();
     const index = new Map(names.map((name, i) => [name, i]));
     const matrix = Array.from(index, () => new Array(names.length).fill(0));
@@ -92,16 +89,13 @@
         matrix[index.get(source)][index.get(target)] += links;
     });
 
-    // 2. Layout
     const chord = d3.chord()
         .padAngle(0.04)
         .sortSubgroups(d3.descending);
     const chords = chord(matrix);
 
-    // 3. Color Scale (Tableau10 + SchemeCategory10 mix for variety)
     const color = d3.scaleOrdinal(d3.schemeTableau10).domain(names);
 
-    // 4. Draw Outer Arcs (The Clusters)
     const group = svg.append("g")
         .selectAll("g")
         .data(chords.groups)
@@ -128,7 +122,6 @@
         .attr("text-anchor", d => d.angle > Math.PI ? "end" : "start")
         .text(d => names[d.index]);
 
-    // 6. Draw Ribbons (The Conflicts)
     const ribbon = d3.ribbon().radius(innerRadius);
 
     svg.append("g")
@@ -138,7 +131,7 @@
         .join("path")
         .attr("class", "ribbon")
         .attr("d", ribbon)
-        .attr("fill", d => color(names[d.source.index])) // Color based on ATTACKER
+        .attr("fill", d => color(names[d.source.index]))
         .on("mouseover", function(event, d) {
             d3.select(this).classed("highlighted", true);
             const sourceName = names[d.source.index];
@@ -162,10 +155,8 @@
             d3.select("#tooltip").style("opacity", 0);
         });
 
-    // --- INTERACTION LOGIC ---
     function fadeOthers(event, d) {
         const i = d.index;
-        // Fade ribbons not connected to this group
         svg.selectAll(".ribbon")
            .classed("faded", r => r.source.index !== i && r.target.index !== i)
            .classed("highlighted", r => r.source.index === i || r.target.index === i);

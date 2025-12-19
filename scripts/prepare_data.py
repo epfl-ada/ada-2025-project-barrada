@@ -198,12 +198,11 @@ class VisualizationDataPrep:
             print(f"WARNING: {rq16_file} not found.")
             return {}
         
-        df = pd.read_csv(rq16_file, index_col=0)  # ← Read cluster names as index
+        df = pd.read_csv(rq16_file, index_col=0) 
         
-        # Top 10 victims (negative net flow)
         victims = df.nsmallest(10, 'net_toxicity_flow')
         victims_list = []
-        for cluster_name in victims.index:  # ← Iterate over index (cluster names)
+        for cluster_name in victims.index: 
             row = victims.loc[cluster_name]
             victims_list.append({
                 "cluster": str(cluster_name),
@@ -212,10 +211,9 @@ class VisualizationDataPrep:
                 "net_flow": int(row['net_toxicity_flow'])
             })
         
-        # Top 10 bullies (positive net flow)
         bullies = df.nlargest(10, 'net_toxicity_flow')
         bullies_list = []
-        for cluster_name in bullies.index:  # ← Iterate over index (cluster names)
+        for cluster_name in bullies.index: 
             row = bullies.loc[cluster_name]
             bullies_list.append({
                 "cluster": str(cluster_name),

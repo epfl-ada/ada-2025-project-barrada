@@ -19,7 +19,7 @@
 
         #donut-container {
             width: 100%;
-            height: 100vh; /* Full viewport height for impact */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,7 +82,6 @@
                 .append("g")
                 .attr("transform", `translate(${width/2}, ${height/2})`);
 
-            // Convert and sort data
             const dataArray = Object.entries(distData).map(([key, value]) => ({key, value}));
             
             dataArray.sort((a, b) => {
@@ -115,7 +114,6 @@
                     d3.select(".center-subtext").text("All Subreddits");
                 });
 
-            // Static Center Text
             svg.append("text")
                 .attr("class", "center-text")
                 .attr("text-anchor", "middle")

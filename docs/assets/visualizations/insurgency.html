@@ -54,7 +54,7 @@
             gap: 60px;
             max-width: 1100px;
             width: 100%;
-            flex-wrap: wrap; /* Responsive wrapping on smaller screens */
+            flex-wrap: wrap;
         }
 
         /* --- WAFFLE CHART GRID --- */
@@ -87,7 +87,7 @@
         .block.insurgency { background-color: var(--color-insurgency); }
         .block.bullying { background-color: var(--color-bullying); }
 
-        /* --- NARRATIVE PANEL (RIGHT SIDE) --- */
+        /* --- NARRATIVE PANEL --- */
         .narrative-panel {
             flex: 1;
             min-width: 300px;
@@ -214,14 +214,12 @@
                 const bullyingPct = data.bullying_pct * 100;
 
                 // 2. Update Text Elements
-                // Using d3.format for clean percentage display
                 const fmt = d3.format(".1f");
                 d3.select("#insurgency-pct").text(fmt(insurgencyPct) + "%");
                 d3.select("#bullying-pct").text(fmt(bullyingPct) + "%");
 
-                // 3. Generate Waffle Grid Data (100 blocks representing 100%)
+                // 3. Generate Waffle Grid Data
                 const gridData = [];
-                // Calculate how many blocks out of 100 belong to insurgency
                 const cutoffIndex = Math.round(insurgencyPct);
 
                 for (let i = 0; i < 100; i++) {
@@ -229,7 +227,6 @@
                     gridData.push({
                         id: i,
                         type: isInsurgency ? 'insurgency' : 'bullying',
-                        // Tooltip label
                         label: isInsurgency ? `Insurgency Attack (Punching Up)` : `Bullying Attack (Punching Down)`
                     });
                 }
@@ -245,7 +242,6 @@
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1)
                             .html(d.label)
-                            // Position tooltip slightly above cursor
                             .style("left", (event.pageX + 15) + "px")
                             .style("top", (event.pageY - 35) + "px");
                     })
@@ -256,12 +252,11 @@
                     })
                     .on("mouseout", () => tooltip.style("opacity", 0));
 
-                // 5. Entrance Animation (Waterfall effect)
+                // 5. Entrance Animation
                 chartContainer.selectAll(".block")
                     .style("opacity", 0)
                     .style("transform", "translateY(20px) scale(0.8)")
                     .transition()
-                    // Stagger delay based on index for waterfall look
                     .delay((d, i) => i * 8) 
                     .duration(500)
                     .ease(d3.easeBackOut.overshoot(1.2))
@@ -274,7 +269,6 @@
             }
         }
 
-        // Initialize when DOM is ready
         initVisualization();
     </script>
 </body>

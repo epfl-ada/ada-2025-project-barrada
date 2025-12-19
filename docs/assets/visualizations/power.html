@@ -49,7 +49,6 @@
 
         .chart-panel {
             background: #fff;
-            /* No border for cleaner academic look, just spacing */
             margin-bottom: 20px;
         }
 
@@ -84,12 +83,12 @@
 
         .bar-value {
             font-size: 10px;
-            fill: #fff; /* Text inside bars */
+            fill: #fff;
             font-weight: bold;
         }
         
         .bar-value.outside {
-            fill: #333; /* Text outside bars for small values */
+            fill: #333; 
         }
 
         .legend {
@@ -135,8 +134,8 @@
         const HEIGHT = 300 - MARGIN.top - MARGIN.bottom;
 
         // Palette
-        const COLOR_POS = "#27ae60"; // Green
-        const COLOR_NEG = "#c0392b"; // Red
+        const COLOR_POS = "#27ae60"; 
+        const COLOR_NEG = "#c0392b";
 
         async function initDashboard() {
             try {
@@ -154,9 +153,6 @@
         }
 
         function createDivergingBarChart(selector, title, dataset) {
-            // Sort by correlation magnitude for cleaner look
-            // OR keep them as is if your Python script sorted them. 
-            // Let's sort by raw correlation to show strongest positive at top, strongest negative at bottom
             dataset.sort((a, b) => b.correlation - a.correlation);
 
             const container = d3.select(selector);
@@ -172,9 +168,6 @@
                 .append("g")
                 .attr("transform", `translate(${MARGIN.left},${MARGIN.top})`);
 
-            // X Scale: Symmetrical domain (-1 to 1) or adaptive
-            // For PageRank correlations, raw structural are high (0.8), others are lower (0.2)
-            // We'll use adaptive max to make the bars visible
             const maxVal = d3.max(dataset, d => Math.abs(d.correlation));
             const x = d3.scaleLinear()
                 .domain([-maxVal, maxVal])
@@ -187,7 +180,6 @@
                 .padding(0.3);
 
             // Add Axes
-            // We only need the zero line really, but let's add a light grid
             svg.append("g")
                 .attr("class", "axis")
                 .attr("transform", `translate(0,${HEIGHT})`)
@@ -213,9 +205,7 @@
                 .attr("height", y.bandwidth())
                 .attr("fill", d => d.correlation > 0 ? COLOR_POS : COLOR_NEG);
 
-            // Add Y-Axis Labels (Feature Names)
-            // We position them differently depending on bar direction or fixed left?
-            // Fixed left is cleanest for academic charts.
+            // Add Y-Axis Labels
             svg.append("g")
                 .attr("class", "axis")
                 .call(d3.axisLeft(y).tickSize(0))

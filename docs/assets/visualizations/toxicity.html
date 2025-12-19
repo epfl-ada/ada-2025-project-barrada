@@ -112,7 +112,6 @@
 
         const tooltip = d3.select("#tooltip");
 
-        // Color scheme
         const colors = {
             aggressor: "#e74c3c",
             hub: "#95a5a6", 
@@ -124,11 +123,9 @@
             d3.json('../data/nodes.json')
         ]).then(([data, nodeNames]) => {
 
-            // Build nodes and links
             const nodes = [];
             const links = [];
             
-            // Central hub node
             nodes.push({
                 id: 0,
                 name: "Systemic\nToxicity",
@@ -137,13 +134,11 @@
 
             let nodeId = 1;
 
-            // Add aggressor nodes (sources)
-            // In toxicity.html
             data.bullies.forEach(d => {
                 const flowValue = Math.abs(d.net_flow);
                 nodes.push({
                     id: nodeId,
-                    name: d.cluster,  // ← d.cluster is now "Meta-Commentary" not "33"
+                    name: d.cluster, 
                     type: "aggressor",
                     flow: flowValue
                 });
@@ -155,7 +150,6 @@
                 nodeId++;
             });
 
-            // Add victim nodes (targets)
             data.victims.forEach(d => {
                 const flowValue = Math.abs(d.net_flow);
                 nodes.push({
@@ -172,7 +166,6 @@
                 nodeId++;
             });
 
-            // Create Sankey layout
             const sankey = d3.sankey()
                 .nodeId(d => d.id)
                 .nodeWidth(18)

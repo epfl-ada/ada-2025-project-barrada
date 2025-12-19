@@ -6,7 +6,6 @@
     <title>The Bridge Builder's Dictionary</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        /* ACADEMIC STYLE CSS */
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #ffffff;
@@ -64,7 +63,7 @@
         .bar:hover { opacity: 1; }
 
         .axis text { font-size: 11px; fill: #555; }
-        .axis path, .axis line { display: none; } /* Clean look */
+        .axis path, .axis line { display: none; } 
         
         .value-label {
             font-size: 10px;
@@ -72,7 +71,6 @@
             font-weight: bold;
         }
 
-        /* Narrative Box */
         .insight-box {
             background: #f9f9f9;
             border-left: 3px solid #e67e22;
@@ -159,7 +157,7 @@
                 .transition().duration(1000)
                 .attr("width", d => x(d.correlation));
 
-            // Y Axis (Labels)
+            // Y Axis
             svg.append("g")
                 .attr("class", "axis")
                 .call(d3.axisLeft(y).tickSize(0))
@@ -167,7 +165,7 @@
                 .style("font-weight", "500")
                 .style("font-size", "12px");
 
-            // Value Labels (Numbers)
+            // Value Labels
             svg.selectAll(".value-label")
                 .data(dataset)
                 .join("text")
