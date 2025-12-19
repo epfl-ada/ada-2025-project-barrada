@@ -1,0 +1,126 @@
+{
+  "victims": [
+    {
+      "cluster": "Memes/Cute/Funny",
+      "hate_import": 11241,
+      "hate_export": 1640,
+      "net_flow": -9601
+    },
+    {
+      "cluster": "Help/Advice/Q&A",
+      "hate_import": 11589,
+      "hate_export": 3626,
+      "net_flow": -7963
+    },
+    {
+      "cluster": "Lifestyle",
+      "hate_import": 3941,
+      "hate_export": 255,
+      "net_flow": -3686
+    },
+    {
+      "cluster": "Gaming-AAA Titles",
+      "hate_import": 4654,
+      "hate_export": 1797,
+      "net_flow": -2857
+    },
+    {
+      "cluster": "Science/Academia",
+      "hate_import": 5460,
+      "hate_export": 2901,
+      "net_flow": -2559
+    },
+    {
+      "cluster": "Lifestyle/Outdoor",
+      "hate_import": 3396,
+      "hate_export": 1030,
+      "net_flow": -2366
+    },
+    {
+      "cluster": "Geographic/Countries",
+      "hate_import": 4270,
+      "hate_export": 1955,
+      "net_flow": -2315
+    },
+    {
+      "cluster": "YouTube/Gaming Content",
+      "hate_import": 2414,
+      "hate_export": 419,
+      "net_flow": -1995
+    },
+    {
+      "cluster": "Movies/TV/Comics",
+      "hate_import": 1772,
+      "hate_export": 427,
+      "net_flow": -1345
+    },
+    {
+      "cluster": "Technology/Hardware",
+      "hate_import": 1508,
+      "hate_export": 531,
+      "net_flow": -977
+    }
+  ],
+  "bullies": [
+    {
+      "cluster": "Meta-Commentary",
+      "hate_import": 4051,
+      "hate_export": 28872,
+      "net_flow": 24821
+    },
+    {
+      "cluster": "Politics/Activism",
+      "hate_import": 4769,
+      "hate_export": 8217,
+      "net_flow": 3448
+    },
+    {
+      "cluster": "Shitpost",
+      "hate_import": 5491,
+      "hate_export": 7913,
+      "net_flow": 2422
+    },
+    {
+      "cluster": "Entertainment Mixed",
+      "hate_import": 429,
+      "hate_export": 1698,
+      "net_flow": 1269
+    },
+    {
+      "cluster": "Politics/extremism",
+      "hate_import": 5469,
+      "hate_export": 6439,
+      "net_flow": 970
+    },
+    {
+      "cluster": "Random",
+      "hate_import": 586,
+      "hate_export": 1002,
+      "net_flow": 416
+    },
+    {
+      "cluster": "Lifestyle/Home",
+      "hate_import": 352,
+      "hate_export": 716,
+      "net_flow": 364
+    },
+    {
+      "cluster": "Games",
+      "hate_import": 341,
+      "hate_export": 613,
+      "net_flow": 272
+    },
+    {
+      "cluster": "Spam",
+      "hate_import": 376,
+      "hate_export": 593,
+      "net_flow": 217
+    },
+    {
+      "cluster": "Spam/Personalities",
+      "hate_import": 311,
+      "hate_export": 487,
+      "net_flow": 176
+    }
+  ]
+}

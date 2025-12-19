@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Art/Imaginary",
+    "size": 195,
+    "purity": 0,
+    "civility": 97.82608695652173,
+    "pagerank": 1.0286293795743424e-05
+  },
+  {
+    "name": "Celebrities/Models",
+    "size": 215,
+    "purity": 0,
+    "civility": 97.57412398921832,
+    "pagerank": 8.570437984299386e-06
+  },
+  {
+    "name": "Entertainment Mixed",
+    "size": 2156,
+    "purity": 0,
+    "civility": 91.68462291870716,
+    "pagerank": 7.399818007841483e-06
+  },
+  {
+    "name": "Esports/Online Games",
+    "size": 729,
+    "purity": 0,
+    "civility": 95.62236456690378,
+    "pagerank": 4.81210999027674e-05
+  },
+  {
+    "name": "Football",
+    "size": 298,
+    "purity": 0,
+    "civility": 97.39483747609944,
+    "pagerank": 3.1162055283571975e-05
+  },
+  {
+    "name": "Games",
+    "size": 2755,
+    "purity": 0,
+    "civility": 96.54725695617888,
+    "pagerank": 8.685568023024532e-06
+  },
+  {
+    "name": "Gaming-AAA Titles",
+    "size": 949,
+    "purity": 0,
+    "civility": 96.27950310559005,
+    "pagerank": 7.719600214672914e-05
+  },
+  {
+    "name": "Geographic/Countries",
+    "size": 618,
+    "purity": 0,
+    "civility": 94.02414794436804,
+    "pagerank": 5.327150042992959e-05
+  },
+  {
+    "name": "Help/Advice/Q&A",
+    "size": 498,
+    "purity": 0,
+    "civility": 91.3767271516564,
+    "pagerank": 0.0001857739249822
+  },
+  {
+    "name": "Japanese",
+    "size": 159,
+    "purity": 0,
+    "civility": 99.75556762629006,
+    "pagerank": 1.4861658538198918e-05
+  },
+  {
+    "name": "Lifestyle",
+    "size": 648,
+    "purity": 0,
+    "civility": 97.62259929144136,
+    "pagerank": 3.971307292350891e-05
+  },
+  {
+    "name": "Lifestyle/Home",
+    "size": 2349,
+    "purity": 0,
+    "civility": 94.58642068652654,
+    "pagerank": 7.619584644278706e-06
+  },
+  {
+    "name": "Lifestyle/Outdoor",
+    "size": 596,
+    "purity": 0,
+    "civility": 96.14289994008388,
+    "pagerank": 7.459235455655861e-05
+  },
+  {
+    "name": "Low Quality",
+    "size": 63,
+    "purity": 0,
+    "civility": 94.96402877697841,
+    "pagerank": 4.244682706330206e-06
+  },
+  {
+    "name": "Memes/Cute/Funny",
+    "size": 756,
+    "purity": 0,
+    "civility": 90.00487567040469,
+    "pagerank": 9.78292800849485e-05
+  },
+  {
+    "name": "Meta-Commentary",
+    "size": 426,
+    "purity": 0,
+    "civility": 78.8110964332893,
+    "pagerank": 3.1975856821218344e-05
+  },
+  {
+    "name": "Mix",
+    "size": 2256,
+    "purity": 0,
+    "civility": 95.88927907457136,
+    "pagerank": 7.85466738526281e-06
+  },
+  {
+    "name": "Movies/TV/Comics",
+    "size": 476,
+    "purity": 0,
+    "civility": 97.18782929399367,
+    "pagerank": 4.7585370742894046e-05
+  },
+  {
+    "name": "Music",
+    "size": 444,
+    "purity": 0,
+    "civility": 95.62135112593828,
+    "pagerank": 3.8507872269257904e-05
+  },
+  {
+    "name": "My Little Pony",
+    "size": 102,
+    "purity": 0,
+    "civility": 94.92273730684326,
+    "pagerank": 2.09834713292978e-05
+  },
+  {
+    "name": "NSFW",
+    "size": 932,
+    "purity": 0,
+    "civility": 93.2510885341074,
+    "pagerank": 9.500401180559e-06
+  },
+  {
+    "name": "NSFW-Extreme",
+    "size": 378,
+    "purity": 0,
+    "civility": 91.70437405731525,
+    "pagerank": 7.885325180120401e-06
+  },
+  {
+    "name": "NSFW-Fetish",
+    "size": 387,
+    "purity": 0,
+    "civility": 96.54115586690017,
+    "pagerank": 1.811700474276032e-05
+  },
+  {
+    "name": "NSFW-Homosexual",
+    "size": 124,
+    "purity": 0,
+    "civility": 94.31818181818183,
+    "pagerank": 8.66538882475703e-06
+  },
+  {
+    "name": "Niche",
+    "size": 128,
+    "purity": 0,
+    "civility": 93.18181818181817,
+    "pagerank": 5.358641984492606e-06
+  },
+  {
+    "name": "Personal/Community",
+    "size": 726,
+    "purity": 0,
+    "civility": 94.50381679389312,
+    "pagerank": 1.6386001086347326e-05
+  },
+  {
+    "name": "Politics/Activism",
+    "size": 814,
+    "purity": 0,
+    "civility": 85.22441199741063,
+    "pagerank": 3.039456768369538e-05
+  },
+  {
+    "name": "Politics/extremism",
+    "size": 367,
+    "purity": 0,
+    "civility": 79.68769716088329,
+    "pagerank": 5.333677015011571e-05
+  },
+  {
+    "name": "Random",
+    "size": 6059,
+    "purity": 0,
+    "civility": 95.3735340289962,
+    "pagerank": 6.511915136227744e-06
+  },
+  {
+    "name": "Science/Academia",
+    "size": 935,
+    "purity": 0,
+    "civility": 91.0570609451586,
+    "pagerank": 4.376570885171248e-05
+  },
+  {
+    "name": "Shitpost",
+    "size": 676,
+    "purity": 0,
+    "civility": 89.56233841608189,
+    "pagerank": 6.230174513589332e-05
+  },
+  {
+    "name": "Small Random",
+    "size": 132,
+    "purity": 0,
+    "civility": 95.54140127388536,
+    "pagerank": 5.0060409804322485e-06
+  },
+  {
+    "name": "Spam",
+    "size": 441,
+    "purity": 0,
+    "civility": 94.26332591661024,
+    "pagerank": 1.7054673404448553e-05
+  },
+  {
+    "name": "Spam/Personalities",
+    "size": 277,
+    "purity": 0,
+    "civility": 90.63641607383195,
+    "pagerank": 1.21006506637835e-05
+  },
+  {
+    "name": "Sports/American",
+    "size": 361,
+    "purity": 0,
+    "civility": 96.30673906989696,
+    "pagerank": 6.0068935048115394e-05
+  },
+  {
+    "name": "Tech/Cryptocurrency",
+    "size": 407,
+    "purity": 0,
+    "civility": 94.97857029472459,
+    "pagerank": 4.880383781018713e-05
+  },
+  {
+    "name": "Technology/Hardware",
+    "size": 386,
+    "purity": 0,
+    "civility": 97.84426761935694,
+    "pagerank": 8.930772232460598e-05
+  },
+  {
+    "name": "Trading",
+    "size": 570,
+    "purity": 0,
+    "civility": 92.42350655658088,
+    "pagerank": 1.5852950614906396e-05
+  },
+  {
+    "name": "YouTube/Gaming Content",
+    "size": 364,
+    "purity": 0,
+    "civility": 96.11172976985894,
+    "pagerank": 7.036030013669825e-05
+  },
+  {
+    "name": "YouTuber Personalities",
+    "size": 86,
+    "purity": 0,
+    "civility": 92.3963133640553,
+    "pagerank": 5.238856496869916e-06
+  }
+]

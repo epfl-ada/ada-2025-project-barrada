@@ -1,0 +1,99 @@
+{
+  "distribution": {
+    "Neutral": 51.42454702605802,
+    "Influential": 25.49138869325821,
+    "Supportive": 20.3246046481849,
+    "Critical": 1.3477175235290295,
+    "Controversial": 1.4117421089698405
+  },
+  "top_by_role": {
+    "Critical": [
+      {
+        "name": "Politics/extremism",
+        "pct": 11.71662125340599
+      },
+      {
+        "name": "Meta-Commentary",
+        "pct": 11.502347417840369
+      },
+      {
+        "name": "Shitpost",
+        "pct": 5.62130177514792
+      },
+      {
+        "name": "Politics/Activism",
+        "pct": 5.4054054054054
+      },
+      {
+        "name": "Help/Advice/Q&A",
+        "pct": 3.41365461847389
+      }
+    ],
+    "Supportive": [
+      {
+        "name": "Help/Advice/Q&A",
+        "pct": 74.49799196787149
+      },
+      {
+        "name": "Lifestyle/Outdoor",
+        "pct": 68.6241610738255
+      },
+      {
+        "name": "Technology/Hardware",
+        "pct": 67.87564766839378
+      },
+      {
+        "name": "Gaming-AAA Titles",
+        "pct": 62.697576396206536
+      },
+      {
+        "name": "Sports/American",
+        "pct": 56.232686980609415
+      }
+    ],
+    "Influential": [
+      {
+        "name": "Help/Advice/Q&A",
+        "pct": 83.53413654618474
+      },
+      {
+        "name": "Lifestyle/Outdoor",
+        "pct": 73.99328859060402
+      },
+      {
+        "name": "Technology/Hardware",
+        "pct": 73.83419689119171
+      },
+      {
+        "name": "Gaming-AAA Titles",
+        "pct": 64.06743940990516
+      },
+      {
+        "name": "Sports/American",
+        "pct": 63.988919667590025
+      }
+    ],
+    "Controversial": [
+      {
+        "name": "Politics/extremism",
+        "pct": 11.44414168937329
+      },
+      {
+        "name": "Meta-Commentary",
+        "pct": 10.09389671361502
+      },
+      {
+        "name": "Help/Advice/Q&A",
+        "pct": 7.02811244979919
+      },
+      {
+        "name": "Politics/Activism",
+        "pct": 4.91400491400491
+      },
+      {
+        "name": "Shitpost",
+        "pct": 4.88165680473372
+      }
+    ]
+  }
+}

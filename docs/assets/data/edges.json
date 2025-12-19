@@ -1,0 +1,1700 @@
+[
+  {
+    "source": "Art/Imaginary",
+    "target": "Art/Imaginary",
+    "value": 236,
+    "sentiment": 0.9745762711864406
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Help/Advice/Q&A",
+    "value": 2463,
+    "sentiment": 0.7661388550548112
+  },
+  {
+    "source": "Random",
+    "target": "Esports/Online Games",
+    "value": 624,
+    "sentiment": 0.9166666666666666
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Lifestyle",
+    "value": 509,
+    "sentiment": 0.756385068762279
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Lifestyle/Outdoor",
+    "value": 1165,
+    "sentiment": 0.8197424892703863
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Memes/Cute/Funny",
+    "value": 5641,
+    "sentiment": 0.7915263251196596
+  },
+  {
+    "source": "Random",
+    "target": "Help/Advice/Q&A",
+    "value": 2875,
+    "sentiment": 0.904
+  },
+  {
+    "source": "Random",
+    "target": "Gaming-AAA Titles",
+    "value": 1690,
+    "sentiment": 0.931360946745562
+  },
+  {
+    "source": "Random",
+    "target": "Geographic/Countries",
+    "value": 761,
+    "sentiment": 0.8869908015768725
+  },
+  {
+    "source": "Random",
+    "target": "Lifestyle/Outdoor",
+    "value": 2246,
+    "sentiment": 0.9287622439893144
+  },
+  {
+    "source": "Random",
+    "target": "Memes/Cute/Funny",
+    "value": 1296,
+    "sentiment": 0.8858024691358025
+  },
+  {
+    "source": "Art/Imaginary",
+    "target": "Shitpost",
+    "value": 168,
+    "sentiment": 0.8928571428571429
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Science/Academia",
+    "value": 656,
+    "sentiment": 0.8201219512195121
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Shitpost",
+    "value": 997,
+    "sentiment": 0.7913741223671013
+  },
+  {
+    "source": "Random",
+    "target": "Personal/Community",
+    "value": 630,
+    "sentiment": 0.8984126984126984
+  },
+  {
+    "source": "Random",
+    "target": "Random",
+    "value": 970,
+    "sentiment": 0.9402061855670104
+  },
+  {
+    "source": "Random",
+    "target": "Science/Academia",
+    "value": 892,
+    "sentiment": 0.9035874439461884
+  },
+  {
+    "source": "Random",
+    "target": "Shitpost",
+    "value": 1009,
+    "sentiment": 0.867195242814668
+  },
+  {
+    "source": "Celebrities/Models",
+    "target": "Celebrities/Models",
+    "value": 97,
+    "sentiment": 0.9587628865979382
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "YouTube/Gaming Content",
+    "value": 908,
+    "sentiment": 0.8171806167400881
+  },
+  {
+    "source": "Random",
+    "target": "Sports/American",
+    "value": 662,
+    "sentiment": 0.9425981873111784
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Entertainment Mixed",
+    "value": 978,
+    "sentiment": 0.7321063394683026
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Esports/Online Games",
+    "value": 2607,
+    "sentiment": 0.4982738780207135
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Football",
+    "value": 1138,
+    "sentiment": 0.5887521968365553
+  },
+  {
+    "source": "Random",
+    "target": "Tech/Cryptocurrency",
+    "value": 753,
+    "sentiment": 0.9150066401062416
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Gaming-AAA Titles",
+    "value": 8004,
+    "sentiment": 0.5344827586206896
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Geographic/Countries",
+    "value": 6406,
+    "sentiment": 0.555416796753044
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Help/Advice/Q&A",
+    "value": 15226,
+    "sentiment": 0.5688953106528307
+  },
+  {
+    "source": "Random",
+    "target": "Technology/Hardware",
+    "value": 1686,
+    "sentiment": 0.9205219454329776
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Lifestyle",
+    "value": 6342,
+    "sentiment": 0.5518763796909493
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Lifestyle/Home",
+    "value": 522,
+    "sentiment": 0.6704980842911877
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Lifestyle/Outdoor",
+    "value": 7148,
+    "sentiment": 0.6071628427532176
+  },
+  {
+    "source": "Celebrities/Models",
+    "target": "NSFW",
+    "value": 65,
+    "sentiment": 0.9692307692307692
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Memes/Cute/Funny",
+    "value": 21161,
+    "sentiment": 0.591890742403478
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Help/Advice/Q&A",
+    "value": 6181,
+    "sentiment": 0.8136223911988352
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Meta-Commentary",
+    "value": 7075,
+    "sentiment": 0.5250883392226149
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Movies/TV/Comics",
+    "value": 5624,
+    "sentiment": 0.6874110953058321
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Music",
+    "value": 1325,
+    "sentiment": 0.6135849056603774
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Geographic/Countries",
+    "value": 1941,
+    "sentiment": 0.8248325605358063
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "NSFW",
+    "value": 554,
+    "sentiment": 0.5667870036101083
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Lifestyle",
+    "value": 1507,
+    "sentiment": 0.7425348374253484
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Lifestyle/Home",
+    "value": 637,
+    "sentiment": 0.9309262166405023
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Lifestyle/Outdoor",
+    "value": 1914,
+    "sentiment": 0.90282131661442
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Memes/Cute/Funny",
+    "value": 3272,
+    "sentiment": 0.7487775061124694
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Personal/Community",
+    "value": 625,
+    "sentiment": 0.6768
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Politics/Activism",
+    "value": 6269,
+    "sentiment": 0.5230499282182166
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Politics/extremism",
+    "value": 9233,
+    "sentiment": 0.5544243474493664
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Random",
+    "value": 808,
+    "sentiment": 0.6287128712871287
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Science/Academia",
+    "value": 9590,
+    "sentiment": 0.5326381647549531
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Shitpost",
+    "value": 10204,
+    "sentiment": 0.5893767150137201
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Spam",
+    "value": 654,
+    "sentiment": 0.6085626911314985
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Gaming-AAA Titles",
+    "value": 869,
+    "sentiment": 0.8619102416570771
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Sports/American",
+    "value": 2736,
+    "sentiment": 0.5796783625730995
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Help/Advice/Q&A",
+    "value": 3488,
+    "sentiment": 0.8256880733944955
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Science/Academia",
+    "value": 6595,
+    "sentiment": 0.8656557998483699
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Lifestyle",
+    "value": 545,
+    "sentiment": 0.6770642201834862
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Tech/Cryptocurrency",
+    "value": 1219,
+    "sentiment": 0.5061525840853158
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Lifestyle/Outdoor",
+    "value": 1324,
+    "sentiment": 0.8625377643504532
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Memes/Cute/Funny",
+    "value": 4493,
+    "sentiment": 0.8348542176719341
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "Technology/Hardware",
+    "value": 3061,
+    "sentiment": 0.6739627572688663
+  },
+  {
+    "source": "Meta-Commentary",
+    "target": "YouTube/Gaming Content",
+    "value": 4381,
+    "sentiment": 0.6010043369093814
+  },
+  {
+    "source": "Mix",
+    "target": "Esports/Online Games",
+    "value": 863,
+    "sentiment": 0.9374275782155272
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Movies/TV/Comics",
+    "value": 735,
+    "sentiment": 0.8938775510204081
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Music",
+    "value": 528,
+    "sentiment": 0.8977272727272727
+  },
+  {
+    "source": "Mix",
+    "target": "Gaming-AAA Titles",
+    "value": 742,
+    "sentiment": 0.967654986522911
+  },
+  {
+    "source": "Science/Academia",
+    "target": "YouTube/Gaming Content",
+    "value": 555,
+    "sentiment": 0.6936936936936937
+  },
+  {
+    "source": "Mix",
+    "target": "Help/Advice/Q&A",
+    "value": 1409,
+    "sentiment": 0.8679914833215047
+  },
+  {
+    "source": "Shitpost",
+    "target": "Entertainment Mixed",
+    "value": 991,
+    "sentiment": 0.8627648839556004
+  },
+  {
+    "source": "Shitpost",
+    "target": "Esports/Online Games",
+    "value": 1698,
+    "sentiment": 0.8586572438162544
+  },
+  {
+    "source": "Shitpost",
+    "target": "Gaming-AAA Titles",
+    "value": 5647,
+    "sentiment": 0.8434567026739862
+  },
+  {
+    "source": "Shitpost",
+    "target": "Geographic/Countries",
+    "value": 1198,
+    "sentiment": 0.7929883138564274
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Science/Academia",
+    "value": 663,
+    "sentiment": 0.8069381598793364
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "Shitpost",
+    "value": 2663,
+    "sentiment": 0.8220052572286894
+  },
+  {
+    "source": "Shitpost",
+    "target": "Help/Advice/Q&A",
+    "value": 11653,
+    "sentiment": 0.7437569724534455
+  },
+  {
+    "source": "Shitpost",
+    "target": "Lifestyle",
+    "value": 1799,
+    "sentiment": 0.7331851028349082
+  },
+  {
+    "source": "Shitpost",
+    "target": "Lifestyle/Outdoor",
+    "value": 2313,
+    "sentiment": 0.7907479463899697
+  },
+  {
+    "source": "Shitpost",
+    "target": "Memes/Cute/Funny",
+    "value": 17479,
+    "sentiment": 0.7649751129927341
+  },
+  {
+    "source": "Shitpost",
+    "target": "Meta-Commentary",
+    "value": 1205,
+    "sentiment": 0.7427385892116183
+  },
+  {
+    "source": "Entertainment Mixed",
+    "target": "YouTube/Gaming Content",
+    "value": 754,
+    "sentiment": 0.8408488063660478
+  },
+  {
+    "source": "Shitpost",
+    "target": "Movies/TV/Comics",
+    "value": 2340,
+    "sentiment": 0.8076923076923077
+  },
+  {
+    "source": "Shitpost",
+    "target": "Music",
+    "value": 738,
+    "sentiment": 0.8428184281842819
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Esports/Online Games",
+    "value": 12935,
+    "sentiment": 0.9123308851952068
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Games",
+    "value": 1905,
+    "sentiment": 0.9601049868766404
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Gaming-AAA Titles",
+    "value": 5194,
+    "sentiment": 0.9014247208317288
+  },
+  {
+    "source": "Shitpost",
+    "target": "Politics/Activism",
+    "value": 787,
+    "sentiment": 0.8043202033036849
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Help/Advice/Q&A",
+    "value": 1116,
+    "sentiment": 0.8620071684587813
+  },
+  {
+    "source": "Shitpost",
+    "target": "Politics/extremism",
+    "value": 1226,
+    "sentiment": 0.6884176182707994
+  },
+  {
+    "source": "Mix",
+    "target": "Tech/Cryptocurrency",
+    "value": 717,
+    "sentiment": 0.9358437935843794
+  },
+  {
+    "source": "Shitpost",
+    "target": "Shitpost",
+    "value": 11798,
+    "sentiment": 0.8064078657399559
+  },
+  {
+    "source": "Shitpost",
+    "target": "Random",
+    "value": 659,
+    "sentiment": 0.8694992412746586
+  },
+  {
+    "source": "Shitpost",
+    "target": "Science/Academia",
+    "value": 2737,
+    "sentiment": 0.794665692363902
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Memes/Cute/Funny",
+    "value": 674,
+    "sentiment": 0.8486646884272997
+  },
+  {
+    "source": "Shitpost",
+    "target": "Sports/American",
+    "value": 1495,
+    "sentiment": 0.8127090301003345
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Mix",
+    "value": 543,
+    "sentiment": 0.9631675874769796
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Movies/TV/Comics",
+    "value": 822,
+    "sentiment": 0.927007299270073
+  },
+  {
+    "source": "Shitpost",
+    "target": "Technology/Hardware",
+    "value": 1077,
+    "sentiment": 0.8607242339832869
+  },
+  {
+    "source": "Shitpost",
+    "target": "YouTube/Gaming Content",
+    "value": 3513,
+    "sentiment": 0.798462852263023
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Gaming-AAA Titles",
+    "value": 682,
+    "sentiment": 0.93841642228739
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Help/Advice/Q&A",
+    "value": 2010,
+    "sentiment": 0.945273631840796
+  },
+  {
+    "source": "Small Random",
+    "target": "Gaming-AAA Titles",
+    "value": 47,
+    "sentiment": 1.0
+  },
+  {
+    "source": "Small Random",
+    "target": "Help/Advice/Q&A",
+    "value": 41,
+    "sentiment": 0.951219512195122
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Random",
+    "value": 544,
+    "sentiment": 0.9705882352941176
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Lifestyle/Outdoor",
+    "value": 838,
+    "sentiment": 0.9761336515513126
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "Shitpost",
+    "value": 936,
+    "sentiment": 0.844017094017094
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Memes/Cute/Funny",
+    "value": 1281,
+    "sentiment": 0.9188134270101485
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Movies/TV/Comics",
+    "value": 4335,
+    "sentiment": 0.936332179930796
+  },
+  {
+    "source": "Esports/Online Games",
+    "target": "YouTube/Gaming Content",
+    "value": 555,
+    "sentiment": 0.8702702702702703
+  },
+  {
+    "source": "Football",
+    "target": "Football",
+    "value": 5152,
+    "sentiment": 0.9444875776397516
+  },
+  {
+    "source": "Movies/TV/Comics",
+    "target": "Shitpost",
+    "value": 1101,
+    "sentiment": 0.9182561307901907
+  },
+  {
+    "source": "Spam",
+    "target": "Geographic/Countries",
+    "value": 567,
+    "sentiment": 0.9188712522045857
+  },
+  {
+    "source": "Spam",
+    "target": "Help/Advice/Q&A",
+    "value": 1403,
+    "sentiment": 0.9158945117605132
+  },
+  {
+    "source": "Spam",
+    "target": "Memes/Cute/Funny",
+    "value": 782,
+    "sentiment": 0.8900255754475703
+  },
+  {
+    "source": "Music",
+    "target": "Help/Advice/Q&A",
+    "value": 1190,
+    "sentiment": 0.907563025210084
+  },
+  {
+    "source": "Football",
+    "target": "Tech/Cryptocurrency",
+    "value": 524,
+    "sentiment": 0.9961832061068704
+  },
+  {
+    "source": "Music",
+    "target": "Music",
+    "value": 4297,
+    "sentiment": 0.9134279730044216
+  },
+  {
+    "source": "Games",
+    "target": "Esports/Online Games",
+    "value": 3404,
+    "sentiment": 0.9347826086956522
+  },
+  {
+    "source": "Spam",
+    "target": "Science/Academia",
+    "value": 624,
+    "sentiment": 0.9134615384615384
+  },
+  {
+    "source": "Games",
+    "target": "Games",
+    "value": 948,
+    "sentiment": 0.9472573839662448
+  },
+  {
+    "source": "Games",
+    "target": "Gaming-AAA Titles",
+    "value": 6164,
+    "sentiment": 0.926995457495133
+  },
+  {
+    "source": "Spam",
+    "target": "Shitpost",
+    "value": 515,
+    "sentiment": 0.883495145631068
+  },
+  {
+    "source": "Games",
+    "target": "Help/Advice/Q&A",
+    "value": 599,
+    "sentiment": 0.9232053422370616
+  },
+  {
+    "source": "Spam",
+    "target": "Spam",
+    "value": 833,
+    "sentiment": 0.942376950780312
+  },
+  {
+    "source": "Spam",
+    "target": "Technology/Hardware",
+    "value": 853,
+    "sentiment": 0.9859320046893316
+  },
+  {
+    "source": "Spam/Personalities",
+    "target": "Help/Advice/Q&A",
+    "value": 491,
+    "sentiment": 0.6985743380855397
+  },
+  {
+    "source": "Games",
+    "target": "Shitpost",
+    "value": 834,
+    "sentiment": 0.9112709832134293
+  },
+  {
+    "source": "Games",
+    "target": "Tech/Cryptocurrency",
+    "value": 647,
+    "sentiment": 0.9690880989180836
+  },
+  {
+    "source": "Games",
+    "target": "Technology/Hardware",
+    "value": 673,
+    "sentiment": 0.9405646359583952
+  },
+  {
+    "source": "My Little Pony",
+    "target": "My Little Pony",
+    "value": 629,
+    "sentiment": 0.9650238473767886
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Esports/Online Games",
+    "value": 3603,
+    "sentiment": 0.9184013322231472
+  },
+  {
+    "source": "Spam/Personalities",
+    "target": "Spam/Personalities",
+    "value": 678,
+    "sentiment": 0.7227138643067846
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Games",
+    "value": 3435,
+    "sentiment": 0.9644832605531296
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Gaming-AAA Titles",
+    "value": 23772,
+    "sentiment": 0.9251219922598014
+  },
+  {
+    "source": "My Little Pony",
+    "target": "Shitpost",
+    "value": 164,
+    "sentiment": 0.7682926829268293
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Help/Advice/Q&A",
+    "value": 1748,
+    "sentiment": 0.9016018306636157
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Memes/Cute/Funny",
+    "value": 1533,
+    "sentiment": 0.8760600130463144
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Movies/TV/Comics",
+    "value": 1018,
+    "sentiment": 0.911591355599214
+  },
+  {
+    "source": "Sports/American",
+    "target": "Help/Advice/Q&A",
+    "value": 692,
+    "sentiment": 0.9277456647398844
+  },
+  {
+    "source": "Sports/American",
+    "target": "Memes/Cute/Funny",
+    "value": 664,
+    "sentiment": 0.8554216867469879
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Random",
+    "value": 764,
+    "sentiment": 0.9685863874345548
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Shitpost",
+    "value": 1987,
+    "sentiment": 0.9214896829391042
+  },
+  {
+    "source": "NSFW",
+    "target": "NSFW",
+    "value": 1063,
+    "sentiment": 0.9266227657572906
+  },
+  {
+    "source": "NSFW",
+    "target": "NSFW-Fetish",
+    "value": 361,
+    "sentiment": 0.961218836565097
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "Technology/Hardware",
+    "value": 1873,
+    "sentiment": 0.9305926321409504
+  },
+  {
+    "source": "Gaming-AAA Titles",
+    "target": "YouTube/Gaming Content",
+    "value": 2387,
+    "sentiment": 0.9078341013824884
+  },
+  {
+    "source": "Sports/American",
+    "target": "Sports/American",
+    "value": 22371,
+    "sentiment": 0.9253497832014662
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Football",
+    "value": 507,
+    "sentiment": 0.9684418145956608
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Geographic/Countries",
+    "value": 9058,
+    "sentiment": 0.873923603444469
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Help/Advice/Q&A",
+    "value": 3369,
+    "sentiment": 0.8533689522113387
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Lifestyle",
+    "value": 2243,
+    "sentiment": 0.8430673205528311
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Lifestyle/Home",
+    "value": 834,
+    "sentiment": 0.9784172661870504
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Lifestyle/Outdoor",
+    "value": 1124,
+    "sentiment": 0.912811387900356
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Memes/Cute/Funny",
+    "value": 2893,
+    "sentiment": 0.9025233321811268
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Geographic/Countries",
+    "value": 521,
+    "sentiment": 0.9040307101727448
+  },
+  {
+    "source": "NSFW-Extreme",
+    "target": "Help/Advice/Q&A",
+    "value": 453,
+    "sentiment": 0.5938189845474614
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Help/Advice/Q&A",
+    "value": 1285,
+    "sentiment": 0.777431906614786
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Memes/Cute/Funny",
+    "value": 693,
+    "sentiment": 0.847041847041847
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Politics/Activism",
+    "value": 1368,
+    "sentiment": 0.8450292397660819
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Politics/extremism",
+    "value": 1475,
+    "sentiment": 0.7613559322033898
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Random",
+    "value": 502,
+    "sentiment": 0.9561752988047808
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Science/Academia",
+    "value": 2410,
+    "sentiment": 0.8846473029045643
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Shitpost",
+    "value": 835,
+    "sentiment": 0.8874251497005988
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Mix",
+    "value": 626,
+    "sentiment": 0.9424920127795527
+  },
+  {
+    "source": "NSFW-Extreme",
+    "target": "NSFW-Fetish",
+    "value": 404,
+    "sentiment": 0.8712871287128713
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "Technology/Hardware",
+    "value": 1223,
+    "sentiment": 0.9035159443990188
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Politics/Activism",
+    "value": 515,
+    "sentiment": 0.7631067961165049
+  },
+  {
+    "source": "Geographic/Countries",
+    "target": "YouTube/Gaming Content",
+    "value": 554,
+    "sentiment": 0.8808664259927798
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Random",
+    "value": 1135,
+    "sentiment": 0.9859030837004406
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Science/Academia",
+    "value": 753,
+    "sentiment": 0.8061088977423638
+  },
+  {
+    "source": "Tech/Cryptocurrency",
+    "target": "Tech/Cryptocurrency",
+    "value": 6919,
+    "sentiment": 0.9303367538661657
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Gaming-AAA Titles",
+    "value": 608,
+    "sentiment": 0.8881578947368421
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Geographic/Countries",
+    "value": 830,
+    "sentiment": 0.8674698795180723
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Help/Advice/Q&A",
+    "value": 16244,
+    "sentiment": 0.8150701797586801
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Lifestyle",
+    "value": 1334,
+    "sentiment": 0.7841079460269865
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Lifestyle/Outdoor",
+    "value": 2599,
+    "sentiment": 0.868410927279723
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Meta-Commentary",
+    "value": 619,
+    "sentiment": 0.7059773828756059
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Memes/Cute/Funny",
+    "value": 3908,
+    "sentiment": 0.7292732855680655
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Meta-Commentary",
+    "value": 557,
+    "sentiment": 0.748653500897666
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Gaming-AAA Titles",
+    "value": 2807,
+    "sentiment": 0.9472746704666904
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Mix",
+    "value": 581,
+    "sentiment": 0.8864027538726333
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Movies/TV/Comics",
+    "value": 633,
+    "sentiment": 0.8672985781990521
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Music",
+    "value": 513,
+    "sentiment": 0.9181286549707602
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Geographic/Countries",
+    "value": 705,
+    "sentiment": 0.9375886524822696
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Help/Advice/Q&A",
+    "value": 1175,
+    "sentiment": 0.942127659574468
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Lifestyle",
+    "value": 679,
+    "sentiment": 0.9646539027982328
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Lifestyle/Outdoor",
+    "value": 630,
+    "sentiment": 0.9365079365079364
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Memes/Cute/Funny",
+    "value": 984,
+    "sentiment": 0.9532520325203252
+  },
+  {
+    "source": "NSFW-Fetish",
+    "target": "NSFW",
+    "value": 1237,
+    "sentiment": 0.9434114793856104
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Personal/Community",
+    "value": 770,
+    "sentiment": 0.9298701298701298
+  },
+  {
+    "source": "NSFW-Fetish",
+    "target": "NSFW-Fetish",
+    "value": 998,
+    "sentiment": 0.9418837675350702
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Politics/Activism",
+    "value": 735,
+    "sentiment": 0.8666666666666667
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Politics/extremism",
+    "value": 794,
+    "sentiment": 0.7632241813602015
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Random",
+    "value": 1154,
+    "sentiment": 0.9064124783362218
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Science/Academia",
+    "value": 2937,
+    "sentiment": 0.8454204971058904
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Shitpost",
+    "value": 2457,
+    "sentiment": 0.8412698412698413
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "Technology/Hardware",
+    "value": 653,
+    "sentiment": 0.8437978560490046
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Random",
+    "value": 1316,
+    "sentiment": 0.9908814589665652
+  },
+  {
+    "source": "Help/Advice/Q&A",
+    "target": "YouTube/Gaming Content",
+    "value": 820,
+    "sentiment": 0.7658536585365854
+  },
+  {
+    "source": "NSFW-Homosexual",
+    "target": "Esports/Online Games",
+    "value": 187,
+    "sentiment": 1.0
+  },
+  {
+    "source": "Technology/Hardware",
+    "target": "Technology/Hardware",
+    "value": 11343,
+    "sentiment": 0.9587410737900026
+  },
+  {
+    "source": "Japanese",
+    "target": "Japanese",
+    "value": 2060,
+    "sentiment": 0.996116504854369
+  },
+  {
+    "source": "Japanese",
+    "target": "Memes/Cute/Funny",
+    "value": 188,
+    "sentiment": 1.0
+  },
+  {
+    "source": "Trading",
+    "target": "Gaming-AAA Titles",
+    "value": 681,
+    "sentiment": 0.9118942731277532
+  },
+  {
+    "source": "Trading",
+    "target": "Help/Advice/Q&A",
+    "value": 723,
+    "sentiment": 0.7565698478561549
+  },
+  {
+    "source": "NSFW-Homosexual",
+    "target": "NSFW-Homosexual",
+    "value": 190,
+    "sentiment": 0.8210526315789474
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Politics/Activism",
+    "value": 1974,
+    "sentiment": 0.8449848024316109
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Politics/extremism",
+    "value": 1827,
+    "sentiment": 0.705528188286809
+  },
+  {
+    "source": "Trading",
+    "target": "Science/Academia",
+    "value": 521,
+    "sentiment": 0.7428023032629558
+  },
+  {
+    "source": "Niche",
+    "target": "Help/Advice/Q&A",
+    "value": 54,
+    "sentiment": 0.8148148148148148
+  },
+  {
+    "source": "Trading",
+    "target": "Trading",
+    "value": 1317,
+    "sentiment": 0.9514047076689446
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Help/Advice/Q&A",
+    "value": 1786,
+    "sentiment": 0.942889137737962
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Geographic/Countries",
+    "value": 698,
+    "sentiment": 0.968481375358166
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Lifestyle",
+    "value": 1460,
+    "sentiment": 0.963013698630137
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Lifestyle/Outdoor",
+    "value": 1166,
+    "sentiment": 0.9451114922813036
+  },
+  {
+    "source": "Science/Academia",
+    "target": "Shitpost",
+    "value": 1062,
+    "sentiment": 0.7645951035781544
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Memes/Cute/Funny",
+    "value": 782,
+    "sentiment": 0.9207161125319692
+  },
+  {
+    "source": "YouTube/Gaming Content",
+    "target": "Gaming-AAA Titles",
+    "value": 2071,
+    "sentiment": 0.9439884113954612
+  },
+  {
+    "source": "YouTube/Gaming Content",
+    "target": "Help/Advice/Q&A",
+    "value": 669,
+    "sentiment": 0.9192825112107624
+  },
+  {
+    "source": "Niche",
+    "target": "Science/Academia",
+    "value": 40,
+    "sentiment": 0.75
+  },
+  {
+    "source": "YouTube/Gaming Content",
+    "target": "Memes/Cute/Funny",
+    "value": 884,
+    "sentiment": 0.8687782805429864
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Science/Academia",
+    "value": 722,
+    "sentiment": 0.9584487534626038
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Esports/Online Games",
+    "value": 549,
+    "sentiment": 0.9672131147540984
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Gaming-AAA Titles",
+    "value": 664,
+    "sentiment": 0.9487951807228916
+  },
+  {
+    "source": "Lifestyle",
+    "target": "Technology/Hardware",
+    "value": 630,
+    "sentiment": 0.9714285714285714
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Help/Advice/Q&A",
+    "value": 1861,
+    "sentiment": 0.8678130037614186
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Geographic/Countries",
+    "value": 509,
+    "sentiment": 0.7917485265225933
+  },
+  {
+    "source": "YouTube/Gaming Content",
+    "target": "Shitpost",
+    "value": 940,
+    "sentiment": 0.9276595744680852
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Lifestyle/Outdoor",
+    "value": 865,
+    "sentiment": 0.8820809248554913
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Geographic/Countries",
+    "value": 1190,
+    "sentiment": 0.8403361344537815
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Help/Advice/Q&A",
+    "value": 1548,
+    "sentiment": 0.8940568475452196
+  },
+  {
+    "source": "YouTube/Gaming Content",
+    "target": "YouTube/Gaming Content",
+    "value": 2084,
+    "sentiment": 0.9193857965451055
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Lifestyle",
+    "value": 544,
+    "sentiment": 0.8419117647058824
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Lifestyle/Outdoor",
+    "value": 1226,
+    "sentiment": 0.9282218597063622
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Memes/Cute/Funny",
+    "value": 860,
+    "sentiment": 0.8697674418604651
+  },
+  {
+    "source": "YouTuber Personalities",
+    "target": "Gaming-AAA Titles",
+    "value": 109,
+    "sentiment": 0.8165137614678899
+  },
+  {
+    "source": "Personal/Community",
+    "target": "Personal/Community",
+    "value": 701,
+    "sentiment": 0.9315263908701854
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Politics/Activism",
+    "value": 1104,
+    "sentiment": 0.8840579710144928
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Politics/extremism",
+    "value": 688,
+    "sentiment": 0.7587209302325582
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Science/Academia",
+    "value": 1288,
+    "sentiment": 0.8959627329192547
+  },
+  {
+    "source": "YouTuber Personalities",
+    "target": "Shitpost",
+    "value": 43,
+    "sentiment": 0.8604651162790697
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Tech/Cryptocurrency",
+    "value": 564,
+    "sentiment": 0.9219858156028368
+  },
+  {
+    "source": "Lifestyle/Home",
+    "target": "Technology/Hardware",
+    "value": 626,
+    "sentiment": 0.9552715654952076
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Gaming-AAA Titles",
+    "value": 510,
+    "sentiment": 0.7137254901960784
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Geographic/Countries",
+    "value": 3980,
+    "sentiment": 0.7015075376884422
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Help/Advice/Q&A",
+    "value": 5793,
+    "sentiment": 0.7051614016916968
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Lifestyle",
+    "value": 3258,
+    "sentiment": 0.5991405770411296
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Entertainment Mixed",
+    "value": 573,
+    "sentiment": 0.9476439790575916
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Lifestyle/Home",
+    "value": 658,
+    "sentiment": 0.8541033434650456
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Lifestyle/Outdoor",
+    "value": 1420,
+    "sentiment": 0.6774647887323944
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Memes/Cute/Funny",
+    "value": 3513,
+    "sentiment": 0.627668659265585
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Meta-Commentary",
+    "value": 2381,
+    "sentiment": 0.6068878622427551
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Geographic/Countries",
+    "value": 664,
+    "sentiment": 0.933734939759036
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Help/Advice/Q&A",
+    "value": 3759,
+    "sentiment": 0.8983772279861665
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Lifestyle",
+    "value": 1323,
+    "sentiment": 0.9123204837490552
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Lifestyle/Home",
+    "value": 761,
+    "sentiment": 0.9789750328515112
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Lifestyle/Outdoor",
+    "value": 6891,
+    "sentiment": 0.9373095341750108
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Memes/Cute/Funny",
+    "value": 3165,
+    "sentiment": 0.8527646129541864
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Personal/Community",
+    "value": 546,
+    "sentiment": 0.4908424908424908
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Politics/Activism",
+    "value": 13699,
+    "sentiment": 0.7773560113876925
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Politics/extremism",
+    "value": 5961,
+    "sentiment": 0.6416708605938601
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Science/Academia",
+    "value": 4918,
+    "sentiment": 0.7332248881659211
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Shitpost",
+    "value": 1560,
+    "sentiment": 0.6871794871794872
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Personal/Community",
+    "value": 512,
+    "sentiment": 0.97265625
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Random",
+    "value": 1328,
+    "sentiment": 0.963855421686747
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Science/Academia",
+    "value": 1871,
+    "sentiment": 0.9476215927311598
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Shitpost",
+    "value": 568,
+    "sentiment": 0.908450704225352
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Tech/Cryptocurrency",
+    "value": 1739,
+    "sentiment": 0.6779758481886141
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "Technology/Hardware",
+    "value": 905,
+    "sentiment": 0.7988950276243094
+  },
+  {
+    "source": "Politics/Activism",
+    "target": "YouTube/Gaming Content",
+    "value": 721,
+    "sentiment": 0.5866851595006934
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "Technology/Hardware",
+    "value": 590,
+    "sentiment": 0.9322033898305084
+  },
+  {
+    "source": "Lifestyle/Outdoor",
+    "target": "YouTube/Gaming Content",
+    "value": 575,
+    "sentiment": 0.888695652173913
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Geographic/Countries",
+    "value": 2646,
+    "sentiment": 0.5434618291761149
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Help/Advice/Q&A",
+    "value": 3836,
+    "sentiment": 0.5484880083420229
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Lifestyle",
+    "value": 1783,
+    "sentiment": 0.514301738642737
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Lifestyle/Outdoor",
+    "value": 1172,
+    "sentiment": 0.5972696245733788
+  },
+  {
+    "source": "Low Quality",
+    "target": "Help/Advice/Q&A",
+    "value": 31,
+    "sentiment": 0.6774193548387096
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Memes/Cute/Funny",
+    "value": 2329,
+    "sentiment": 0.5216831258050666
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Meta-Commentary",
+    "value": 2373,
+    "sentiment": 0.4142435735356089
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Politics/Activism",
+    "value": 3475,
+    "sentiment": 0.6224460431654676
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Politics/extremism",
+    "value": 5387,
+    "sentiment": 0.7026174122888436
+  },
+  {
+    "source": "Low Quality",
+    "target": "Shitpost",
+    "value": 70,
+    "sentiment": 0.8571428571428571
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Science/Academia",
+    "value": 2786,
+    "sentiment": 0.5678391959798995
+  },
+  {
+    "source": "Politics/extremism",
+    "target": "Shitpost",
+    "value": 1186,
+    "sentiment": 0.6256323777403036
+  },
+  {
+    "source": "Memes/Cute/Funny",
+    "target": "Gaming-AAA Titles",
+    "value": 573,
+    "sentiment": 0.8534031413612565
+  }
+]

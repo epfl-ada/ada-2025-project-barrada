@@ -1,0 +1,158 @@
+{
+  "overall_features": [
+    {
+      "feature": "Positive Links In",
+      "correlation": 0.8785,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Total In-Weight",
+      "correlation": 0.866,
+      "p_value": 0.0
+    },
+    {
+      "feature": "In-Degree Centrality",
+      "correlation": 0.832,
+      "p_value": 0.0
+    },
+    {
+      "feature": "In-Degree",
+      "correlation": 0.832,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Unique Sources",
+      "correlation": 0.8071,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Betweenness",
+      "correlation": 0.6354,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Authority Score",
+      "correlation": 0.6126,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Clustering",
+      "correlation": -0.5951,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Total Degree",
+      "correlation": 0.5944,
+      "p_value": 0.0
+    },
+    {
+      "feature": "Negative Links In",
+      "correlation": 0.5743,
+      "p_value": 0.0
+    }
+  ],
+  "liwc_features": [
+    {
+      "feature": "Relativity",
+      "correlation": 0.2317,
+      "p_value": 9.17e-50
+    },
+    {
+      "feature": "Tentative",
+      "correlation": 0.1838,
+      "p_value": 1.18e-31
+    },
+    {
+      "feature": "Work",
+      "correlation": 0.1613,
+      "p_value": 1.14e-24
+    },
+    {
+      "feature": "Inclusive",
+      "correlation": 0.1586,
+      "p_value": 6.8e-24
+    },
+    {
+      "feature": "Negative Emotion",
+      "correlation": -0.1496,
+      "p_value": 2.03e-21
+    },
+    {
+      "feature": "Anger",
+      "correlation": -0.1466,
+      "p_value": 1.3e-20
+    },
+    {
+      "feature": "Prepositions",
+      "correlation": 0.1421,
+      "p_value": 1.91e-19
+    },
+    {
+      "feature": "Time",
+      "correlation": 0.1358,
+      "p_value": 6.88e-18
+    },
+    {
+      "feature": "Discrepancy",
+      "correlation": 0.1332,
+      "p_value": 2.96e-17
+    },
+    {
+      "feature": "Motion",
+      "correlation": 0.1297,
+      "p_value": 1.95e-16
+    }
+  ],
+  "toxicity_features": [
+    {
+      "feature": "% Positive Out",
+      "correlation": -0.7627,
+      "p_value": 4.1e-08
+    },
+    {
+      "feature": "Avg Out Sentiment",
+      "correlation": -0.7627,
+      "p_value": 4.1e-08
+    },
+    {
+      "feature": "% Critical Role",
+      "correlation": 0.7545,
+      "p_value": 6.93e-08
+    },
+    {
+      "feature": "LIWC Negemo",
+      "correlation": 0.7525,
+      "p_value": 7.83e-08
+    },
+    {
+      "feature": "Emotional Score",
+      "correlation": 0.7404,
+      "p_value": 1.62e-07
+    },
+    {
+      "feature": "LIWC Anger",
+      "correlation": 0.7039,
+      "p_value": 1.17e-06
+    },
+    {
+      "feature": "% Positive In",
+      "correlation": -0.6752,
+      "p_value": 4.56e-06
+    },
+    {
+      "feature": "Avg In Sentiment",
+      "correlation": -0.6752,
+      "p_value": 4.56e-06
+    },
+    {
+      "feature": "% Controversial",
+      "correlation": 0.6147,
+      "p_value": 5.18e-05
+    },
+    {
+      "feature": "LIWC Religion",
+      "correlation": 0.5654,
+      "p_value": 0.000266
+    }
+  ]
+}

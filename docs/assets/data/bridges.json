@@ -1,0 +1,96 @@
+{
+  "overall_features": [
+    {
+      "feature": "Total Degree",
+      "correlation": 0.7287,
+      "category": "Structural"
+    },
+    {
+      "feature": "In-Degree",
+      "correlation": 0.7169,
+      "category": "Structural"
+    },
+    {
+      "feature": "Out-Degree",
+      "correlation": 0.6628,
+      "category": "Structural"
+    },
+    {
+      "feature": "Unique Sources",
+      "correlation": 0.6562,
+      "category": "Structural"
+    },
+    {
+      "feature": "Unique Targets",
+      "correlation": 0.65,
+      "category": "Structural"
+    },
+    {
+      "feature": "PageRank",
+      "correlation": 0.6356,
+      "category": "Structural"
+    },
+    {
+      "feature": "Authority Score",
+      "correlation": 0.6335,
+      "category": "Structural"
+    },
+    {
+      "feature": "In-Weight",
+      "correlation": 0.6293,
+      "category": "Structural"
+    }
+  ],
+  "liwc_features": [
+    {
+      "feature": "Non-fluencies (uh, um)",
+      "correlation": 0.2678,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Friends",
+      "correlation": 0.2598,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Family",
+      "correlation": 0.2455,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Assent (yes, ok)",
+      "correlation": 0.2431,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Home",
+      "correlation": 0.23,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Filler (you know)",
+      "correlation": 0.2272,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Anxiety",
+      "correlation": 0.2132,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Ingest (Food/Drink)",
+      "correlation": 0.2103,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Swear",
+      "correlation": 0.208,
+      "category": "Linguistic"
+    },
+    {
+      "feature": "Sexual",
+      "correlation": 0.1965,
+      "category": "Linguistic"
+    }
+  ]
+}
