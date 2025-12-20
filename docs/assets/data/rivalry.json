@@ -1,58 +1,10 @@
 {
   "alliances": [
     {
-      "source_name": "Random",
-      "target_name": "NSFW-Fetish",
-      "sentiment": 1.0,
-      "links": 17
-    },
-    {
-      "source_name": "Football",
-      "target_name": "Games",
-      "sentiment": 1.0,
-      "links": 19
-    },
-    {
-      "source_name": "Politics/extremism",
-      "target_name": "Spam",
-      "sentiment": 0.8686131386861314,
-      "links": 137
-    },
-    {
-      "source_name": "Politics/Activism",
-      "target_name": "Lifestyle/Home",
-      "sentiment": 0.8541033434650456,
-      "links": 658
-    },
-    {
-      "source_name": "Sports/American",
-      "target_name": "Games",
-      "sentiment": 1.0,
-      "links": 57
-    },
-    {
-      "source_name": "Japanese",
-      "target_name": "Esports/Online Games",
-      "sentiment": 1.0,
-      "links": 32
-    },
-    {
-      "source_name": "Science/Academia",
-      "target_name": "Games",
-      "sentiment": 1.0,
-      "links": 39
-    },
-    {
-      "source_name": "Trading",
-      "target_name": "Entertainment Mixed",
-      "sentiment": 1.0,
-      "links": 37
-    },
-    {
-      "source_name": "NSFW-Extreme",
-      "target_name": "Geographic/Countries",
-      "sentiment": 1.0,
-      "links": 81
+      "source_name": "Entertainment Mixed",
+      "target_name": "Trading",
+      "sentiment": 0.9583333333333334,
+      "links": 48
     },
     {
       "source_name": "Help/Advice/Q&A",
@@ -61,28 +13,10 @@
       "links": 770
     },
     {
-      "source_name": "Lifestyle",
+      "source_name": "Trading",
       "target_name": "Entertainment Mixed",
       "sentiment": 1.0,
-      "links": 80
-    },
-    {
-      "source_name": "Meta-Commentary",
-      "target_name": "NSFW-Homosexual",
-      "sentiment": 0.8360655737704918,
-      "links": 61
-    },
-    {
-      "source_name": "Esports/Online Games",
-      "target_name": "NSFW-Homosexual",
-      "sentiment": 0.9807692307692308,
-      "links": 104
-    },
-    {
-      "source_name": "Technology/Hardware",
-      "target_name": "Celebrities/Models",
-      "sentiment": 1.0,
-      "links": 22
+      "links": 37
     },
     {
       "source_name": "Low Quality",
@@ -91,76 +25,22 @@
       "links": 19
     },
     {
-      "source_name": "YouTuber Personalities",
-      "target_name": "Memes/Cute/Funny",
-      "sentiment": 1.0,
-      "links": 23
-    },
-    {
-      "source_name": "Geographic/Countries",
-      "target_name": "My Little Pony",
-      "sentiment": 1.0,
-      "links": 28
-    },
-    {
-      "source_name": "NSFW",
-      "target_name": "Meta-Commentary",
-      "sentiment": 1.0,
-      "links": 21
-    },
-    {
-      "source_name": "Lifestyle/Home",
-      "target_name": "Games",
-      "sentiment": 1.0,
-      "links": 29
-    },
-    {
-      "source_name": "Small Random",
-      "target_name": "Gaming-AAA Titles",
-      "sentiment": 1.0,
-      "links": 47
-    },
-    {
-      "source_name": "Games",
-      "target_name": "Football",
-      "sentiment": 1.0,
-      "links": 46
-    },
-    {
       "source_name": "My Little Pony",
       "target_name": "My Little Pony",
       "sentiment": 0.9650238473767886,
       "links": 629
     },
     {
-      "source_name": "Lifestyle/Outdoor",
-      "target_name": "Games",
+      "source_name": "Gaming-AAA Titles",
+      "target_name": "Football",
       "sentiment": 1.0,
-      "links": 62
+      "links": 45
     },
     {
-      "source_name": "Tech/Cryptocurrency",
-      "target_name": "NSFW",
+      "source_name": "Celebrities/Models",
+      "target_name": "NSFW-Fetish",
       "sentiment": 1.0,
-      "links": 17
-    },
-    {
-      "source_name": "YouTube/Gaming Content",
-      "target_name": "Art/Imaginary",
-      "sentiment": 1.0,
-      "links": 22
-    },
-    {
-      "source_name": "Art/Imaginary",
-      "target_name": "Gaming-AAA Titles",
-      "sentiment": 1.0,
-      "links": 17
-    },
-    {
-      "source_name": "NSFW-Homosexual",
-      "target_name": "Esports/Online Games",
-      "sentiment": 1.0,
-      "links": 187
+      "links": 15
     },
     {
       "source_name": "Personal/Community",
@@ -175,58 +55,28 @@
       "links": 22
     },
     {
-      "source_name": "Gaming-AAA Titles",
-      "target_name": "Football",
+      "source_name": "YouTube/Gaming Content",
+      "target_name": "Art/Imaginary",
       "sentiment": 1.0,
-      "links": 45
+      "links": 22
     },
     {
-      "source_name": "Spam",
-      "target_name": "NSFW",
-      "sentiment": 1.0,
-      "links": 32
-    },
-    {
-      "source_name": "Niche",
-      "target_name": "Lifestyle/Outdoor",
-      "sentiment": 1.0,
-      "links": 21
-    },
-    {
-      "source_name": "Memes/Cute/Funny",
-      "target_name": "Celebrities/Models",
-      "sentiment": 1.0,
-      "links": 15
-    },
-    {
-      "source_name": "Entertainment Mixed",
-      "target_name": "Trading",
-      "sentiment": 0.9583333333333334,
-      "links": 48
-    },
-    {
-      "source_name": "Movies/TV/Comics",
-      "target_name": "Football",
-      "sentiment": 1.0,
-      "links": 26
-    },
-    {
-      "source_name": "Music",
+      "source_name": "Lifestyle/Outdoor",
       "target_name": "Games",
       "sentiment": 1.0,
-      "links": 63
+      "links": 62
     },
     {
-      "source_name": "Shitpost",
-      "target_name": "Art/Imaginary",
-      "sentiment": 0.9699248120300752,
-      "links": 133
-    },
-    {
-      "source_name": "Celebrities/Models",
-      "target_name": "NSFW-Fetish",
+      "source_name": "Small Random",
+      "target_name": "Gaming-AAA Titles",
       "sentiment": 1.0,
-      "links": 15
+      "links": 47
+    },
+    {
+      "source_name": "Meta-Commentary",
+      "target_name": "NSFW-Homosexual",
+      "sentiment": 0.8360655737704918,
+      "links": 61
     },
     {
       "source_name": "Mix",
@@ -235,66 +85,168 @@
       "links": 35
     },
     {
+      "source_name": "Science/Academia",
+      "target_name": "Games",
+      "sentiment": 1.0,
+      "links": 39
+    },
+    {
+      "source_name": "Movies/TV/Comics",
+      "target_name": "Football",
+      "sentiment": 1.0,
+      "links": 26
+    },
+    {
+      "source_name": "Shitpost",
+      "target_name": "Art/Imaginary",
+      "sentiment": 0.9699248120300752,
+      "links": 133
+    },
+    {
+      "source_name": "Technology/Hardware",
+      "target_name": "Celebrities/Models",
+      "sentiment": 1.0,
+      "links": 22
+    },
+    {
+      "source_name": "Japanese",
+      "target_name": "Esports/Online Games",
+      "sentiment": 1.0,
+      "links": 32
+    },
+    {
+      "source_name": "NSFW-Homosexual",
+      "target_name": "Esports/Online Games",
+      "sentiment": 1.0,
+      "links": 187
+    },
+    {
+      "source_name": "NSFW-Extreme",
+      "target_name": "Geographic/Countries",
+      "sentiment": 1.0,
+      "links": 81
+    },
+    {
+      "source_name": "Random",
+      "target_name": "NSFW-Fetish",
+      "sentiment": 1.0,
+      "links": 17
+    },
+    {
+      "source_name": "Football",
+      "target_name": "Games",
+      "sentiment": 1.0,
+      "links": 19
+    },
+    {
+      "source_name": "YouTuber Personalities",
+      "target_name": "Memes/Cute/Funny",
+      "sentiment": 1.0,
+      "links": 23
+    },
+    {
+      "source_name": "Games",
+      "target_name": "Football",
+      "sentiment": 1.0,
+      "links": 46
+    },
+    {
+      "source_name": "Esports/Online Games",
+      "target_name": "NSFW-Homosexual",
+      "sentiment": 0.9807692307692308,
+      "links": 104
+    },
+    {
+      "source_name": "Politics/extremism",
+      "target_name": "Spam",
+      "sentiment": 0.8686131386861314,
+      "links": 137
+    },
+    {
+      "source_name": "Tech/Cryptocurrency",
+      "target_name": "NSFW",
+      "sentiment": 1.0,
+      "links": 17
+    },
+    {
+      "source_name": "Geographic/Countries",
+      "target_name": "My Little Pony",
+      "sentiment": 1.0,
+      "links": 28
+    },
+    {
+      "source_name": "Sports/American",
+      "target_name": "Games",
+      "sentiment": 1.0,
+      "links": 57
+    },
+    {
+      "source_name": "Art/Imaginary",
+      "target_name": "Gaming-AAA Titles",
+      "sentiment": 1.0,
+      "links": 17
+    },
+    {
+      "source_name": "Memes/Cute/Funny",
+      "target_name": "Celebrities/Models",
+      "sentiment": 1.0,
+      "links": 15
+    },
+    {
       "source_name": "NSFW-Fetish",
       "target_name": "Mix",
       "sentiment": 1.0,
       "links": 79
+    },
+    {
+      "source_name": "Music",
+      "target_name": "Games",
+      "sentiment": 1.0,
+      "links": 63
+    },
+    {
+      "source_name": "Lifestyle",
+      "target_name": "Entertainment Mixed",
+      "sentiment": 1.0,
+      "links": 80
+    },
+    {
+      "source_name": "Politics/Activism",
+      "target_name": "Lifestyle/Home",
+      "sentiment": 0.8541033434650456,
+      "links": 658
+    },
+    {
+      "source_name": "Niche",
+      "target_name": "Lifestyle/Outdoor",
+      "sentiment": 1.0,
+      "links": 21
+    },
+    {
+      "source_name": "NSFW",
+      "target_name": "Meta-Commentary",
+      "sentiment": 1.0,
+      "links": 21
+    },
+    {
+      "source_name": "Spam",
+      "target_name": "NSFW",
+      "sentiment": 1.0,
+      "links": 32
+    },
+    {
+      "source_name": "Lifestyle/Home",
+      "target_name": "Games",
+      "sentiment": 1.0,
+      "links": 29
     }
   ],
   "rivalries": [
     {
-      "source_name": "Random",
-      "target_name": "NSFW-Homosexual",
-      "sentiment": 0.6,
-      "links": 15
-    },
-    {
-      "source_name": "Football",
-      "target_name": "Lifestyle",
-      "sentiment": 0.8666666666666667,
-      "links": 45
-    },
-    {
-      "source_name": "Politics/extremism",
-      "target_name": "NSFW-Extreme",
-      "sentiment": 0.3,
-      "links": 20
-    },
-    {
-      "source_name": "Politics/Activism",
-      "target_name": "Personal/Community",
-      "sentiment": 0.4908424908424908,
-      "links": 546
-    },
-    {
-      "source_name": "Sports/American",
-      "target_name": "Lifestyle",
-      "sentiment": 0.78125,
-      "links": 64
-    },
-    {
-      "source_name": "Japanese",
-      "target_name": "Meta-Commentary",
-      "sentiment": 0.9428571428571428,
-      "links": 35
-    },
-    {
-      "source_name": "Science/Academia",
-      "target_name": "YouTube/Gaming Content",
-      "sentiment": 0.6936936936936937,
-      "links": 555
-    },
-    {
-      "source_name": "Trading",
-      "target_name": "Politics/Activism",
-      "sentiment": 0.5454545454545454,
-      "links": 176
-    },
-    {
-      "source_name": "NSFW-Extreme",
-      "target_name": "Meta-Commentary",
-      "sentiment": 0.5294117647058824,
-      "links": 17
+      "source_name": "Entertainment Mixed",
+      "target_name": "NSFW-Fetish",
+      "sentiment": 0.5555555555555556,
+      "links": 117
     },
     {
       "source_name": "Help/Advice/Q&A",
@@ -303,28 +255,10 @@
       "links": 3908
     },
     {
-      "source_name": "Lifestyle",
-      "target_name": "Music",
-      "sentiment": 0.8333333333333334,
-      "links": 60
-    },
-    {
-      "source_name": "Meta-Commentary",
-      "target_name": "Japanese",
-      "sentiment": 0.4166666666666667,
-      "links": 24
-    },
-    {
-      "source_name": "Esports/Online Games",
-      "target_name": "Entertainment Mixed",
-      "sentiment": 0.7575757575757576,
-      "links": 33
-    },
-    {
-      "source_name": "Technology/Hardware",
-      "target_name": "Politics/extremism",
-      "sentiment": 0.8769230769230769,
-      "links": 65
+      "source_name": "Trading",
+      "target_name": "Politics/Activism",
+      "sentiment": 0.5454545454545454,
+      "links": 176
     },
     {
       "source_name": "Low Quality",
@@ -333,76 +267,22 @@
       "links": 31
     },
     {
-      "source_name": "YouTuber Personalities",
-      "target_name": "Sports/American",
-      "sentiment": 0.4,
-      "links": 20
-    },
-    {
-      "source_name": "Geographic/Countries",
-      "target_name": "Politics/extremism",
-      "sentiment": 0.7613559322033898,
-      "links": 1475
-    },
-    {
-      "source_name": "NSFW",
-      "target_name": "Tech/Cryptocurrency",
-      "sentiment": 0.5294117647058824,
-      "links": 17
-    },
-    {
-      "source_name": "Lifestyle/Home",
-      "target_name": "Meta-Commentary",
-      "sentiment": 0.6113744075829384,
-      "links": 211
-    },
-    {
-      "source_name": "Small Random",
-      "target_name": "Shitpost",
-      "sentiment": 0.7647058823529411,
-      "links": 17
-    },
-    {
-      "source_name": "Games",
-      "target_name": "NSFW-Fetish",
-      "sentiment": 0.7,
-      "links": 20
-    },
-    {
       "source_name": "My Little Pony",
       "target_name": "Shitpost",
       "sentiment": 0.7682926829268293,
       "links": 164
     },
     {
-      "source_name": "Lifestyle/Outdoor",
-      "target_name": "Politics/extremism",
-      "sentiment": 0.7767441860465116,
-      "links": 215
+      "source_name": "Gaming-AAA Titles",
+      "target_name": "NSFW-Fetish",
+      "sentiment": 0.7333333333333333,
+      "links": 15
     },
     {
-      "source_name": "Tech/Cryptocurrency",
-      "target_name": "Politics/extremism",
-      "sentiment": 0.6094674556213018,
-      "links": 338
-    },
-    {
-      "source_name": "YouTube/Gaming Content",
-      "target_name": "Spam/Personalities",
-      "sentiment": 0.6666666666666666,
-      "links": 18
-    },
-    {
-      "source_name": "Art/Imaginary",
-      "target_name": "Shitpost",
-      "sentiment": 0.8928571428571429,
-      "links": 168
-    },
-    {
-      "source_name": "NSFW-Homosexual",
-      "target_name": "Help/Advice/Q&A",
-      "sentiment": 0.7272727272727273,
-      "links": 66
+      "source_name": "Celebrities/Models",
+      "target_name": "Memes/Cute/Funny",
+      "sentiment": 0.8333333333333334,
+      "links": 24
     },
     {
       "source_name": "Personal/Community",
@@ -417,57 +297,27 @@
       "links": 98
     },
     {
-      "source_name": "Gaming-AAA Titles",
-      "target_name": "NSFW-Fetish",
-      "sentiment": 0.7333333333333333,
-      "links": 15
-    },
-    {
-      "source_name": "Spam",
-      "target_name": "Politics/Activism",
-      "sentiment": 0.3742690058479532,
-      "links": 342
-    },
-    {
-      "source_name": "Niche",
-      "target_name": "Science/Academia",
-      "sentiment": 0.75,
-      "links": 40
-    },
-    {
-      "source_name": "Memes/Cute/Funny",
-      "target_name": "Politics/extremism",
-      "sentiment": 0.5567010309278351,
-      "links": 194
-    },
-    {
-      "source_name": "Entertainment Mixed",
-      "target_name": "NSFW-Fetish",
-      "sentiment": 0.5555555555555556,
-      "links": 117
-    },
-    {
-      "source_name": "Movies/TV/Comics",
+      "source_name": "YouTube/Gaming Content",
       "target_name": "Spam/Personalities",
-      "sentiment": 0.7777777777777778,
+      "sentiment": 0.6666666666666666,
       "links": 18
     },
     {
-      "source_name": "Music",
-      "target_name": "Football",
-      "sentiment": 0.821917808219178,
-      "links": 292
-    },
-    {
-      "source_name": "Shitpost",
+      "source_name": "Lifestyle/Outdoor",
       "target_name": "Politics/extremism",
-      "sentiment": 0.6884176182707994,
-      "links": 1226
+      "sentiment": 0.7767441860465116,
+      "links": 215
     },
     {
-      "source_name": "Celebrities/Models",
-      "target_name": "Memes/Cute/Funny",
-      "sentiment": 0.8333333333333334,
+      "source_name": "Small Random",
+      "target_name": "Shitpost",
+      "sentiment": 0.7647058823529411,
+      "links": 17
+    },
+    {
+      "source_name": "Meta-Commentary",
+      "target_name": "Japanese",
+      "sentiment": 0.4166666666666667,
       "links": 24
     },
     {
@@ -477,10 +327,160 @@
       "links": 27
     },
     {
+      "source_name": "Science/Academia",
+      "target_name": "YouTube/Gaming Content",
+      "sentiment": 0.6936936936936937,
+      "links": 555
+    },
+    {
+      "source_name": "Movies/TV/Comics",
+      "target_name": "Spam/Personalities",
+      "sentiment": 0.7777777777777778,
+      "links": 18
+    },
+    {
+      "source_name": "Shitpost",
+      "target_name": "Politics/extremism",
+      "sentiment": 0.6884176182707994,
+      "links": 1226
+    },
+    {
+      "source_name": "Technology/Hardware",
+      "target_name": "Politics/extremism",
+      "sentiment": 0.8769230769230769,
+      "links": 65
+    },
+    {
+      "source_name": "Japanese",
+      "target_name": "Meta-Commentary",
+      "sentiment": 0.9428571428571428,
+      "links": 35
+    },
+    {
+      "source_name": "NSFW-Homosexual",
+      "target_name": "Help/Advice/Q&A",
+      "sentiment": 0.7272727272727273,
+      "links": 66
+    },
+    {
+      "source_name": "NSFW-Extreme",
+      "target_name": "Meta-Commentary",
+      "sentiment": 0.5294117647058824,
+      "links": 17
+    },
+    {
+      "source_name": "Random",
+      "target_name": "NSFW-Homosexual",
+      "sentiment": 0.6,
+      "links": 15
+    },
+    {
+      "source_name": "Football",
+      "target_name": "Lifestyle",
+      "sentiment": 0.8666666666666667,
+      "links": 45
+    },
+    {
+      "source_name": "YouTuber Personalities",
+      "target_name": "Sports/American",
+      "sentiment": 0.4,
+      "links": 20
+    },
+    {
+      "source_name": "Games",
+      "target_name": "NSFW-Fetish",
+      "sentiment": 0.7,
+      "links": 20
+    },
+    {
+      "source_name": "Esports/Online Games",
+      "target_name": "Entertainment Mixed",
+      "sentiment": 0.7575757575757576,
+      "links": 33
+    },
+    {
+      "source_name": "Politics/extremism",
+      "target_name": "NSFW-Extreme",
+      "sentiment": 0.3,
+      "links": 20
+    },
+    {
+      "source_name": "Tech/Cryptocurrency",
+      "target_name": "Politics/extremism",
+      "sentiment": 0.6094674556213018,
+      "links": 338
+    },
+    {
+      "source_name": "Geographic/Countries",
+      "target_name": "Politics/extremism",
+      "sentiment": 0.7613559322033898,
+      "links": 1475
+    },
+    {
+      "source_name": "Sports/American",
+      "target_name": "Lifestyle",
+      "sentiment": 0.78125,
+      "links": 64
+    },
+    {
+      "source_name": "Art/Imaginary",
+      "target_name": "Shitpost",
+      "sentiment": 0.8928571428571429,
+      "links": 168
+    },
+    {
+      "source_name": "Memes/Cute/Funny",
+      "target_name": "Politics/extremism",
+      "sentiment": 0.5567010309278351,
+      "links": 194
+    },
+    {
       "source_name": "NSFW-Fetish",
       "target_name": "YouTube/Gaming Content",
       "sentiment": 0.7837837837837838,
       "links": 37
+    },
+    {
+      "source_name": "Music",
+      "target_name": "Football",
+      "sentiment": 0.821917808219178,
+      "links": 292
+    },
+    {
+      "source_name": "Lifestyle",
+      "target_name": "Music",
+      "sentiment": 0.8333333333333334,
+      "links": 60
+    },
+    {
+      "source_name": "Politics/Activism",
+      "target_name": "Personal/Community",
+      "sentiment": 0.4908424908424908,
+      "links": 546
+    },
+    {
+      "source_name": "Niche",
+      "target_name": "Science/Academia",
+      "sentiment": 0.75,
+      "links": 40
+    },
+    {
+      "source_name": "NSFW",
+      "target_name": "Tech/Cryptocurrency",
+      "sentiment": 0.5294117647058824,
+      "links": 17
+    },
+    {
+      "source_name": "Spam",
+      "target_name": "Politics/Activism",
+      "sentiment": 0.3742690058479532,
+      "links": 342
+    },
+    {
+      "source_name": "Lifestyle/Home",
+      "target_name": "Meta-Commentary",
+      "sentiment": 0.6113744075829384,
+      "links": 211
     }
   ]
 }

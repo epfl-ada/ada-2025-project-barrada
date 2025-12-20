@@ -152,7 +152,7 @@
 </head>
 <body>
 
-    <h2>Fig 7. The Synapses of Influence</h2>
+    <h2>The Synapses of Influence</h2>
     <div class="subtitle">
         Visualizing the nervous system of Reddit. Clusters are grouped by <strong>Social Role</strong>.
         <br>Lines represent hyperlinks: <span style="color:#27ae60; font-weight:bold;">Green = Support</span>, 
@@ -221,14 +221,27 @@
 
                 const nodeMap = new Map();
                 nodes.forEach(n => {
-                    const r = [
-                        {id: "Influential", val: n.pct_influential},
-                        {id: "Supportive", val: n.pct_supportive},
-                        {id: "Controversial", val: n.pct_controversial},
-                        {id: "Critical", val: n.pct_critical}
-                    ].sort((a,b) => b.val - a.val)[0];
-                    
-                    const role = r.val > 5 ? r.id : "Neutral";
+                    const roles = [
+                    {id: "Critical", val: n.pct_critical},
+                    {id: "Controversial", val: n.pct_controversial},
+                    {id: "Influential", val: n.pct_influential},
+                    {id: "Supportive", val: n.pct_supportive}
+                    ];
+
+                    let role = "Neutral";
+
+                    if (n.pct_critical > 10) {
+                        role = "Critical";
+                    } else if (n.pct_controversial > 10) {
+                        role = "Controversial";
+                    } else if (n.pct_influential > 20) {
+                        role = "Influential";
+                    } else if (n.pct_supportive > 20) {
+                        role = "Supportive";
+                    } else {
+                        const max = roles.sort((a,b) => b.val - a.val)[0];
+                        role = max.val > 5 ? max.id : "Neutral";
+                    }
                     
                     const nodeObj = {
                         name: n.name,

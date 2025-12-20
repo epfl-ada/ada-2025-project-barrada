@@ -442,6 +442,67 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(data)} nodes")
         return data
     
+    def create_civility_json(self):
+        """Combine RQ13 + cluster_master for civility viz"""
+        print("\nCreating civility.json...")
+        
+        # Load both datasets
+        rq13 = pd.read_csv(self.data_dir / "rq_analysis" / "rq13_internal_civility.csv")
+        cluster_master = pd.read_csv(self.data_dir / "cluster_master_dataset.csv")
+        
+        # Merge on cluster name (src_cluster in RQ13, cluster_label in cluster_master)
+        merged = pd.merge(
+            rq13,
+            cluster_master[['cluster_label', 'insularity', 'n_subreddits', 'pagerank_mean']], 
+            left_on='src_cluster',
+            right_on='cluster_label',
+            how='inner'
+        )
+        
+        # Calculate civility
+        merged['civility'] = (1 - merged['internal_negativity_rate']) * 100
+        merged['insularity_pct'] = merged['insularity'] * 100
+        
+        # Get top/bottom 10
+        top_civil = merged.nlargest(10, 'civility')
+        bottom_civil = merged.nsmallest(10, 'civility')
+        
+        # Prepare output
+        monks_list = []
+        for _, row in top_civil.iterrows():
+            monks_list.append({
+                "cluster": row['cluster_label'],
+                "civility": float(row['civility']),
+                "insularity": float(row['insularity_pct']),
+                "internal_links": int(row['total_internal_links']),
+                "negative_links": int(row['negative_internal_links']),
+                "size": int(row['n_subreddits'])
+            })
+        
+        cannibals_list = []
+        for _, row in bottom_civil.iterrows():
+            cannibals_list.append({
+                "cluster": row['cluster_label'],
+                "civility": float(row['civility']),
+                "insularity": float(row['insularity_pct']),
+                "internal_links": int(row['total_internal_links']),
+                "negative_links": int(row['negative_internal_links']),
+                "size": int(row['n_subreddits'])
+            })
+        
+        output = {
+            "monks": monks_list,
+            "cannibals": cannibals_list
+        }
+        
+        # Save to civility.json
+        output_path = self.output_dir / "civility.json"
+        with open(output_path, 'w') as f:
+            json.dump(output, f, indent=2)
+        
+        print(f"Created {output_path}")
+        return output
+    
     def run_all(self):
         """Run all JSON generation tasks"""
         print("COMPLETE VISUALIZATION DATA PREPARATION")
@@ -456,6 +517,7 @@ class VisualizationDataPrep:
         self.create_power_json()
         self.create_bridges_json()
         self.create_quadrant_json()
+        self.create_civility_json()  
         
         print("All JSON files created successfully!")
         print(f"Output directory: {self.output_dir}")

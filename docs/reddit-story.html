@@ -76,7 +76,7 @@ permalink: /
     <h3 class="section-header text-center">The 40 continents of Reddit</h3>
 
         <p>
-          Each subreddit has a <strong>300-dimensional</strong> embedding. That's very powerful, however it's hard to “vizualize”.
+          Each subreddit has a <strong>300-dimensional</strong> embedding. That's very powerful, however it's hard to visualize.
           So before clustering, we used <strong>PCA</strong> to reduce the number of dimensions while maintaining as most of the information.
         </p>
 
@@ -302,13 +302,39 @@ permalink: /
     </div>
 
     <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
-      <h3 style="margin-bottom: 1rem;">Zooming Out: Which Topics Dominate?</h3>
+      <h3 style="margin-bottom: 1rem;">The Nervous System: Which Topics Dominate Each Role?</h3>
       <p>
-        Looking at individual subreddits is fascinating, but to understand the ecosystem, we need to look at the <strong>Continents</strong> (Topic Clusters) we identified earlier.
+        We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
+        to the <strong>40 topic clusters</strong> we identified earlier. 
+        Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>?
       </p>
+      <p style="margin-top: 1.2rem;">
+        These aren't isolated dots on a chart ,they're living communities wired together by thousands of hyperlinks. 
+        Below, we visualize Reddit's complete neural network: clusters grouped by social role, 
+        connected by the conversations that flow between them.
+      </p>
+    </div>
+
+    <div style="width: 100%; height: 1100px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 3rem auto;">
+      <iframe
+        src="{{ '/assets/visualizations/synapses.html' | relative_url }}"
+        width="100%"
+        height="100%"
+        style="border: none;"
+        title="The Synapses of Reddit"
+        scrolling="no"
+      ></iframe>
+    </div>
+    <p class="caption-left" style="margin-top: 10px; font-size: 0.95rem; color: #666; line-height: 1.6;">
+      <strong>The Synapses of Influence:</strong> Reddit's nervous system visualized as a hierarchical edge bundling diagram.<br>
+    </p>
+
+    <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
+      <h3 style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
       <p>
-        Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>? 
-        Let's break down which topics dominate each of the four social roles.
+        The network shows connections, but not composition. 
+        Politics and Gaming both appear—but do they play the same role? 
+        Let's break down the <strong>topic clusters</strong> that fill each of the four archetypes.
       </p>
     </div>
 
@@ -648,7 +674,7 @@ permalink: /
     <h4 style="margin-bottom: 0.5rem;">Key Insight: Unexpected Alliances</h4>
     <p>
       While ideological rivals clash loudly, many alliances form around shared interests.
-      NStrong support networks emerge between communities centered on <em>Music</em>, <em>Games</em>, and <em>Sports</em>.
+      Strong support networks emerge between communities centered on <em>Music</em>, <em>Games</em>, and <em>Sports</em>.
     </p>
     <p>
       Even <em>Politics</em> and <em>Activism</em> show a softer side: sending substantial supportive traffic toward <em>Lifestyle</em> and <em>Home</em> communities. 
@@ -754,7 +780,7 @@ permalink: /
       
       <p>
         The punching bags tend to be mainstream hubs: highly visible, generic and easy to mock. On Reddit scale is a liability. 
-        The attackers, by contrast, are often smaller niche communities that define themselves through opposition. For them hostility isn't incedental, it becomes their identity.
+        The attackers, by contrast, are often smaller niche communities that define themselves through opposition. For them hostility isn't incidental, it becomes their identity.
       </p>
 
       <p style="margin-top: 1.5rem;">
@@ -808,7 +834,7 @@ permalink: /
     <p>
       If the source is larger than the target, that's punching down.
       If the source is smaller than the target, that's insurgency: punching up. 
-      This is one of the few times <strong> Power</strong> can be quantifies and analyzed.
+      This is one of the few times <strong> Power</strong> can be quantified and analyzed.
     </p>
 
     <!-- Waffle Chart Visualization -->
