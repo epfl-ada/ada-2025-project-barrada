@@ -296,6 +296,71 @@ a {
   display: block;
 }
 
+.chapters-dd { position: relative; }
+
+.chapters-dd summary::-webkit-details-marker { display: none; }
+
+.chapters-dd summary {
+  text-decoration: none;
+}
+
+.chapters-btn {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  padding: 0.25rem 0;      /* no “button” look */
+  border: none;           /* removes box */
+  background: transparent;
+  font-weight: 600;
+}
+
+.chapters-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.6rem);
+  width: 240px;
+
+  max-height: none;
+  overflow: visible;
+
+  padding: 0.4rem;
+  border-radius: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+
+  z-index: 9999;
+}
+
+
+.chapters-caret {
+  display: inline-block;
+  transition: transform 150ms ease;
+}
+.chapters-dd[open] .chapters-caret { transform: rotate(180deg); }
+
+
+
+.chapters-menu a {
+  display: block;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.chapters-menu a:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.story-chapter { scroll-margin-top: 90px; }
+
 .hero {
   position: relative;
   min-height: 100vh;

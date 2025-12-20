@@ -1,10 +1,32 @@
 <header class="site-header" role="banner">
   <div class="wrapper site-nav-bar">
     <a class="site-title" rel="author" href="{{ '/' | relative_url }}">Reddit Invisible Brain</a>
+
     <nav class="site-nav" aria-label="Primary">
-      <a class="dataset-pill" href="https://www.google.com" target="_blank" rel="noopener">Dataset</a>
-      <a href="{{ '/#clusters' | relative_url }}">Clusters</a>
-      <a href="{{ '/#roles' | relative_url }}">Roles</a>
+      <a class="dataset-pill"
+         href="https://snap.stanford.edu/data/soc-RedditHyperlinks.html"
+         target="_blank" rel="noopener">Dataset</a>
+
+      <details class="chapters-dd">
+        <summary class="chapters-btn">
+          Chapters <span class="chapters-caret">▾</span>
+        </summary>
+
+        <div class="chapters-menu" role="menu" aria-label="Chapters">
+          <a role="menuitem" href="{{ '/#the-map' | relative_url }}">Map</a>
+          <a role="menuitem" href="{{ '/#roles' | relative_url }}">Roles</a>
+          <a role="menuitem" href="{{ '/#network' | relative_url }}">Network</a>
+          <a role="menuitem" href="{{ '/#rivalries' | relative_url }}">Rivalries</a>
+          <a role="menuitem" href="{{ '/#alliances' | relative_url }}">Alliances</a>
+          <a role="menuitem" href="{{ '/#punching-bags' | relative_url }}">Punching Bags</a>
+          <a role="menuitem" href="{{ '/#power-game' | relative_url }}">Power</a>
+          <a role="menuitem" href="{{ '/#civility' | relative_url }}">Civility</a>
+          <a role="menuitem" href="{{ '/#liwc' | relative_url }}">Language</a>
+          <a role="menuitem" href="{{ '/#conclusion' | relative_url }}">Conclusion</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
+
+<script src="{{ '/assets/js/chapters-dropdown.js' | relative_url }}" defer></script>
