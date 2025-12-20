@@ -511,6 +511,26 @@ permalink: /
       This tells us who actually holds the keys to the kingdom.
     </p>
 
+    <div style="max-width: 760px; margin: 1.4rem auto 2rem auto; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:1rem 1.2rem; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+      <ul style="list-style: disc; padding-left:1.3rem; margin:0; color:#111;">
+        <li style="margin:0 0 0.8rem 0;">
+          <strong>Betweenness Centrality:</strong> Do shortest paths from other nodes pass through this node?
+          <div style="text-align:center; font-family:'Times New Roman', Georgia, serif; font-size:1.05rem; margin-top:0.35rem;">
+            <em>B</em>(<em>v</em>) = Σ<sub>s≠v≠t</sub>  num of shortest paths from <em>s</em> to <em>t</em> that go through <em>v</em>
+          </div>
+        </li>
+        <li style="margin:0;">
+          <strong>PageRank:</strong> How “important” are the nodes, judging by their global connectivity?
+          <div style="text-align:center; font-family:'Times New Roman', Georgia, serif; font-size:1.05rem; margin-top:0.35rem; font-weight:700;">
+            <em>r</em> = α <em>P</em><sup>T</sup> <em>r</em> + (1 − α) <em>v</em>
+          </div>
+          <div style="text-align:center; font-size:0.9rem; color:#4b5563; margin-top:0.2rem;">
+            where <em>r</em> denotes the rank of all nodes, <em>P</em> is the transition matrix, and <em>v</em> is a uniform personalization vector.
+          </div>
+        </li>
+      </ul>
+    </div>
+
     <div class="media-row" style="display:flex; gap: 4rem; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
       
       <div style="flex: 1 1 300px; max-width: 450px;">
