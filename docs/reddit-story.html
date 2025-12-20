@@ -271,116 +271,115 @@ permalink: /
 
   </div>
 
-  <div class="section-inner">
-      <h3 class="section-title text-center">The 4 roles</h3>
-      <p>
-        After mapping the continents, we zoom in on the <strong>voice</strong> each cluster tends to produce.
-        We can use four roles to classify most of the Subreddits:<br>
-        <div style="text-align:center;">
-          <p style="margin:0;"></p>
-            <strong>Influential</strong>: Large number of incoming positive links,<br>
-            <strong>Supportive</strong>: Large number of outgoing positive links,<br>
-            <strong>Controversial</strong>: High number of incoming negative links,<br>
-            <strong>Critical</strong>: High number of outgoing negative links.
-          </p>
-        </div>
+  <h3 class="section-title text-center">The 4 roles</h3>
+  <p>
+    After mapping the continents, we zoom in on the <strong>voice</strong> each cluster tends to produce.
+    We can use four roles to classify most of the Subreddits:<br>
+    <div style="text-align:center;">
+      <p style="margin:0;"></p>
+        <strong>Influential</strong>: Large number of incoming positive links,<br>
+        <strong>Supportive</strong>: Large number of outgoing positive links,<br>
+        <strong>Controversial</strong>: High number of incoming negative links,<br>
+        <strong>Critical</strong>: High number of outgoing negative links.
       </p>
+    </div>
+  </p>
 
-    <h3 class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
+  <h3 class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
 
-    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-        <div style="height: 600px; overflow: hidden;">
-          <iframe
-            src="{{ '/assets/visualizations/quadrant.html' | relative_url }}"
-            width="100%"
-            height="100%"
-            style="border: none;"
-            title="Interactive Social Compass"
-            scrolling="no"
-          ></iframe>
-        </div>
-        <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-          <strong>Interactive:</strong> Scroll to zoom, drag to pan. Hover for details.<br>
-          <strong>X-Axis:</strong> positivity (Outgoing) | <strong>Y-Axis:</strong> Controversy (Incoming)
-        </p>
+  <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+    <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+      <div style="height: 600px; overflow: hidden;">
+        <iframe
+          src="{{ '/assets/visualizations/quadrant.html' | relative_url }}"
+          width="100%"
+          height="100%"
+          style="border: none;"
+          title="Interactive Social Compass"
+          scrolling="no"
+        ></iframe>
       </div>
-
-      <div class="media-text" style="flex:0 1 380px;min-width:260px;padding:0 0.5rem;text-align:left;">
-        <p style="margin:0 0 0.8rem 0;">
-          <strong>To see how these roles manifest in practice, we mapped the top 200 active subreddits</strong>
-        </p>
-        <p style="margin:0;">
-          The results are striking: Communities generating or attracting negative links (Critical and Controversial) are present, but they make up only a small fraction compared to the much larger Supportive clusters. 
-          This helps explain why Reddit can feel both peaceful and chaotic: most interactions are constructive, while a small number of communities produce a disproportionate share of friction.
-        </p>
-      </div>
-    </div>
-
-    <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
-      <h3 style="margin-bottom: 1rem;">The Nervous System: Which Topics Dominate Each Role?</h3>
-      <p>
-        We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
-        to the <strong>40 topic clusters</strong> we identified earlier. 
-        Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>?
-      </p>
-      <p style="margin-top: 1.2rem;">
-        These aren't isolated dots on a chart ,they're living communities wired together by thousands of hyperlinks. 
-        Below, we visualize Reddit's complete neural network: clusters grouped by social role, 
-        connected by the conversations that flow between them.
+      <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+        <strong>Interactive:</strong> Scroll to zoom, drag to pan. Hover for details.<br>
+        <strong>X-Axis:</strong> positivity (Outgoing) | <strong>Y-Axis:</strong> Controversy (Incoming)
       </p>
     </div>
 
-    <div style="width: 100%; height: 1100px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 3rem auto;">
-      <iframe
-        src="{{ '/assets/visualizations/synapses.html' | relative_url }}"
-        width="100%"
-        height="100%"
-        style="border: none;"
-        title="The Synapses of Reddit"
-        scrolling="no"
-      ></iframe>
+    <div class="media-text" style="flex:0 1 380px;min-width:260px;padding:0 0.5rem;text-align:left;">
+      <p style="margin:0 0 0.8rem 0;">
+        <strong>To see how these roles manifest in practice, we mapped the top 200 active subreddits</strong>
+      </p>
+      <p style="margin:0;">
+        The results are striking: Communities generating or attracting negative links (Critical and Controversial) are present, but they make up only a small fraction compared to the much larger Supportive clusters. 
+        This helps explain why Reddit can feel both peaceful and chaotic: most interactions are constructive, while a small number of communities produce a disproportionate share of friction.
+      </p>
     </div>
-    <p class="caption-left" style="margin-top: 10px; font-size: 0.95rem; color: #666; line-height: 1.6;">
-      <strong>The Synapses of Influence:</strong> Reddit's nervous system visualized as a hierarchical edge bundling diagram.<br>
+  </div>
+
+  <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
+    <h3 style="margin-bottom: 1rem;">The Nervous System: Which Topics Dominate Each Role?</h3>
+    <p>
+      We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
+      to the <strong>40 topic clusters</strong> we identified earlier. 
+      Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>?
     </p>
+    <p style="margin-top: 1.2rem;">
+      These aren't isolated dots on a chart ,they're living communities wired together by thousands of hyperlinks. 
+      Below, we visualize Reddit's complete neural network: clusters grouped by social role, 
+      connected by the conversations that flow between them.
+    </p>
+  </div>
 
-    <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
-      <h3 style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
-      <p>
-        The network shows connections, but not composition. 
-        Politics and Gaming both appear,but do they play the same role? 
-        Let's break down the <strong>topic clusters</strong> that fill each of the four archetypes.
+  <div style="width: 100%; height: 1100px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 3rem auto;">
+    <iframe
+      src="{{ '/assets/visualizations/synapses.html' | relative_url }}"
+      width="100%"
+      height="100%"
+      style="border: none;"
+      title="The Synapses of Reddit"
+      scrolling="no"
+    ></iframe>
+  </div>
+  <p class="caption-left" style="margin-top: 10px; font-size: 0.95rem; color: #666; line-height: 1.6;">
+    <strong>The Synapses of Influence:</strong> Reddit's nervous system visualized as a hierarchical edge bundling diagram.<br>
+  </p>
+
+  <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
+    <h3 style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
+    <p>
+      The network shows connections, but not composition. 
+      Politics and Gaming both appear,but do they play the same role? 
+      Let's break down the <strong>topic clusters</strong> that fill each of the four archetypes.
+    </p>
+  </div>
+
+    <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
+    <h3 class="section-header text-center" style="margin-top:3rem;">Influential</h3>
+
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+        <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+          <img 
+            src="{{ '/assets/img/role_influential_top.png' | relative_url }}" 
+            alt="Top Influential Clusters chart" 
+            style="width:100%; height:auto; display:block;"
+          />
+        </div>
+
+      <!-- RIGHT: IMAGE + TEXT -->
+      <div class="role-col" style="flex:0 1 480px;min-width:320px;text-align:center;">
+      <img
+        src="{{ '/assets/img/influential.png' | relative_url }}"
+        alt="Influential role icon"
+        loading="lazy"
+        style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+      />
+      <p style="margin:0;text-align:left;padding:0 0.5rem;">
+        <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
+        Their power is reach: they don't need to be extreme to dominate the flow of links.
+        The "Help/Advice/Q&A" cluster is the most influential on Reddit (83.5%), followed closely by "Lifestyle" and "Tech."
       </p>
     </div>
-
-      <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
-      <h3 class="section-header text-center" style="margin-top:3rem;">Influential</h3>
-
-        <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-          <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-            <img 
-              src="{{ '/assets/img/role_influential_top.png' | relative_url }}" 
-              alt="Top Influential Clusters chart" 
-              style="width:100%; height:auto; display:block;"
-            />
-          </div>
-
-        <!-- RIGHT: IMAGE + TEXT -->
-       <div class="role-col" style="flex:0 1 480px;min-width:320px;text-align:center;">
-        <img
-          src="{{ '/assets/img/influential.png' | relative_url }}"
-          alt="Influential role icon"
-          loading="lazy"
-          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
-        />
-        <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
-          Their power is reach: they don't need to be extreme to dominate the flow of links.
-          The "Help/Advice/Q&A" cluster is the most influential on Reddit (83.5%), followed closely by "Lifestyle" and "Tech."
-        </p>
-      </div>
-    </div>
+  
 
     <p style="margin-top:1.2rem;">
       If Influential clusters are where attention concentrates, Supportive clusters are where attention turns into care.
