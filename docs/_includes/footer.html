@@ -1,0 +1,194 @@
+<footer class="site-footer" role="contentinfo" aria-label="Site footer">
+  <style>
+    .site-footer{
+      --footer-bg:#ffffff;
+      --footer-panel:#ffffff;
+      --footer-border:#e5e7eb;
+      --footer-text:#0f172a;
+      --footer-muted:#525f70;
+      --footer-accent:#2563eb;
+      --footer-radius:14px;
+
+      background:var(--footer-bg);
+      color:var(--footer-text);
+      padding:2.4rem 1rem 3rem;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+
+    .site-footer .footer-shell{
+      max-width:1150px;
+      margin:0 auto;
+    }
+
+    .site-footer .footer-panel{
+      background:var(--footer-panel);
+      border:1px solid var(--footer-border);
+      border-radius:var(--footer-radius);
+      padding:1.8rem 1.6rem 1.7rem;
+      box-shadow:0 18px 40px rgba(15,23,42,0.08);
+    }
+
+    .site-footer .footer-heading{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:1rem;
+      margin-bottom:1.5rem;
+    }
+
+    .site-footer .footer-brand h2{
+      margin:0.1rem 0 0.25rem;
+      font-size:1.28rem;
+      letter-spacing:0.2px;
+    }
+
+    .site-footer .footer-links{
+      display:flex;
+      gap:0.65rem;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .site-footer .footer-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:0.35rem;
+      padding:0.55rem 0.9rem;
+      border-radius:999px;
+      font-size:0.95rem;
+      color:var(--footer-text);
+      text-decoration:none;
+      border:1px solid var(--footer-border);
+      background:rgba(255,255,255,0.03);
+      transition:transform 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+    .site-footer .footer-chip svg{
+      width:16px;
+      height:16px;
+      display:block;
+      fill:currentColor;
+    }
+    .site-footer .footer-chip:hover{
+      transform:translateY(-1px);
+      border-color:var(--footer-accent);
+      color:var(--footer-accent);
+    }
+    .site-footer .footer-chip.footer-chip--accent{
+      border-color:var(--footer-accent);
+      color:var(--footer-text);
+      background:linear-gradient(135deg, rgba(47,123,246,0.15), rgba(47,123,246,0.06));
+    }
+
+    .site-footer .team-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:0.85rem;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .site-footer .team-card{
+      background:#f5f7fb;
+      border:1px solid var(--footer-border);
+      border-radius:12px;
+      padding:1rem 1.1rem;
+      min-height:120px;
+      display:flex;
+      flex-direction:column;
+      gap:0.5rem;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .site-footer .team-name{
+      font-weight:600;
+      letter-spacing:0.1px;
+      color:var(--footer-text);
+    }
+
+    .site-footer .team-email{
+      color:var(--footer-accent);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      background:#e8f0ff;
+      font-size:1.25rem;
+      transition:transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+    }
+    .site-footer .team-email:hover{
+      transform:translateY(-2px);
+      background:#dbe6ff;
+      box-shadow:0 10px 24px rgba(37,99,235,0.18);
+    }
+
+    .site-footer .footer-meta{
+      margin-top:1.6rem;
+      text-align:center;
+      color:var(--footer-muted);
+      font-size:0.95rem;
+      letter-spacing:0.2px;
+    }
+  </style>
+
+  <div class="footer-shell">
+      <div class="footer-heading">
+
+
+        <div class="footer-links" aria-label="Project links">
+          <a class="footer-chip footer-chip--accent"
+             href="{{ site.github_repo | default: 'https://github.com/epfl-ada/ada-2025-project-barrada' }}"
+             target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.38-3.37-1.38-.45-1.2-1.11-1.52-1.11-1.52-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.58 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.15-4.56-5.12 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.06.8-.23 1.66-.35 2.52-.35s1.72.12 2.52.35c1.9-1.34 2.75-1.06 2.75-1.06.55 1.41.2 2.45.1 2.71.64.72 1.03 1.64 1.03 2.77 0 3.98-2.34 4.86-4.57 5.11.36.32.68.96.68 1.94v2.25c0 .27.18.59.69.48A10 10 0 0 0 12 2Z"/>
+            </svg>
+            <span>Project repository</span>
+          </a>
+        </div>
+      </div>
+
+      <ul class="team-grid" aria-label="Project team">
+        <li class="team-card">
+          <div class="team-name">Amer Lakrami</div>
+          <a class="team-email" href="mailto:amer.lakrami@epfl.ch" aria-label="Email Amer Lakrami">
+            <span aria-hidden="true">✉️</span>
+          </a>
+        </li>
+        <li class="team-card">
+          <div class="team-name">Hamza Barrada</div>
+          <a class="team-email" href="mailto:hamza.barrada@epfl.ch" aria-label="Email Hamza Barrada">
+            <span aria-hidden="true">✉️</span>
+          </a>
+        </li>
+        <li class="team-card">
+          <div class="team-name">Omar El Khyari</div>
+          <a class="team-email" href="mailto:omar.elkhyari@epfl.ch" aria-label="Email Omar El Khyari">
+            <span aria-hidden="true">✉️</span>
+          </a>
+        </li>
+        <li class="team-card">
+          <div class="team-name">Omar Zakariya</div>
+          <a class="team-email" href="mailto:omar.zakariya@epfl.ch" aria-label="Email Omar Zakariya">
+            <span aria-hidden="true">✉️</span>
+          </a>
+        </li>
+        <li class="team-card">
+          <div class="team-name">Cesar Illanes</div>
+          <a class="team-email" href="mailto:cesar.illanes@epfl.ch" aria-label="Email Cesar Illanes">
+            <span aria-hidden="true">✉️</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="footer-meta">
+        Created by the team · © {{ site.time | date: "%Y" }}
+      </div>
+  </div>
+</footer>
