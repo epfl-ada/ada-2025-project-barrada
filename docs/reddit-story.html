@@ -34,8 +34,10 @@ permalink: /
   </div>
 </section>
 
-<section>
-  <h2 class="section-title text-center">Introduction</h2>
+<section class="story-chapter" id="introduction">
+    <div class="section-header">
+    <h2 class="section-title text-center">Introduction</h2>
+  </div>
   <p class="text-center">
     Reddit feels chaotic on the surface. Millions of users. Tens of thousands of communities. 
     Endless threads branching, colliding, and disappearing every day. It looks like noise.
@@ -64,7 +66,7 @@ permalink: /
     </div>
 
     <!-- CHAPTER 1 -->
-    <h3 class="section-header text-center">The Map: Continents and Roads</h3>
+    <h3 id="continents-roads" class="section-header text-center">The Map: Continents and Roads</h3>
     <p>
       Reddit has <strong>50,000+</strong> subreddits. If we treat every subreddit as totally unique,
       we get lost in the small details and miss the big structure. So we start with a simple idea:
@@ -94,7 +96,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 2 -->
-    <h3 class="section-header text-center">The 40 continents of Reddit</h3>
+    <h3 id="continents-40" class="section-header text-center">The 40 continents of Reddit</h3>
 
         <p>
           Each subreddit has a <strong>300-dimensional</strong> embedding. That's very powerful, however it's hard to visualize.
@@ -156,7 +158,7 @@ permalink: /
 
 
     <!-- CHAPTER 3 -->
-    <h3 class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
+    <h3 id="paths" class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
     <p>
       Our “paths” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it's a form of communication that can be either friendly, hostile or just neutral so each link is not just a connection but carries a specific <strong>tone</strong>. By tracking link tone at scale, we can track how both attention and conflicts travel across Reddit.
     </p>
@@ -199,7 +201,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 4 -->
-    <h3 class="section-header text-center">How are most of the links?</h3>
+    <h3 id="links-tone" class="section-header text-center">How are most of the links?</h3>
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
@@ -223,7 +225,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 5 -->
-    <h3 class="section-header text-center">Where do most interactions concentrate?</h3>
+    <h3 id="concentrate" class="section-header text-center">Where do most interactions concentrate?</h3>
 
 
     <p>
@@ -274,7 +276,7 @@ permalink: /
 
 
   </div>
-  <h3 class="section-header text-center">The 4 main roles</h3>
+  <h3 id="roles-4" class="section-header text-center">The 4 main roles</h3>
   <p>
     After mapping the continents, we zoom in on the <strong>voice</strong> each cluster tends to produce.
     We can use four roles to classify most of the Subreddits:<br>
@@ -288,7 +290,7 @@ permalink: /
     </div>
   </p>
 
-  <h3 class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
+  <h3 id="social-compass" class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
 
   <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
     <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
@@ -320,7 +322,7 @@ permalink: /
   </div>
 
   <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
-    <h3 style="margin-bottom: 1rem;">The Nervous System</h3>
+    <h3 id="nervous-system" style="margin-bottom: 1rem;">The Nervous System</h3>
     <p>
       We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
       to the <strong>40 topic clusters</strong> we identified earlier. 
@@ -348,7 +350,7 @@ permalink: /
   </p>
 
   <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
-    <h3 style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
+    <h3 id="topics-roles" style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
     <p>
       The network shows connections, but not composition. 
       Politics and Gaming both appear,but do they play the same role? 
@@ -357,7 +359,7 @@ permalink: /
   </div>
 
     <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">Influential</h3>
+    <h3 id="role-influential" class="section-header text-center" style="margin-top:3rem;">Influential</h3>
 
       <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
         <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
@@ -390,7 +392,7 @@ permalink: /
 
 
   <!-- ROLE 2: SUPPORTIVE -->
-  <h3 class="section-header text-center" style="margin-top:3rem;">Supportive</h3>
+  <h3 id="role-supportive" class="section-header text-center" style="margin-top:3rem;">Supportive</h3>
 
   <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
     <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
@@ -422,7 +424,7 @@ permalink: /
 
 
   <!-- ROLE 3: CONTROVERSIAL (VIZ LEFT, IMAGE RIGHT) -->
-  <h3 class="section-header text-center" style="margin-top:3rem;">Controversial</h3>
+  <h3 id="role-controversial" class="section-header text-center" style="margin-top:3rem;">Controversial</h3>
 
   <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
     <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
@@ -457,7 +459,7 @@ permalink: /
 
 
   <!-- ROLE 4: CRITICAL (IMAGE LEFT, VIZ RIGHT) -->
-  <h3 class="section-header text-center" style="margin-top:3rem;">Critical</h3>
+  <h3 id="role-critical" class="section-header text-center" style="margin-top:3rem;">Critical</h3>
 
   <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
     <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
@@ -492,7 +494,7 @@ permalink: /
 
   <div class="section-inner">
     <div class="section-header">
-      <h3 class="section-header text-center">The Network Fabric</h3>
+      <h3 id="network-fabric" class="section-header text-center">The Network Fabric</h3>
     </div>
 
     <h3 class="text-center">To truly understand the map, we need to ask: which communities hold the most influence? 
@@ -592,7 +594,7 @@ permalink: /
 
   <div class="section-inner">
     <div class="section-header">
-      <h3 class="section-header text-center">Rivalries and Fault Lines</h3>
+      <h3 id="rivalries" class="section-header text-center">Rivalries and Fault Lines</h3>
     </div>
 
 
@@ -653,7 +655,7 @@ permalink: /
 
   <div class="section-inner">
     <div class="section-header">
-      <h3 class="section-header text-center">Friendships and Safe Harbors</h3>
+      <h3 id="alliances" class="section-header text-center">Friendships and Safe Harbors</h3>
     </div>
 
 
@@ -705,7 +707,7 @@ permalink: /
   </div>
 
   <div class="section-inner">
-    <h3 class="text-center">Punching Bags and Bullies: Who dishes out the most hits and who absorbs them?</h3>
+    <h3 id="punching-bags" class="text-center">Punching Bags and Bullies: Who dishes out the most hits and who absorbs them?</h3>
 
     <p>
       Not every target is a victim, and not every attacker is "evil." But the network gives us a concrete way to tell the difference:
@@ -809,7 +811,7 @@ permalink: /
   </div>
 
   <div class="section-inner">
-    <h3 class="text-center">The Power Struggle (David and Goliath): do small communities attack the big ones?</h3>
+    <h3 id="power-struggle" class="text-center">The Power Struggle (David and Goliath): do small communities attack the big ones?</h3>
 
     <!-- Hero Image -->
     <div style="max-width: 800px; margin: 2rem auto;">
@@ -901,7 +903,7 @@ permalink: /
       </p>
     </div>
 
-    <h3 class="section-header text-center" style="margin-top:2.5rem;">A Tour of the Islands</h3>
+    <h3 id="tour-islands" class="section-header text-center" style="margin-top:2.5rem;">A Tour of the Islands</h3>
 
       <!-- ISLAND 1: TEXT LEFT, IMAGE RIGHT -->
       <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:2rem;">
@@ -982,7 +984,7 @@ permalink: /
         While Battlegrounds buzz with internal conflict, the most secluded communities remain remarkably civil. This leads to an important insight.
       </p>
 
-    <h3 class="section-header text-center" style="margin-top:2.5rem;">The Purity Principle: Isolation ≠ Toxicity</h3>
+    <h3 id="purity" class="section-header text-center" style="margin-top:2.5rem;">The Purity Principle: Isolation ≠ Toxicity</h3>
 
       <p>
         Echo chambers are assumed to be toxic. Yet, surprisingly the most isolated communities frequently turn out to be the most civil.
@@ -1008,7 +1010,7 @@ permalink: /
         while science and health communities rely on broad connections to survive.
       </p>
 
-      <h3 class="section-header text-center" style="margin-top:2.5rem;">The Takeaway: Isolation isn't inherently bad.</h3>
+      <h3 id="takeaway-isolation" class="section-header text-center" style="margin-top:2.5rem;">The Takeaway: Isolation isn't inherently bad.</h3>
     
       <p>
         The most peaceful corners of Reddit are often the most secluded,
@@ -1051,7 +1053,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 1 -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">Four roles, four voices</h3>
+    <h3 id="four-voices" class="section-header text-center" style="margin-top:3rem;">Four roles, four voices</h3>
 
     <p>
       The network roles weren't just structural, they also reveal distinct linguistic types.
@@ -1108,7 +1110,7 @@ permalink: /
 
 
     <!-- CHAPTER 2 -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">
+    <h3 id="asymmetry" class="section-header text-center" style="margin-top:3rem;">
       The Asymmetry Paradox: How You Speak vs. How People Speak About You
     </h3>
 
@@ -1136,7 +1138,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 3 -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">The Bridge Builder’s dictionary</h3>
+    <h3 id="bridge-dictionary" class="section-header text-center" style="margin-top:3rem;">The Bridge Builder’s dictionary</h3>
 
     <p>
       Finally, we asked what makes a community a true connector : a bridge between the different islands.
@@ -1191,7 +1193,7 @@ permalink: /
       ></iframe>
     </figure>
 
-    <p>
+    <p style="margin-top:2.5rem;"></p>
       Reddit is a network of communities, each with its own rhythm, voice, and way of interacting. 
       Some link outward, some stay quiet, some clash internally, and others build bridges across the platform.<br>
 
@@ -1206,4 +1208,3 @@ permalink: /
 
   </div>
 </section>
-
