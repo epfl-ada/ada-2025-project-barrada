@@ -48,11 +48,11 @@ permalink: /
     Some communities attract attention, others redirect it. 
     Conflict spreads through these connections, and language shifts depending on who is speaking and who is being discussed. 
     Taken together, these interactions reveal that Reddit is not just a collection of posts, 
-    but a living network shaped by how communities connect and respond to one another. It is almost like living network. Which leads us to question: <br>
+    but a living network shaped by how communities connect and respond to one another. It is almost like a living network. Which leads us to question: <br>
 
     <strong>  What does this collective brain look like when examined through different lenses? <br></strong> <br>
 
-    This will not be story about individual posts or viral moments. 
+    This will not be a story about individual posts or viral moments. 
     But one that uncovers the hidden patterns that emerge when millions of small actions accumulate. <br>
 
     <strong><em> Let's dive into Reddit's collective consciousness and uncover the patterns within.</em></strong>
@@ -76,7 +76,7 @@ permalink: /
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
-        To do that, we use <strong>subreddit embeddings</strong>: a 300-number fingerprint for every subreddit.
+        To do that, we use <strong>subreddit embeddings</strong>: a 300-dimensional fingerprint for every subreddit.
         Two subreddits have similar fingerprints when <strong>similar users post in them</strong>.
         That means the embeddings capture something powerful: not what a subreddit claims to be,
         but what it shares with others through real user behavior.
@@ -101,7 +101,7 @@ permalink: /
 
         <p>
           Each subreddit has a <strong>300-dimensional</strong> embedding. That's very powerful, however it's hard to visualize.
-          So before clustering, we used <strong>PCA</strong> to reduce the number of dimensions while maintaining as most of the information.
+          So before clustering, we used <strong>PCA</strong> to reduce the number of dimensions while maintaining most of the information.
         </p>
 
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
@@ -117,14 +117,14 @@ permalink: /
       <!-- PCA TEXT -->
       <div class="media-text" style="flex:1 1 380px;min-width:280px;padding:0 1rem;text-align:left;">
         <p style="margin-top:0.5rem;">
-              We used PCA (Principal Component Analysis) to verify that the data has structure, 90% of it's variance is captured in only 50 dimensions, then applied K-Means clustering.
+              We used PCA (Principal Component Analysis) to verify that the data has structure, 90% of its variance is captured in only 50 dimensions, then applied K-Means clustering.
         </p>
       </div>
 
     </div>
 
       <p style="margin-top:1.2rem;">
-      We choose a clear goal: compress 50k+ communities into a manageable list. This simplifies Reddit's vast landscape into a map we can actually grasp .
+      We had a clear goal: compress 50k+ communities into a manageable list. This simplifies Reddit's vast landscape into a map we can actually grasp.
       And to do so, we use <strong>K-Means</strong>, which groups the subreddits into <strong>40 topic blocs</strong>
       (Politics, Music, Sports, Tech, and so on).
     </p>
@@ -162,7 +162,7 @@ permalink: /
     <h3 id="paths" class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
     <p>
       Our “paths” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it's a form of communication that can be either friendly, 
-      hostile or just neutral so each link is not just a connection but it carries a specific <strong>tone</strong>. 
+      hostile or just neutral. Each link is not just a connection but it carries a specific <strong>tone</strong>. 
       By tracking link tone at scale, we can track how both attention and conflicts travel across Reddit.
     </p>
     <div class="media-stack" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1.2rem;width:100%;">
@@ -1029,7 +1029,7 @@ permalink: /
       
       <p style="margin-top: 2rem;">
         Isolation arises from self-sufficiency, not dogmatism. 
-        Football fans and hobbyists communities thrive without needing extensive external links, 
+        Football fans and hobbyist communities thrive without needing extensive external links, 
         while science and health communities rely on broad connections to survive.
       </p>
 
@@ -1072,7 +1072,7 @@ permalink: /
     <p>
       We capture this layer using <strong>LIWC</strong> (Linguistic Inquiry and Word Count) 
       which translates text into measurable signals such as anger, anxiety, certainty, pronouns (“we” vs. “they”), and social focus.
-      This is not mind-reading. It's a way to measure detect large-scale patterns in word choice.
+      This is not mind-reading. It's a way to detect large-scale patterns in word choice.
     </p>
 
     <!-- CHAPTER 1 -->
