@@ -2,166 +2,367 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top 5 Isolated Ecosystems</title>
+    <title>The Paradox: Isolation ≠ Toxicity</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #fff;
-            padding: 30px 40px;
-        }
-        
-        .chart-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .chart-title {
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        
-        .bar-item {
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .bar-label {
+        body { 
+            font-family: 'IBM Plex Sans', sans-serif; 
+            margin: 0; 
+            padding: 0;
+            background: #fff; 
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-        
-        .bar-name {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .bar-value {
-            font-weight: 700;
-            color: #667eea;
-            font-size: 16px;
-        }
-        
-        .bar-track {
-            height: 32px;
-            background: #f0f0f0;
-            border-radius: 6px;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             overflow: hidden;
+        }
+        
+        #chart-container {
+            width: 100%;
+            max-width: 1100px; /* Wider for clear text */
+            height: 650px;
             position: relative;
         }
+
+        .rank-axis {
+            font-size: 14px;
+            font-weight: 700;
+            fill: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-axis {
+            font-size: 12px;
+            fill: #555;
+            font-weight: 500;
+        }
+
+        .slope-line {
+            fill: none;
+            stroke-width: 3px; /* Thicker lines */
+            opacity: 0.5; /* More visible by default */
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+            stroke-linecap: round;
+        }
+
+        /* HIGH CONTRAST COLORS */
+        .slope-line.refuge { stroke: #10ac84; }       /* Darker Jungle Green */
+        .slope-line.crossroad { stroke: #2e86de; }    /* Strong Blue */
+        .slope-line.battleground { stroke: #ee5253; } /* Intense Red */
+
+        /* HOVER STATES */
+        .slope-line:hover,
+        .slope-line.highlighted {
+            opacity: 1;
+            stroke-width: 5px; /* Super thick on hover */
+            z-index: 100;
+        }
+
+        .slope-line.faded {
+            opacity: 0.05;
+            stroke-width: 1px;
+        }
+
+        .cluster-label {
+            font-size: 13px; /* Larger text */
+            fill: #222; /* Near black for readability */
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cluster-label:hover,
+        .cluster-label.highlighted {
+            fill: #000;
+            font-weight: 800;
+            font-size: 14px;
+        }
         
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        .cluster-label.faded {
+            opacity: 0.1;
+        }
+
+        .rank-number {
+            font-size: 12px;
+            fill: #888;
+            font-weight: 500;
+        }
+
+        /* TOOLTIP */
+        .tooltip {
+            position: absolute;
+            background: rgba(30, 30, 30, 0.95); /* Dark background for contrast */
+            color: #fff;
+            padding: 12px 16px;
             border-radius: 6px;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 13px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            line-height: 1.5;
+            transform: translateY(-10px);
+            transition: opacity 0.1s, transform 0.1s;
+        }
+
+        .tooltip strong { color: #fff; font-weight: 700; }
+        .tooltip .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        
+        .tag.refuge { background: #10ac84; }
+        .tag.crossroad { background: #2e86de; }
+        .tag.battleground { background: #ee5253; }
+
+        /* LEGEND */
+        .legend {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid #eee;
+        }
+
+        .legend-item {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-            color: white;
+            gap: 8px;
             font-size: 13px;
             font-weight: 600;
+            color: #333;
+            cursor: default;
         }
-        
-        .bar-item:nth-child(2) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 80%); }
-        .bar-item:nth-child(3) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 60%); }
-        .bar-item:nth-child(4) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 40%); }
-        .bar-item:nth-child(5) .bar-fill { background: linear-gradient(90deg, #667eea 0%, #764ba2 20%); }
-        
-        .description {
-            font-size: 13px;
-            color: #666;
-            margin-top: 4px;
-            font-style: italic;
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
         }
-        
-        @keyframes slideIn {
-            from { width: 0; }
+
+        .insight-banner {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e8f8f5;
+            border: 1px solid #10ac84;
+            color: #0e6655;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
     </style>
 </head>
 <body>
-    <div class="chart-container">
-        <div class="chart-title">Top 5 Most Isolated Ecosystems</div>
-        
-        <div class="bar-item">
-            <div class="bar-label">
-                <span class="bar-name">Japanese</span>
-                <span class="bar-value">91.8%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width: 91.8%;" data-width="91.8"></div>
-            </div>
-            <div class="description">Isolated by language, but highly peaceful</div>
+
+<div id="chart-container">    
+    <svg id="slope-chart"></svg>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-dot" style="background:#10ac84;"></div>
+            <span>Refuges (Paradox)</span>
         </div>
-        
-        <div class="bar-item">
-            <div class="bar-label">
-                <span class="bar-name">NSFW</span>
-                <span class="bar-value">78.1%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width: 78.1%;" data-width="78.1"></div>
-            </div>
-            <div class="description">Self-contained because mainstream subs ban them</div>
+        <div class="legend-item">
+            <div class="legend-dot" style="background:#2e86de;"></div>
+            <span>Crossroads</span>
         </div>
-        
-        <div class="bar-item">
-            <div class="bar-label">
-                <span class="bar-name">Music</span>
-                <span class="bar-value">73.2%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width: 73.2%;" data-width="73.2"></div>
-            </div>
-            <div class="description">Fans rarely venture outside their genre</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-label">
-                <span class="bar-name">My Little Pony</span>
-                <span class="bar-value">72.5%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width: 72.5%;" data-width="72.5"></div>
-            </div>
-            <div class="description">Tight-knit fandom with complete ecosystem</div>
-        </div>
-        
-        <div class="bar-item">
-            <div class="bar-label">
-                <span class="bar-name">Football</span>
-                <span class="bar-value">71.8%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" style="width: 71.8%;" data-width="71.8"></div>
-            </div>
-            <div class="description">Team fandom creates parallel universe</div>
+        <div class="legend-item">
+            <div class="legend-dot" style="background:#ee5253;"></div>
+            <span>Battlegrounds</span>
         </div>
     </div>
     
-    <script>
-        // Animate bars on load
-        window.addEventListener('load', () => {
-            const bars = document.querySelectorAll('.bar-fill');
-            bars.forEach((bar, index) => {
-                const width = bar.getAttribute('data-width');
-                bar.style.width = '0';
-                setTimeout(() => {
-                    bar.style.width = width + '%';
-                }, 100 * index);
-            });
+    <div id="tooltip" class="tooltip"></div>
+</div>
+
+<script>
+    async function init() {
+        // --- 1. CONFIGURATION ---
+        const width = 1100; // Wider layout
+        const height = 600;
+        const margin = {top: 90, right: 220, bottom: 80, left: 220}; // Larger margins for labels
+        const plotHeight = height - margin.top - margin.bottom;
+
+        // --- 2. LOAD DATA ---
+        // Uses the path from your snippet. Adjust if file location differs.
+        const data = await d3.json('../data/civility.json');
+
+        // --- 3. PROCESS DATA ---
+        const byPurity = [...data].sort((a, b) => b.insularity - a.insularity);
+        const byCivility = [...data].sort((a, b) => b.civility - a.civility);
+
+        const purityRank = new Map(byPurity.map((d, i) => [d.cluster, i + 1]));
+        const civilityRank = new Map(byCivility.map((d, i) => [d.cluster, i + 1]));
+
+        const civMed = d3.median(data, d => d.civility);
+        const purMed = d3.median(data, d => d.insularity);
+
+        const processed = data.map(d => {
+            const pRank = purityRank.get(d.cluster);
+            const cRank = civilityRank.get(d.cluster);
+            
+            // Classification Logic
+            let type = 'crossroad'; 
+            if (d.civility < civMed) {
+                type = 'battleground'; 
+            } else if (d.insularity >= purMed) {
+                type = 'refuge'; 
+            }
+
+            return {
+                ...d,
+                pRank,
+                cRank,
+                type,
+                delta: cRank - pRank 
+            };
         });
-    </script>
+
+        // --- 4. DRAWING ---
+        const svg = d3.select("#slope-chart")
+            .attr("viewBox", `0 0 ${width} ${height}`)
+            .attr("preserveAspectRatio", "xMidYMid meet");
+
+        const yScale = d3.scaleLinear()
+            .domain([1, data.length])
+            .range([margin.top, margin.top + plotHeight]);
+
+        const leftX = margin.left;
+        const rightX = width - margin.right;
+
+        // Headers
+        const headers = svg.append("g");
+        
+        headers.append("text").attr("class", "rank-axis").attr("x", leftX).attr("y", margin.top - 30).attr("text-anchor", "end").text("Purity Rank");
+        headers.append("text").attr("class", "sub-axis").attr("x", leftX).attr("y", margin.top - 12).attr("text-anchor", "end").text("(Most Isolated)");
+
+        headers.append("text").attr("class", "rank-axis").attr("x", rightX).attr("y", margin.top - 30).attr("text-anchor", "start").text("Civility Rank");
+        headers.append("text").attr("class", "sub-axis").attr("x", rightX).attr("y", margin.top - 12).attr("text-anchor", "start").text("(Most Civil)");
+
+        // Filter: Top 15 ranks + Special Interest Clusters
+        const visibleNodes = processed.filter(d => 
+            d.pRank <= 15 || d.cRank <= 15 || d.cluster.includes("Meta") || d.cluster.includes("Politics")
+        );
+
+        // Draw Lines
+        svg.append("g")
+            .selectAll("path")
+            .data(visibleNodes)
+            .join("path")
+            .attr("class", d => `slope-line ${d.type}`)
+            .attr("d", d => `M ${leftX} ${yScale(d.pRank)} C ${leftX + 120} ${yScale(d.pRank)}, ${rightX - 120} ${yScale(d.cRank)}, ${rightX} ${yScale(d.cRank)}`)
+            .on("mouseenter", (e, d) => highlight(d.cluster, e, d))
+            .on("mouseleave", reset);
+
+        // Left Labels
+        svg.append("g")
+            .selectAll("text")
+            .data(visibleNodes)
+            .join("text")
+            .attr("class", "cluster-label left")
+            .attr("x", leftX - 15)
+            .attr("y", d => yScale(d.pRank))
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "end")
+            .text(d => d.cluster)
+            .on("mouseenter", (e, d) => highlight(d.cluster, e, d))
+            .on("mouseleave", reset);
+
+        // Left Ranks
+        svg.append("g")
+            .selectAll("text")
+            .data(visibleNodes)
+            .join("text")
+            .attr("class", "rank-number")
+            .attr("x", leftX - 180)
+            .attr("y", d => yScale(d.pRank))
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "start")
+            .text(d => `#${d.pRank}`);
+
+        // Right Labels
+        svg.append("g")
+            .selectAll("text")
+            .data(visibleNodes)
+            .join("text")
+            .attr("class", "cluster-label right")
+            .attr("x", rightX + 15)
+            .attr("y", d => yScale(d.cRank))
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "start")
+            .text(d => d.cluster)
+            .on("mouseenter", (e, d) => highlight(d.cluster, e, d))
+            .on("mouseleave", reset);
+
+        // Right Ranks
+        svg.append("g")
+            .selectAll("text")
+            .data(visibleNodes)
+            .join("text")
+            .attr("class", "rank-number")
+            .attr("x", rightX + 160)
+            .attr("y", d => yScale(d.cRank))
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "end")
+            .text(d => `#${d.cRank}`);
+
+        // --- INTERACTION ---
+        const tooltip = d3.select("#tooltip");
+
+        function highlight(cluster, event, d) {
+            // Fade others
+            d3.selectAll(".slope-line").classed("faded", k => k.cluster !== cluster);
+            d3.selectAll(".cluster-label").classed("faded", k => k.cluster !== cluster);
+            
+            // Highlight current
+            const line = d3.selectAll(`.slope-line.${d.type}`).filter(k => k.cluster === cluster);
+            line.classed("highlighted", true).raise();
+
+            d3.selectAll(".cluster-label").filter(k => k.cluster === cluster)
+              .classed("highlighted", true)
+              .classed("faded", false);
+
+            // Tooltip
+            const typeName = d.type === 'refuge' ? 'Refuge' : d.type === 'crossroad' ? 'Crossroad' : 'Battleground';
+            tooltip.html(`
+                <span class="tag ${d.type}">${typeName}</span><br/>
+                <strong>${d.cluster}</strong><br/>
+                <hr style="border:0; border-top:1px solid #444; margin:5px 0;">
+                Isolated: <strong>${d.insularity.toFixed(1)}%</strong> (#${d.pRank})<br/>
+                Civil: <strong>${d.civility.toFixed(1)}%</strong> (#${d.cRank})
+            `)
+            .style("opacity", 1)
+            .style("transform", "translateY(0)")
+            .style("left", (event.pageX + 20) + "px")
+            .style("top", (event.pageY - 40) + "px");
+        }
+
+        function reset() {
+            d3.selectAll(".slope-line").classed("faded", false).classed("highlighted", false);
+            d3.selectAll(".cluster-label").classed("faded", false).classed("highlighted", false);
+            tooltip.style("opacity", 0).style("transform", "translateY(-10px)");
+        }
+    }
+
+    init();
+</script>
 </body>
 </html>
