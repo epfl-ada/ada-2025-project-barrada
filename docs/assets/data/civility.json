@@ -1,0 +1,162 @@
+[
+  {
+    "cluster": "Japanese",
+    "civility": 99.80582524271846,
+    "insularity": 48.18713450292398,
+    "internal_links": 2060,
+    "negative_links": 4,
+    "size": 159
+  },
+  {
+    "cluster": "Art/Imaginary",
+    "civility": 98.72881355932203,
+    "insularity": 20.10221465076661,
+    "internal_links": 236,
+    "negative_links": 3,
+    "size": 195
+  },
+  {
+    "cluster": "Lifestyle/Home",
+    "civility": 98.50427350427351,
+    "insularity": 2.22581565680585,
+    "internal_links": 468,
+    "negative_links": 7,
+    "size": 2349
+  },
+  {
+    "cluster": "My Little Pony",
+    "civility": 98.25119236883944,
+    "insularity": 24.02597402597402,
+    "internal_links": 629,
+    "negative_links": 11,
+    "size": 102
+  },
+  {
+    "cluster": "Lifestyle",
+    "civility": 98.15068493150685,
+    "insularity": 3.94541278205647,
+    "internal_links": 1460,
+    "negative_links": 27,
+    "size": 648
+  },
+  {
+    "cluster": "Celebrities/Models",
+    "civility": 97.93814432989691,
+    "insularity": 8.137583892617439,
+    "internal_links": 97,
+    "negative_links": 2,
+    "size": 215
+  },
+  {
+    "cluster": "Technology/Hardware",
+    "civility": 97.93705368950015,
+    "insularity": 25.911458333333332,
+    "internal_links": 11343,
+    "negative_links": 234,
+    "size": 386
+  },
+  {
+    "cluster": "Trading",
+    "civility": 97.57023538344724,
+    "insularity": 9.56982996657462,
+    "internal_links": 1317,
+    "negative_links": 32,
+    "size": 570
+  },
+  {
+    "cluster": "Games",
+    "civility": 97.36286919831224,
+    "insularity": 3.3881343817012097,
+    "internal_links": 948,
+    "negative_links": 25,
+    "size": 2755
+  },
+  {
+    "cluster": "Mix",
+    "civility": 97.28506787330316,
+    "insularity": 2.59191931038526,
+    "internal_links": 442,
+    "negative_links": 12,
+    "size": 2256
+  },
+  {
+    "cluster": "Meta-Commentary",
+    "civility": 76.25441696113076,
+    "insularity": 4.70524859673858,
+    "internal_links": 7075,
+    "negative_links": 1680,
+    "size": 426
+  },
+  {
+    "cluster": "Politics/extremism",
+    "civility": 85.13087061444217,
+    "insularity": 9.14833998471597,
+    "internal_links": 5387,
+    "negative_links": 801,
+    "size": 367
+  },
+  {
+    "cluster": "Spam/Personalities",
+    "civility": 86.13569321533923,
+    "insularity": 8.77329192546583,
+    "internal_links": 678,
+    "negative_links": 94,
+    "size": 277
+  },
+  {
+    "cluster": "Politics/Activism",
+    "civility": 88.86780056938464,
+    "insularity": 17.65221313059725,
+    "internal_links": 13699,
+    "negative_links": 1525,
+    "size": 814
+  },
+  {
+    "cluster": "Memes/Cute/Funny",
+    "civility": 89.57631625598299,
+    "insularity": 5.71941315434608,
+    "internal_links": 5641,
+    "negative_links": 588,
+    "size": 756
+  },
+  {
+    "cluster": "Shitpost",
+    "civility": 90.3203932869978,
+    "insularity": 10.22038185661318,
+    "internal_links": 11798,
+    "negative_links": 1142,
+    "size": 676
+  },
+  {
+    "cluster": "Help/Advice/Q&A",
+    "civility": 90.75350898793401,
+    "insularity": 12.55244998415875,
+    "internal_links": 16244,
+    "negative_links": 1502,
+    "size": 498
+  },
+  {
+    "cluster": "NSFW-Homosexual",
+    "civility": 91.05263157894737,
+    "insularity": 11.91969887076537,
+    "internal_links": 190,
+    "negative_links": 17,
+    "size": 124
+  },
+  {
+    "cluster": "Science/Academia",
+    "civility": 93.2827899924185,
+    "insularity": 9.2209390117726,
+    "internal_links": 6595,
+    "negative_links": 443,
+    "size": 935
+  },
+  {
+    "cluster": "Geographic/Countries",
+    "civility": 93.69618017222345,
+    "insularity": 14.58873552481115,
+    "internal_links": 9058,
+    "negative_links": 571,
+    "size": 618
+  }
+]
