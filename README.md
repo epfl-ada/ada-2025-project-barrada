@@ -225,47 +225,79 @@ Each hyperlink contains:
   - Derived scores (toxicity, analytical, emotional)
 - **Output:** `cluster_master_dataset.csv` (40 clusters × 110 features)
 
-### Research Question Framework
+## Research Question Framework
 
 We conducted **statistical tests** organized into **5 thematic areas**:
 
-| Theme | Research Questions | Methods |
-|-------|-------------------|---------|
-| **1. Roles & Psychology** | RQ1| ANOVA, t-tests, correlation analysis |
-| RQ1.1 | What linguistic patterns distinguish social roles? | Compare LIWC means across roles (Critical/Supportive/etc.) |
-| RQ1.2 | Which emotions dominate conflict vs support? | T-test: positive vs negative link LIWC scores |
-| RQ1.3 | Do communities experience emotional asymmetry? | Compare outgoing vs incoming LIWC (paired differences) |
-| RQ1.4 | Do ideological neighbors attack each other more? | Compare within-cluster vs cross-cluster sentiment |
-| **2. Echo Chambers** | RQ2 | Correlation, purity index, regression |
-| RQ2.1 | Does certainty correlate with insularity? | Pearson r: certainty score vs internal link percentage |
-| RQ2.2 | Where do semantic and structural clustering align? | Purity matrix: topic cluster × network community |
-| RQ2.3 | What predicts isolation? | Regression: insularity ~ LIWC + network features |
-| **3. Network Structure** | RQ3 | Correlation, flow matrices, bridge analysis |
-| RQ3.1 | What makes a bridge? | Correlation: betweenness vs LIWC/role features |
-| RQ3.2 | Which topics act as bridges? | Cross-cluster link density by topic |
-| RQ3.3 | What are the major rivalries and alliances? | Net sentiment flow matrix between clusters |
-| **4. Conflict Patterns** | RQ4 | Cluster comparisons, sentiment aggregation |
-| RQ4.1 | How are roles distributed across topics? | Role percentage per cluster |
-| RQ4.2 | Which clusters attack outward most? | External negativity: outgoing negative - incoming positive |
-| RQ4.3 | Which clusters attack themselves? | Internal civility: negative links within cluster |
-| RQ4.4 | What language predicts internal peace? | Correlation: civility vs LIWC features |
-| RQ4.5 | What language predicts external war? | Correlation: external negativity vs LIWC |
-| **5. Power Dynamics** | RQ5 | Flow analysis, regression, directional tests |
-| RQ5.1 | Who are the punching bags? | Net toxicity flow: incoming negative - outgoing negative |
-| RQ5.2 | What predicts PageRank? | Correlation: PageRank vs LIWC/betweenness/degree |
-| RQ5.3 | Do attacks flow up or down the hierarchy? | Compare low-PR → high-PR vs high-PR → low-PR links |
-| RQ5.4 | Does receiving hate breed sending hate? | Correlation: incoming negativity vs outgoing negativity |
-| RQ5.5 | Are critics analytical or emotional? | Compare cognitive vs emotional LIWC in negative links |
+---
+
+### 1. Roles & Psychology
+**Methods:** ANOVA, t-tests, correlation analysis
+
+|  | Research Question | Method |
+|----|------------------|---------|
+| **RQ1.1** | What linguistic patterns distinguish social roles? | Compare LIWC means across roles (Critical/Supportive/etc.) |
+| **RQ1.2** | Which emotions dominate conflict vs support? | T-test: positive vs negative link LIWC scores |
+| **RQ1.3** | Do communities experience emotional asymmetry? | Compare outgoing vs incoming LIWC (paired differences) |
+| **RQ1.4** | Do ideological neighbors attack each other more? | Compare within-cluster vs cross-cluster sentiment |
+
+---
+
+### 2. Echo Chambers
+**Methods:** Correlation, purity index, regression
+
+|  | Research Question | Method |
+|----|------------------|---------|
+| **RQ2.1** | Does certainty correlate with insularity? | Pearson r: certainty score vs internal link percentage |
+| **RQ2.2** | Where do semantic and structural clustering align? | Purity matrix: topic cluster × network community |
+| **RQ2.3** | What predicts isolation? | Regression: insularity ~ LIWC + network features |
+
+---
+
+### 3. Network Structure
+**Methods:** Correlation, flow matrices, bridge analysis
+
+|  | Research Question | Method |
+|----|------------------|---------|
+| **RQ3.1** | What makes a bridge? | Correlation: betweenness vs LIWC/role features |
+| **RQ3.2** | Which topics act as bridges? | Cross-cluster link density by topic |
+| **RQ3.3** | What are the major rivalries and alliances? | Net sentiment flow matrix between clusters |
+
+---
+
+### 4. Conflict Patterns
+**Methods:** Cluster comparisons, sentiment aggregation
+
+|  | Research Question | Method |
+|----|------------------|---------|
+| **RQ4.1** | How are roles distributed across topics? | Role percentage per cluster |
+| **RQ4.2** | Which clusters attack outward most? | External negativity: outgoing negative - incoming positive |
+| **RQ4.3** | Which clusters attack themselves? | Internal civility: negative links within cluster |
+| **RQ4.4** | What language predicts internal peace? | Correlation: civility vs LIWC features |
+| **RQ4.5** | What language predicts external war? | Correlation: external negativity vs LIWC |
+
+---
+
+### 5. Power Dynamics
+**Methods:** Flow analysis, regression, directional tests
+
+|  | Research Question | Method |
+|----|------------------|---------|
+| **RQ5.1** | Who are the punching bags? | Net toxicity flow: incoming negative - outgoing negative |
+| **RQ5.2** | What predicts PageRank? | Correlation: PageRank vs LIWC/betweenness/degree |
+| **RQ5.3** | Do attacks flow up or down the hierarchy? | Compare low-PR(PageRank) → high-PR vs high-PR → low-PR links |
+| **RQ5.4** | Does receiving hate breed sending hate? | Correlation: incoming negativity vs outgoing negativity |
+| **RQ5.5** | Are critics analytical or emotional? | Compare cognitive vs emotional LIWC in negative links |
+
+---
 
 **Statistical Methods:**
 - **Correlation Analysis:** Pearson r for continuous variables
 - **T-tests:** Compare group means (e.g., positive vs negative link language)
 - **ANOVA:** Compare multiple groups (e.g., LIWC across 4 roles)
 - **Flow Matrices:** Net sentiment between clusters (incoming - outgoing)
-- **Regression-Style Analysis:** Identify predictors of outcomes (e.g., what drives betweenness?)
 
 All outputs saved to `data/processed/rq_analysis/` for reproducibility.
-
 ### Visualization Pipeline
 
 #### Static Visualizations (17 PNG charts)

@@ -287,11 +287,8 @@
   </div>
 
   <script>
-    // ----------------------------
-    // Global state
-    // ----------------------------
     let nodesAll = [];
-    let edgesRaw = [];     // NEVER mutated by D3
+    let edgesRaw = [];  
     let nodeByName = new Map();
 
     let svg, g;
@@ -324,15 +321,11 @@
         const h = left.clientHeight;
         svg.attr("width", w).attr("height", h);
 
-        // re-render current selection if any
         const current = document.getElementById("panel-name").innerText;
         if (nodeByName.has(current)) renderEgo(current);
       });
     }
 
-    // ----------------------------
-    // Data loading
-    // ----------------------------
     Promise.all([
       d3.json("../data/nodes.json"),
       d3.json("../data/edges.json")
@@ -340,17 +333,15 @@
       nodesAll = nodes;
       nodeByName = new Map(nodesAll.map(n => [n.name, n]));
 
-      // Keep edgesRaw immutable and string-based
       edgesRaw = edges.map(e => ({
         ...e,
-        sourceName: e.source,  // expected to be node name
+        sourceName: e.source,
         targetName: e.target
       }));
 
       initSVG();
       initPicker(nodesAll);
 
-      // default: pick the top pagerank node if available, else first
       const defaultNode = [...nodesAll].sort((a,b) => (b.pagerank ?? 0) - (a.pagerank ?? 0))[0] || nodesAll[0];
       if (defaultNode) {
         document.getElementById("clusterSelect").value = defaultNode.name;
@@ -399,11 +390,10 @@
       const center = nodeByName.get(centerName);
       if (!center) return;
 
-      // STOP old sim + CLEAR old drawing (prevents “superposed” visuals)
       if (currentSimulation) currentSimulation.stop();
       g.selectAll("*").remove();
 
-      // 1) Node dedupe map (FIXES "two selected clusters")
+      // 1) Node dedupe map
       const nodeMap = new Map();
       nodeMap.set(centerName, center);
 
@@ -436,7 +426,6 @@
         })
         .map(e => ({ ...e })); // copy (so forceLink can mutate safely)
 
-      // OPTIONAL edge dedupe (keeps graph clean if duplicates exist)
       const edgeMap = new Map();
       for (const e of egoEdges0) {
         // treat as directed key; if you want undirected, sort the pair
@@ -445,10 +434,8 @@
       }
       const egoEdges = Array.from(edgeMap.values());
 
-      // Right panel update
       showPanel(center);
 
-      // Left graph render
       renderGraph(egoNodes, egoEdges, centerName);
     }
 
@@ -468,7 +455,7 @@
         .domain([0, 10, 25])
         .mode('lab');
 
-      // Convert edge endpoints from names to node objects (for simulation only)
+      // Convert edge endpoints from names to node objects
       const byNameLocal = new Map(egoNodes.map(n => [n.name, n]));
       const simEdges = egoEdges.map(e => ({
         ...e,
@@ -586,7 +573,7 @@
       const ctx = document.getElementById("radarChart").getContext("2d");
       if (radarChartInstance) radarChartInstance.destroy();
 
-      // Safe getters (your JSON fields must match these names)
+      // Safe getters
       const Anger   = Number(d.Anger   ?? d.LIWC_Anger   ?? 0);
       const Negemo  = Number(d.Negemo  ?? d.LIWC_Negemo  ?? 0);
       const Posemo  = Number(d.Posemo  ?? d.LIWC_Posemo  ?? 0);
@@ -594,7 +581,6 @@
       const CogMech = Number(d.CogMech ?? d.LIWC_CogMech ?? 0);
       const Social  = Number(d.Social  ?? d.LIWC_Social  ?? 0);
 
-      // Normalize to 0..100 with rough caps (adjust to your real ranges if needed)
       const values = [
         (Anger   / 0.02) * 100,
         (Negemo  / 0.04) * 100,

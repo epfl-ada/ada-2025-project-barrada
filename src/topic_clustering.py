@@ -211,13 +211,11 @@ class TopicClustering:
         unique_labels = sorted(df['topic_cluster_label'].unique())
         
         for label in unique_labels:
-            # Filter for this cluster
             cluster_data = df[df['topic_cluster_label'] == label]
             
             if len(cluster_data) == 0:
                 continue
                 
-            # Sort by distance (smaller is better/more central)
             top_central = cluster_data.sort_values('distance_to_centroid', ascending=True).head(10)
             
             print(f"\nCluster: {label} - {len(cluster_data)} members")

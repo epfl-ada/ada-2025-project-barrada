@@ -20,7 +20,7 @@
         
         #chart-container {
             width: 100%;
-            max-width: 1100px; /* Wider for clear text */
+            max-width: 1100px; 
             height: 650px;
             position: relative;
         }
@@ -41,23 +41,23 @@
 
         .slope-line {
             fill: none;
-            stroke-width: 3px; /* Thicker lines */
-            opacity: 0.5; /* More visible by default */
+            stroke-width: 3px;
+            opacity: 0.5; 
             transition: all 0.2s ease-out;
             cursor: pointer;
             stroke-linecap: round;
         }
 
         /* HIGH CONTRAST COLORS */
-        .slope-line.refuge { stroke: #10ac84; }       /* Darker Jungle Green */
-        .slope-line.crossroad { stroke: #2e86de; }    /* Strong Blue */
-        .slope-line.battleground { stroke: #ee5253; } /* Intense Red */
+        .slope-line.refuge { stroke: #10ac84; }      
+        .slope-line.crossroad { stroke: #2e86de; }  
+        .slope-line.battleground { stroke: #ee5253; } 
 
         /* HOVER STATES */
         .slope-line:hover,
         .slope-line.highlighted {
             opacity: 1;
-            stroke-width: 5px; /* Super thick on hover */
+            stroke-width: 5px; 
             z-index: 100;
         }
 
@@ -67,8 +67,8 @@
         }
 
         .cluster-label {
-            font-size: 13px; /* Larger text */
-            fill: #222; /* Near black for readability */
+            font-size: 13px;
+            fill: #222;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -94,7 +94,7 @@
         /* TOOLTIP */
         .tooltip {
             position: absolute;
-            background: rgba(30, 30, 30, 0.95); /* Dark background for contrast */
+            background: rgba(30, 30, 30, 0.95); 
             color: #fff;
             padding: 12px 16px;
             border-radius: 6px;
@@ -195,17 +195,14 @@
 
 <script>
     async function init() {
-        // --- 1. CONFIGURATION ---
-        const width = 1100; // Wider layout
+
+        const width = 1100; 
         const height = 600;
         const margin = {top: 90, right: 220, bottom: 80, left: 220}; // Larger margins for labels
         const plotHeight = height - margin.top - margin.bottom;
 
-        // --- 2. LOAD DATA ---
-        // Uses the path from your snippet. Adjust if file location differs.
         const data = await d3.json('../data/civility.json');
 
-        // --- 3. PROCESS DATA ---
         const byPurity = [...data].sort((a, b) => b.insularity - a.insularity);
         const byCivility = [...data].sort((a, b) => b.civility - a.civility);
 
@@ -219,7 +216,6 @@
             const pRank = purityRank.get(d.cluster);
             const cRank = civilityRank.get(d.cluster);
             
-            // Classification Logic
             let type = 'crossroad'; 
             if (d.civility < civMed) {
                 type = 'battleground'; 
@@ -236,7 +232,6 @@
             };
         });
 
-        // --- 4. DRAWING ---
         const svg = d3.select("#slope-chart")
             .attr("viewBox", `0 0 ${width} ${height}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
@@ -248,7 +243,6 @@
         const leftX = margin.left;
         const rightX = width - margin.right;
 
-        // Headers
         const headers = svg.append("g");
         
         headers.append("text").attr("class", "rank-axis").attr("x", leftX).attr("y", margin.top - 30).attr("text-anchor", "end").text("Purity Rank");

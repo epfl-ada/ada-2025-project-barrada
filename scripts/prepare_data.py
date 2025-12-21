@@ -368,7 +368,6 @@ class VisualizationDataPrep:
         """Create betweenness predictor data (RQ8)"""
         print("\nCreating bridges.json...")
         
-        # Data taken from your RQ8 Analysis Log
         bridges_data = {
             "overall_features": [
                 {"feature": "Total Degree", "correlation": 0.7287, "category": "Structural"},

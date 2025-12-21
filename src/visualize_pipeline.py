@@ -20,13 +20,11 @@ PROCESSED_DIR = BASE_DIR / 'data' / 'processed'
 FIGURES_DIR = BASE_DIR / 'results' / 'figures'
 HTML_DIR = BASE_DIR / 'results' / 'html'
 
-# Ensure all output directories exist
 FIGURES_DIR.mkdir(exist_ok=True, parents=True)
 HTML_DIR.mkdir(exist_ok=True, parents=True)
 
 
 # Helper Function
-
 def load_hyperlinks_data(file_name: str = "combined_hyperlinks.csv") -> Optional[pd.DataFrame]:
     """Loads the processed hyperlinks CSV"""
 
