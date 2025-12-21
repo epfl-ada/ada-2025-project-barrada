@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import numpy as np
 from pathlib import Path
+from typing import List, Dict, Any, Union
 
 class VisualizationDataPrep:
     """
@@ -14,7 +15,7 @@ class VisualizationDataPrep:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
-    def create_nodes_json(self):
+    def create_nodes_json(self) -> List[Dict[str, Any]]:
         """Create nodes.json from cluster_master_dataset.csv"""
         print("Creating nodes.json...")
         
@@ -59,7 +60,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(nodes)} nodes")
         return nodes
     
-    def create_edges_json(self):
+    def create_edges_json(self) -> List[Dict[str, Any]]:
         """
         Create edges with sentiment-based filtering
         Strategy: Top 2 per cluster + edges >500 links
@@ -105,7 +106,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(edges)} edges")
         return edges
     
-    def create_rivalry_json(self):
+    def create_rivalry_json(self) -> Dict[str, List[Dict[str, Any]]]:
         """Top 1 alliance + top 1 rival per cluster"""
         print("\nCreating rivalry.json...")
         
@@ -162,7 +163,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path}")
         return output
     
-    def create_insurgency_json(self):
+    def create_insurgency_json(self)-> Dict[str, Union[int, float, str]]:
         """Create insurgency data"""
         print("\nCreating insurgency.json...")
         
@@ -189,7 +190,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path}")
         return output
     
-    def create_toxicity_json(self):
+    def create_toxicity_json(self)-> Dict[str, List[Dict[str, Any]]]:
         """Create toxicity flow data for Sankey"""
         print("\nCreating toxicity.json...")
         
@@ -234,7 +235,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path}")
         return output
         
-    def create_echo_json(self):
+    def create_roles_json(self) -> Dict[str, Any]:
         """Create echo chamber scatter data (RQ6)"""
         print("\nCreating echo.json...")
         
@@ -260,7 +261,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(echo_data)} clusters")
         return echo_data
     
-    def create_roles_json(self):
+    def create_power_json(self) -> Dict[str, List[Dict[str, Any]]]:
         """Create role distribution data (RQ1)"""
         print("\nCreating roles.json...")
         
@@ -312,7 +313,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path}")
         return output
     
-    def create_power_json(self):
+    def create_bridges_json(self) -> Dict[str, List[Dict[str, Any]]]:
         """Create power correlation data (RQ17)"""
         print("\nCreating power.json...")
         
@@ -400,7 +401,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path}")
         return bridges_data
     
-    def create_quadrant_json(self):
+    def create_quadrant_json(self) -> List[Dict[str, Any]]:
         """Create roles_scatter.json for Interactive Quadrant Map"""
         print("\nCreating roles_scatter.json...")
         
@@ -442,7 +443,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(data)} nodes")
         return data
     
-    def create_civility_json(self):
+    def create_civility_json(self) -> List[Dict[str, Any]]:
         """Combine RQ13 + cluster_master for civility viz (Flattened List)"""
         print("\nCreating civility.json...")
         
@@ -497,7 +498,6 @@ class VisualizationDataPrep:
                 "size": int(row['n_subreddits'])
             })
         
-        # FIX: Concatenate lists to produce a single flat JSON array [...]
         output = monks_list + cannibals_list
         
         # Save to civility.json
@@ -508,7 +508,7 @@ class VisualizationDataPrep:
         print(f"Created {output_path} with {len(output)} items")
         return output
     
-    def run_all(self):
+    def run_all(self) -> None:
         """Run all JSON generation tasks"""
         print("COMPLETE VISUALIZATION DATA PREPARATION")
         
