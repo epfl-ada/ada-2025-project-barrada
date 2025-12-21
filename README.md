@@ -308,7 +308,7 @@ Execute `results.ipynb` to reproduce all results:
 After running the notebook:
 - `data/processed/`: 17 CSV files + 1 directory with 20 RQ results
 - `results/figures/`: 17 PNG visualization files
-- `docs/assets/data/`: 11 JSON files (if prepare_data.py is run)
+- `docs/assets/data/`: 11 JSON files 
 
 ---
 
