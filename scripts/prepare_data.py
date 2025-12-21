@@ -443,12 +443,19 @@ class VisualizationDataPrep:
         return data
     
     def create_civility_json(self):
-        """Combine RQ13 + cluster_master for civility viz"""
+        """Combine RQ13 + cluster_master for civility viz (Flattened List)"""
         print("\nCreating civility.json...")
         
         # Load both datasets
-        rq13 = pd.read_csv(self.data_dir / "rq_analysis" / "rq13_internal_civility.csv")
-        cluster_master = pd.read_csv(self.data_dir / "cluster_master_dataset.csv")
+        rq13_path = self.data_dir / "rq_analysis" / "rq13_internal_civility.csv"
+        cluster_path = self.data_dir / "cluster_master_dataset.csv"
+
+        if not rq13_path.exists() or not cluster_path.exists():
+            print("WARNING: Required files for civility.json not found.")
+            return []
+
+        rq13 = pd.read_csv(rq13_path)
+        cluster_master = pd.read_csv(cluster_path)
         
         # Merge on cluster name (src_cluster in RQ13, cluster_label in cluster_master)
         merged = pd.merge(
@@ -467,7 +474,7 @@ class VisualizationDataPrep:
         top_civil = merged.nlargest(10, 'civility')
         bottom_civil = merged.nsmallest(10, 'civility')
         
-        # Prepare output
+        # Prepare lists
         monks_list = []
         for _, row in top_civil.iterrows():
             monks_list.append({
@@ -490,17 +497,15 @@ class VisualizationDataPrep:
                 "size": int(row['n_subreddits'])
             })
         
-        output = {
-            "monks": monks_list,
-            "cannibals": cannibals_list
-        }
+        # FIX: Concatenate lists to produce a single flat JSON array [...]
+        output = monks_list + cannibals_list
         
         # Save to civility.json
         output_path = self.output_dir / "civility.json"
         with open(output_path, 'w') as f:
             json.dump(output, f, indent=2)
         
-        print(f"Created {output_path}")
+        print(f"Created {output_path} with {len(output)} items")
         return output
     
     def run_all(self):

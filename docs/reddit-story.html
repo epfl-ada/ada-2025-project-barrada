@@ -12,21 +12,21 @@ permalink: /
   </div>
   <div class="hero-inner">
     <h1 class="hero-title animate-fade-up delay-1">
-      The Hidden Web of <span class="text-gradient">Reddit</span>
+      <span class="text-gradient">Reddit's Invisible Brain:</span> <br>
+      A web woven from the threads
     </h1>
     <p class="hero-subtitle animate-fade-up delay-2">
       An analytical deep-dive into
       <span class="data-highlight"> 858,488 </span> hyperlinks across
       <span class="data-highlight">67,180 </span> subreddits.
     </p>
-    <p class="hero-description animate-fade-up delay-3">
-      What does Reddit's collective mind look like when examined through different lenses ? Let's follow the data as it fans out across the different subreddits, roles, and emotional beats to try to unravel it's secrets.
-    </p>
+
     <div class="hero-actions animate-fade-up delay-4">
       <a class="hero-cta" href="#the-map">
         Begin the story
         <span class="hero-cta-icon">↓</span>
       </a>
+      
     </div>
   </div>
   <div class="hero-scroll">
@@ -35,24 +35,48 @@ permalink: /
   </div>
 </section>
 
+<section class="story-chapter" id="introduction">
+    <div class="section-header">
+    <h2 class="section-title text-center">Introduction</h2>
+  </div>
+  <p class="text-center">
+    Reddit feels chaotic on the surface. Millions of users. Tens of thousands of communities. 
+    Endless threads branching, colliding, and disappearing every day. It looks like random noise.
+    Yet, <strong>beneath that noise there lies some structure <br></strong> 
+
+    We know that reddit communities form around shared interests. Links between them show how ideas move from one place to another. 
+    Some communities attract attention, others redirect it. 
+    Conflict spreads through these connections, and language shifts depending on who is speaking and who is being discussed. 
+    Taken together, these interactions reveal that Reddit is not just a collection of posts, 
+    but a living network shaped by how communities connect and respond to one another. It is almost like a living network. Which leads us to question: <br>
+
+    <strong>  What does this collective brain look like when examined through different lenses? <br></strong> <br>
+
+    This will not be a story about individual posts or viral moments. 
+    But one that uncovers the hidden patterns that emerge when millions of small actions accumulate. <br>
+
+    <strong><em> Let's dive into Reddit's collective consciousness and uncover the patterns within.</em></strong>
+  </p>
+</section>
+
 
 <section class="story-chapter" id="the-map">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">The Map: Continents and Roads</h2>
+      <h2 class="section-title text-center">Reddit's Hidden Architecture</h2>
     </div>
 
     <!-- CHAPTER 1 -->
-    <h3 class="section-header text-center">How did we build the map of Reddit?</h3>
+    <h3 id="continents-roads" class="section-header text-center">The Map: Continents and Roads</h3>
     <p>
       Reddit has <strong>50,000+</strong> subreddits. If we treat every subreddit as totally unique,
-      we get lost in the small details and miss the big structure. So we start with a simple idea:
+      we get lost in the small details and miss the bigger picture. So, we start with a simple idea:
       group similar communities into a smaller number of “continents”.
     </p>
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
-        To do that, we use <strong>subreddit embeddings</strong>: a 300-number fingerprint for every subreddit.
+        To do that, we use <strong>subreddit embeddings</strong>: a 300-dimensional fingerprint for every subreddit.
         Two subreddits have similar fingerprints when <strong>similar users post in them</strong>.
         That means the embeddings capture something powerful: not what a subreddit claims to be,
         but what it shares with others through real user behavior.
@@ -69,15 +93,15 @@ permalink: /
 
     <p style="margin-top:1.2rem;">
       This is the moment the story becomes measurable: Reddit stops being a list of names and becomes a landscape.
-      So now we can ask: <strong>what does this landscape look like when we compress it into a human-scale map?</strong>
+      Allowing us to ask: <strong>What does this landscape look like when we compress it into a human-scale map?</strong>
     </p>
 
     <!-- CHAPTER 2 -->
-    <h3 class="section-header text-center">The 40 continents of Reddit</h3>
+    <h3 id="continents-40" class="section-header text-center">The 40 continents of Reddit</h3>
 
         <p>
           Each subreddit has a <strong>300-dimensional</strong> embedding. That's very powerful, however it's hard to visualize.
-          So before clustering, we used <strong>PCA</strong> to reduce the number of dimensions while maintaining as most of the information.
+          So before clustering, we used <strong>PCA</strong> to reduce the number of dimensions while maintaining most of the information.
         </p>
 
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
@@ -93,28 +117,28 @@ permalink: /
       <!-- PCA TEXT -->
       <div class="media-text" style="flex:1 1 380px;min-width:280px;padding:0 1rem;text-align:left;">
         <p style="margin-top:0.5rem;">
-              We used PCA (Principal Component Analysis) to verify that the data has structure, 90% of it's variance is captured in only 50 dimensions, then applied K-Means clustering.
+              We used PCA (Principal Component Analysis) to verify that the data has structure, 90% of its variance is captured in only 50 dimensions, then applied K-Means clustering.
         </p>
       </div>
 
     </div>
 
       <p style="margin-top:1.2rem;">
-      We choose a clear goal: compress 50k+ communities into a map a human can hold in their head.
-      We do this with <strong>K-Means</strong>, which groups subreddits into <strong>40 topic blocs</strong>
+      We had a clear goal: compress 50k+ communities into a manageable list. This simplifies Reddit's vast landscape into a map we can actually grasp.
+      And to do so, we use <strong>K-Means</strong>, which groups the subreddits into <strong>40 topic blocs</strong>
       (Politics, Music, Sports, Tech, and so on).
     </p>
 
     <p>
-      In doing so we encounter a big issue: algorithms don't understand human culture.
-      They don't understand parody, irony, or communities that exist mainly to mock other communities.
-      So we have to interfere to capture some of the details that get lost in the algorithm: <strong>we manually correct a small set of edge cases</strong>.
+      However, we quickly encounter a big issue: algorithms don't understand human culture.
+      They don't understand parody, irony or sarcasm.
+      So we have to interfere to maintain some of the details that get lost in the algorithm: <strong>we manually correct a small set of edge cases</strong>.
       Not to “cheat” the system but to keep the map meaningful for a human reader.
     </p>
 
     <div style="height: 600px; overflow: hidden; background: white;">
       <iframe
-        src="{{ '/assets/visualizations/continents.html' | relative_url }}"
+        src="{{ '/assets/visualizations/topic_continents_network.html' | relative_url }}"
         width="100%"
         height="100%"
         style="border: none;"
@@ -129,15 +153,17 @@ permalink: /
     </p>
 
     <p style="margin-top:1.2rem;">
-      Now we have the continents. But a still map with no movement is cannot describe the ever moving nature of reddit's threads.
-      The real story starts when we ask: <strong>if Reddit has continents… what are the paths that connect them?</strong>
+      Now we have the continents. But a still map with no movement cannot describe the ever moving nature of reddit's threads.
+      The real story starts when we ask: <strong>if Reddit has continents what paths connect them?</strong>
     </p>
 
 
     <!-- CHAPTER 3 -->
-    <h3 class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
+    <h3 id="paths" class="section-header text-center">If subreddits communicate, what paths connect them?</h3>
     <p>
-      Our “paths” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it's a form of communication that can be either friendly, hostile or just neutral so each link is not just a connection but carries a specific <strong>tone</strong>. By tracking link tone at scale, we can track how both attention and conflicts travel across Reddit.
+      Our “paths” are <strong>hyperlinks</strong>: when subreddit A links to subreddit B it's a form of communication that can be either friendly, 
+      hostile or just neutral. Each link is not just a connection but it carries a specific <strong>tone</strong>. 
+      By tracking link tone at scale, we can track how both attention and conflicts travel across Reddit.
     </p>
     <div class="media-stack" style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1.2rem;width:100%;">
 
@@ -178,7 +204,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 4 -->
-    <h3 class="section-header text-center">How are most of the links?</h3>
+    <h3 id="links-tone" class="section-header text-center">How are most of the links?</h3>
     <div class="media-row" style="display:flex;flex-direction:row;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
       <div class="media-text" style="flex:1 1 320px;min-width:260px;padding:0 1rem;text-align:left;">
       <p>
@@ -202,7 +228,7 @@ permalink: /
     </p>
 
     <!-- CHAPTER 5 -->
-    <h3 class="section-header text-center">Where do most interactions concentrate?</h3>
+    <h3 id="concentrate" class="section-header text-center">Where do most interactions concentrate?</h3>
 
 
     <p>
@@ -253,231 +279,225 @@ permalink: /
 
 
   </div>
-</section>
-
-
-<section class="story-chapter" id="roles">
-  <div class="section-inner">
-    <div class="section-header">
-      <h2 class="section-title text-center">The 4 roles</h2>
-      <p>
-        After mapping the continents, we zoom in on the <strong>voice</strong> each cluster tends to produce.
-        We can use four roles to classify most of the Subreddits:<br>
-        <strong>Influential</strong>: Large number of incoming positive links, <br>
-        <strong>Supportive</strong>: Large number of outgoing positive links, <br>
+  <h3 id="roles-4" class="section-header text-center">The 4 main roles</h3>
+  <p>
+    After mapping the continents, we zoom in on the <strong>voice</strong> each cluster tends to produce.
+    We can use four roles to classify most of the Subreddits:<br>
+    <div style="text-align:center;">
+      <p style="margin:0;"></p>
+        <strong>Influential</strong>: Large number of incoming positive links,<br>
+        <strong>Supportive</strong>: Large number of outgoing positive links,<br>
         <strong>Controversial</strong>: High number of incoming negative links,<br>
         <strong>Critical</strong>: High number of outgoing negative links.
       </p>
     </div>
+  </p>
 
-    <h3 class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
+  <h3 id="social-compass" class="section-header text-center" style="margin-top:2.5rem;">Reddit's Social Compass</h3>
 
-    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-        <div style="height: 600px; overflow: hidden;">
-          <iframe
-            src="{{ '/assets/visualizations/quadrant.html' | relative_url }}"
-            width="100%"
-            height="100%"
-            style="border: none;"
-            title="Interactive Social Compass"
-            scrolling="no"
-          ></iframe>
+  <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+    <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+      <div style="height: 600px; overflow: hidden;">
+        <iframe
+          src="{{ '/assets/visualizations/roles_quadrant_scatter.html' | relative_url }}"
+          width="100%"
+          height="100%"
+          style="border: none;"
+          title="Interactive Social Compass"
+          scrolling="no"
+        ></iframe>
+      </div>
+      <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+        <strong>Interactive:</strong> Scroll to zoom, drag to pan. Hover for details.<br>
+        <strong>X-Axis:</strong> positivity (Outgoing) | <strong>Y-Axis:</strong> Controversy (Incoming)
+      </p>
+    </div>
+
+    <div class="media-text" style="flex:0 1 380px;min-width:260px;padding:0 0.5rem;text-align:left;">
+      <p style="margin:0 0 0.8rem 0;">
+        <strong>To see how these roles manifest in practice, we mapped the top 200 active subreddits</strong>
+      </p>
+      <p style="margin:0;">
+        The results are striking: Communities generating or attracting negative links (Critical and Controversial) are present, but they make up only a small fraction compared to the much larger Supportive clusters. 
+        This helps explain why Reddit can feel both peaceful and chaotic: most interactions are constructive, while a small number of communities produce a disproportionate share of friction.
+      </p>
+    </div>
+  </div>
+
+  <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
+    <h3 id="nervous-system" style="margin-bottom: 1rem;">The Nervous System</h3>
+    <p>
+      We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
+      to the <strong>40 topic clusters</strong> we identified earlier. 
+      Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>?
+    </p>
+    <p style="margin-top: 1.2rem;">
+      These aren't isolated dots on a chart ,they're living communities wired together by thousands of hyperlinks. 
+      Below, we visualize Reddit's complete neural network: clusters grouped by social role, 
+      connected by the conversations that flow between them.
+    </p>
+  </div>
+
+  <div style="width: 100%; height: 1100px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 3rem auto;">
+    <iframe
+      src="{{ '/assets/visualizations/roles_synapses_bundling.html' | relative_url }}"
+      width="100%"
+      height="100%"
+      style="border: none;"
+      title="The Synapses of Reddit"
+      scrolling="no"
+    ></iframe>
+  </div>
+  <p class="caption-left" style="margin-top: 10px; font-size: 0.95rem; color: #666; line-height: 1.6;">
+    <strong>The Synapses of Influence:</strong> Reddit's nervous system visualized as a hierarchical edge bundling diagram.<br>
+  </p>
+
+  <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
+    <h3 id="topics-roles" style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
+    <p>
+      The network shows connections, but not composition. 
+      Politics and Gaming both appear,but do they play the same role? 
+      Let's break down the <strong>topic clusters</strong> that fill each of the four archetypes.
+    </p>
+  </div>
+
+    <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
+    <h3 id="role-influential" class="section-header text-center" style="margin-top:3rem;">Influential</h3>
+
+      <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+        <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+          <img 
+            src="{{ '/assets/img/role_influential_top.png' | relative_url }}" 
+            alt="Top Influential Clusters chart" 
+            style="width:100%; height:auto; display:block;"
+          />
         </div>
-        <p class="caption-center" style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-          <strong>Interactive:</strong> Scroll to zoom, drag to pan. Hover for details.<br>
-          <strong>X-Axis:</strong> positivity (Outgoing) | <strong>Y-Axis:</strong> Controversy (Incoming)
-        </p>
-      </div>
-
-      <div class="media-text" style="flex:0 1 380px;min-width:260px;padding:0 0.5rem;text-align:left;">
-        <p style="margin:0 0 0.8rem 0;">
-          <strong>To see how these roles manifest in practice, we mapped the top 200 active subreddits</strong>
-        </p>
-        <p style="margin:0;">
-          The results are striking: Communities generating or attracting negative links (Critical and Controversial) are present, but they make up only a small fraction compared to the much larger Supportive clusters. 
-          This helps explain why Reddit can feel both peaceful and chaotic: most interactions are constructive, while a small number of communities produce a disproportionate share of friction.
-        </p>
-      </div>
-    </div>
-
-    <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: center;">
-      <h3 style="margin-bottom: 1rem;">The Nervous System: Which Topics Dominate Each Role?</h3>
-      <p>
-        We've mapped individual subreddits, but to understand the ecosystem, we need to zoom out 
-        to the <strong>40 topic clusters</strong> we identified earlier. 
-        Does <em>r/Politics</em> behave like <em>r/Gaming</em>? Is <em>r/Tech</em> more hostile than <em>r/Sports</em>?
-      </p>
-      <p style="margin-top: 1.2rem;">
-        These aren't isolated dots on a chart ,they're living communities wired together by thousands of hyperlinks. 
-        Below, we visualize Reddit's complete neural network: clusters grouped by social role, 
-        connected by the conversations that flow between them.
-      </p>
-    </div>
-
-    <div style="width: 100%; height: 1100px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 3rem auto;">
-      <iframe
-        src="{{ '/assets/visualizations/synapses.html' | relative_url }}"
-        width="100%"
-        height="100%"
-        style="border: none;"
-        title="The Synapses of Reddit"
-        scrolling="no"
-      ></iframe>
-    </div>
-    <p class="caption-left" style="margin-top: 10px; font-size: 0.95rem; color: #666; line-height: 1.6;">
-      <strong>The Synapses of Influence:</strong> Reddit's nervous system visualized as a hierarchical edge bundling diagram.<br>
-    </p>
-
-    <div class="media-text" style="max-width: 800px; margin: 4rem auto 2rem auto; text-align: left;">
-      <h3 style="margin-bottom: 1rem;">Which Topics Dominate Each Role?</h3>
-      <p>
-        The network shows connections, but not composition. 
-        Politics and Gaming both appear,but do they play the same role? 
-        Let's break down the <strong>topic clusters</strong> that fill each of the four archetypes.
-      </p>
-    </div>
-
-      <!-- ROLE 1: INFLUENTIAL (VIZ LEFT, IMAGE RIGHT) -->
-      <h3 class="section-header text-center" style="margin-top:3rem;">Influential</h3>
-
-        <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-          <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-            <img 
-              src="{{ '/assets/img/role_influential_top.png' | relative_url }}" 
-              alt="Top Influential Clusters chart" 
-              style="width:100%; height:auto; display:block;"
-            />
-          </div>
-
-        <!-- RIGHT: IMAGE + TEXT -->
-       <div class="role-col" style="flex:0 1 480px;min-width:320px;text-align:center;">
-        <img
-          src="{{ '/assets/img/influential.png' | relative_url }}"
-          alt="Influential role icon"
-          loading="lazy"
-          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
-        />
-        <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
-          Their power is reach: they don't need to be extreme to dominate the flow of links.
-          The "Help/Advice/Q&A" cluster is the most influential on Reddit (83.5%), followed closely by "Lifestyle" and "Tech."
-        </p>
-      </div>
-    </div>
-
-    <p style="margin-top:1.2rem;">
-      If Influential clusters are where attention concentrates, Supportive clusters are where attention turns into care.
-    </p>
-
-
-    <!-- ROLE 2: SUPPORTIVE -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">Supportive</h3>
-
-    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
-        <img
-          src="{{ '/assets/img/supportive.png' | relative_url }}"
-          alt="Supportive role icon"
-          loading="lazy"
-          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
-        />
-        <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The helpers.</strong> These clusters turn participation into support: advice, empathy, coping, recovery,
-          and practical help. Their outbound links tend to uplift or guide, not to punish.
-        </p>
-      </div>
-
-      <!-- RIGHT: VIZ -->
-      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-        <img 
-          src="{{ '/assets/img/role_supportive_top.png' | relative_url }}" 
-          alt="Top Supportive Clusters chart" 
-          style="width:100%; height:auto; display:block;"
-        />
-      </div>
-    </div>
-
-    <p style="margin-top:1.2rem;">
-      But not every community exists to help or inform. Some exist to fight.
-    </p>
-
-
-    <!-- ROLE 3: CONTROVERSIAL (VIZ LEFT, IMAGE RIGHT) -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">Controversial</h3>
-
-    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-      <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-        <img 
-          src="{{ '/assets/img/role_controversial_top.png' | relative_url }}" 
-          alt="Top Controversial Clusters chart" 
-          style="width:100%; height:auto; display:block;"
-        />
-      </div>
 
       <!-- RIGHT: IMAGE + TEXT -->
-      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
-        <img
-          src="{{ '/assets/img/controversial.png' | relative_url }}"
-          alt="Controversial role icon"
-          loading="lazy"
-          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
-        />
-        <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The lightning rods.</strong> They don't always start fights, but fights find them.
-          Threads here turn into battlegrounds, and links often carry “look at this” energy, supportive or hostile.
-          Unsurprisingly, <strong>Politics/Extremism</strong> takes the top spot. 
-          Interestingly, <strong>Meta-Commentary</strong> (subreddits that talk <em>about</em> Reddit) is the second most controversial. 
-          When you police the internet, the internet fights back.
-        </p>
-      </div>
+      <div class="role-col" style="flex:0 1 480px;min-width:320px;text-align:center;">
+      <img
+        src="{{ '/assets/img/influential.png' | relative_url }}"
+        alt="Influential role icon"
+        loading="lazy"
+        style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+      />
+      <p style="margin:0;text-align:left;padding:0 0.5rem;">
+        <strong>The hubs.</strong> These clusters sit at the center of attention and shape what “average Reddit” sees.
+        Their power is reach: they don't need to be extreme to dominate the flow of links.
+        The "Help/Advice/Q&A" cluster is the most influential on Reddit (83.5%), followed closely by "Lifestyle" and "Tech."
+      </p>
+    </div>
+  </div>
+
+  <p style="margin-top:1.2rem;">
+    If Influential clusters are where attention concentrates, Supportive clusters are where attention turns into care.
+  </p>
+
+
+  <!-- ROLE 2: SUPPORTIVE -->
+  <h3 id="role-supportive" class="section-header text-center" style="margin-top:3rem;">Supportive</h3>
+
+  <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+    <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+      <img
+        src="{{ '/assets/img/supportive.png' | relative_url }}"
+        alt="Supportive role icon"
+        loading="lazy"
+        style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+      />
+      <p style="margin:0;text-align:left;padding:0 0.5rem;">
+        <strong>The helpers.</strong> These clusters turn participation into support: advice, empathy, coping, recovery,
+        and practical help. Their outbound links tend to uplift or guide, not to punish.
+      </p>
     </div>
 
-    <p style="margin-top:1.2rem;">
-      The last role is different: it's not just “where fights happen,” but “where fights are produced.”
+    <!-- RIGHT: VIZ -->
+    <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+      <img 
+        src="{{ '/assets/img/role_supportive_top.png' | relative_url }}" 
+        alt="Top Supportive Clusters chart" 
+        style="width:100%; height:auto; display:block;"
+      />
+    </div>
+  </div>
+
+  <p style="margin-top:1.2rem;">
+    But not every community exists to help or inform. Some exist to fight.
+  </p>
+
+
+  <!-- ROLE 3: CONTROVERSIAL (VIZ LEFT, IMAGE RIGHT) -->
+  <h3 id="role-controversial" class="section-header text-center" style="margin-top:3rem;">Controversial</h3>
+
+  <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+    <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+      <img 
+        src="{{ '/assets/img/role_controversial_top.png' | relative_url }}" 
+        alt="Top Controversial Clusters chart" 
+        style="width:100%; height:auto; display:block;"
+      />
+    </div>
+
+    <!-- RIGHT: IMAGE + TEXT -->
+    <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+      <img
+        src="{{ '/assets/img/controversial.png' | relative_url }}"
+        alt="Controversial role icon"
+        loading="lazy"
+        style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+      />
+      <p style="margin:0;text-align:left;padding:0 0.5rem;">
+        <strong>The lightning rods.</strong> They don't always start fights, but fights find them.
+        Threads here turn into battlegrounds, and links often carry “look at this” energy, supportive or hostile.
+        Unsurprisingly, <strong>Politics/Extremism</strong> takes the top spot. 
+        Interestingly, <strong>Meta-Commentary</strong> (subreddits that talk <em>about</em> Reddit) is the second most controversial. 
+        When you police the internet, the internet fights back.
+      </p>
+    </div>
+  </div>
+
+  <p style="margin-top:1.2rem;">
+    The last role is different: it's not just “where fights happen,” but “where fights are produced.”
+  </p>
+
+
+  <!-- ROLE 4: CRITICAL (IMAGE LEFT, VIZ RIGHT) -->
+  <h3 id="role-critical" class="section-header text-center" style="margin-top:3rem;">Critical</h3>
+
+  <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
+    <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
+      <img
+        src="{{ '/assets/img/critical.png' | relative_url }}"
+        alt="Critical role icon"
+        loading="lazy"
+        style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
+      />
+      <p style="margin:0;text-align:left;padding:0 0.5rem;">
+        <strong>The takedown specialists.</strong> These clusters are built around critique, mockery, and drama.
+        They define themselves by what they oppose. <strong>Politics</strong> and <strong>Meta-Commentary</strong> appear here again.
+        This reveals a "Dual Role": The most Critical communities are often the most Controversial. They are locked in a cycle of attacking and being attacked.
+      </p>
+    </div>
+
+    <!-- RIGHT: VIZ -->
+    <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
+      <img 
+        src="{{ '/assets/img/role_critical_top.png' | relative_url }}" 
+        alt="Top Critical Clusters chart" 
+        style="width:100%; height:auto; display:block;"
+      />
+    </div>
+  </div>
+  <p style="margin-top:2rem;">
+    We have now identified the actors: we know who <strong>promotes</strong> (Supportive) and who <strong>attacks</strong>( Critical).
+      <br>
+      We can now try to analyze the Network itself. 
     </p>
 
 
-    <!-- ROLE 4: CRITICAL (IMAGE LEFT, VIZ RIGHT) -->
-    <h3 class="section-header text-center" style="margin-top:3rem;">Critical</h3>
-
-    <div class="media-row" style="display:flex;gap:1.8rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-top:1.2rem;">
-      <div class="role-col" style="flex:0 1 380px;min-width:260px;text-align:center;">
-        <img
-          src="{{ '/assets/img/critical.png' | relative_url }}"
-          alt="Critical role icon"
-          loading="lazy"
-          style="width:340px;max-width:80%;height:auto;display:block;margin:0 auto 1rem auto;"
-        />
-        <p style="margin:0;text-align:left;padding:0 0.5rem;">
-          <strong>The takedown specialists.</strong> These clusters are built around critique, mockery, and drama.
-          They define themselves by what they oppose. <strong>Politics</strong> and <strong>Meta-Commentary</strong> appear here again.
-          This reveals a "Dual Role": The most Critical communities are often the most Controversial. They are locked in a cycle of attacking and being attacked.
-        </p>
-      </div>
-
-      <!-- RIGHT: VIZ -->
-     <div class="viz-col" style="flex:1 1 520px;min-width:300px;">
-        <img 
-          src="{{ '/assets/img/role_critical_top.png' | relative_url }}" 
-          alt="Top Critical Clusters chart" 
-          style="width:100%; height:auto; display:block;"
-        />
-      </div>
-    </div>
-    <p style="margin-top:2rem;">
-      We have now identified the actors: we know who <strong>promotes</strong> (Supportive) and who <strong>attacks</strong>( Critical).
-        <br>
-        We can now try to analyze the Network itself. 
-      </p>
-  </div>
-</section>
-
-
-<section class="story-chapter" id="network">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">The Network Fabric</h2>
+      <h3 id="network-fabric" class="section-header text-center">The Network Fabric</h3>
     </div>
 
     <h3 class="text-center">To truly understand the map, we need to ask: which communities hold the most influence? 
@@ -494,99 +514,112 @@ permalink: /
       This tells us who actually holds the keys to the kingdom.
     </p>
 
-  <div class="media-row" style="display:flex; gap: 4rem; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
-    
-    <div style="flex: 1 1 300px; max-width: 450px;">
-      <h3 style="text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 1.5rem; color: #3498db;">
-        👑 Prestige Leaders
-      </h3>
-      <p style="font-size: 0.9rem; margin-bottom: 1.5rem; min-height: 3rem;">
-        <strong>Who gets the most links?</strong><br>
-        These are the "Main Characters." Utility leads, but Humor (Memes) is a close second.
-      </p>
-
-      <ol class="clean-list" style="list-style: none; padding: 0; font-family: 'IBM Plex Sans', sans-serif;">
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 700; font-size: 1.1rem;">
-          <span><span style="color:#ccc; margin-right:10px;">1</span> Help/Advice/Q&A</span>
-          <span style="color: #3498db;">1.86</span>
+    <div style="max-width: 760px; margin: 1.4rem auto 2rem auto; background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:1rem 1.2rem; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
+      <ul style="list-style: disc; padding-left:1.3rem; margin:0; color:#111;">
+        <li style="margin:0 0 0.8rem 0;">
+          <strong>Betweenness:</strong> Do shortest paths from other nodes pass through this node?
+          <div style="text-align:center; font-family:'Times New Roman', Georgia, serif; font-size:1.05rem; margin-top:0.35rem;">
+            <em>B</em>(<em>v</em>) = Σ<sub>s≠v≠t</sub>  num of shortest paths from <em>s</em> to <em>t</em> that go through <em>v</em>
+          </div>
         </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">2</span> Memes/Cute/Funny</span>
-          <span style="color: #888;">0.98</span>
+        <li style="margin:0;">
+          <strong>PageRank:</strong> How “important” are the nodes, judging by their global connectivity?
+          <div style="text-align:center; font-family:'Times New Roman', Georgia, serif; font-size:1.05rem; margin-top:0.35rem; font-weight:700;">
+            <em>r</em> = α <em>P</em><sup>T</sup> <em>r</em> + (1 − α) <em>v</em>
+          </div>
+          <div style="text-align:center; font-size:0.9rem; color:#4b5563; margin-top:0.2rem;">
+            where <em>r</em> denotes the rank of all nodes, <em>P</em> is the transition matrix, and <em>v</em> is a uniform personalization vector.
+          </div>
         </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">3</span> Technology/Hardware</span>
-          <span style="color: #888;">0.89</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">4</span> Gaming-AAA Titles</span>
-          <span style="color: #888;">0.77</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">5</span> Lifestyle/Outdoor</span>
-          <span style="color: #888;">0.75</span>
-        </li>
-      </ol>
+      </ul>
     </div>
 
-    <div style="flex: 1 1 300px; max-width: 450px;">
-      <h3 style="text-align: center; border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-bottom: 1.5rem; color: #e67e22;">
-        🌉 Bridge Leaders
-      </h3>
-      <p style="font-size: 0.9rem; margin-bottom: 1.5rem; min-height: 3rem;">
-        <strong>Who connects the unconnected?</strong><br>
-        Meta-Commentary and Advice are the glue holding the network together.
-      </p>
+    <div class="media-row" style="display:flex; gap: 4rem; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
+      
+      <div style="flex: 1 1 300px; max-width: 450px;">
+        <h3 style="text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 1.5rem; color: #3498db;">
+           Prestige Leaders
+        </h3>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem; min-height: 3rem;">
+          <strong>Who gets the most links?</strong><br>
+          These are the "Main Characters." Utility leads, but Humor (Memes) is a close second.
+        </p>
 
-      <ol class="clean-list" style="list-style: none; padding: 0; font-family: 'IBM Plex Sans', sans-serif;">
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 700; font-size: 1.1rem;">
-          <span><span style="color:#ccc; margin-right:10px;">1</span> Meta-Commentary</span>
-          <span style="color: #e67e22;">3.00</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">2</span> Help/Advice/Q&A</span>
-          <span style="color: #888;">3.00</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">3</span> Tech/Cryptocurrency</span>
-          <span style="color: #888;">1.00</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">4</span> Sports/American</span>
-          <span style="color: #888;">1.00</span>
-        </li>
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
-          <span><span style="color:#ccc; margin-right:10px;">5</span> Technology/Hardware</span>
-          <span style="color: #888;">1.00</span>
-        </li>
-      </ol>
+        <ol class="clean-list" style="list-style: none; padding: 0; font-family: 'IBM Plex Sans', sans-serif;">
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 700; font-size: 1.1rem;">
+            <span><span style="color:#ccc; margin-right:10px;">1</span> Help/Advice/Q&A</span>
+            <span style="color: #3498db;">0.0002</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">2</span> Memes/Cute/Funny</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">3</span> Technology/Hardware</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">4</span> Gaming-AAA Titles</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">5</span> Lifestyle/Outdoor</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+        </ol>
+      </div>
+
+      <div style="flex: 1 1 300px; max-width: 450px;">
+        <h3 style="text-align: center; border-bottom: 2px solid #e67e22; padding-bottom: 10px; margin-bottom: 1.5rem; color: #e67e22;">
+           Bridge Leaders
+        </h3>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem; min-height: 3rem;">
+          <strong>Who connects the unconnected?</strong><br>
+          Meta-Commentary and Advice are the glue holding the network together.
+        </p>
+
+        <ol class="clean-list" style="list-style: none; padding: 0; font-family: 'IBM Plex Sans', sans-serif;">
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 700; font-size: 1.1rem;">
+            <span><span style="color:#ccc; margin-right:10px;">1</span> Meta-Commentary</span>
+            <span style="color: #e67e22;">0.0003</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">2</span> Help/Advice/Q&A</span>
+            <span style="color: #888;">0.0003</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">3</span> Tech/Cryptocurrency</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">4</span> Sports/American</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+          <li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <span><span style="color:#ccc; margin-right:10px;">5</span> Technology/Hardware</span>
+            <span style="color: #888;">0.0001</span>
+          </li>
+        </ol>
+      </div>
+
     </div>
+
+    <p style="margin-top:4rem;">
+      The takeaway is simple: Reddit is not flat. A small set of hubs shape discovery, 
+      and a unique set of bridges connect the silos.
+    </p>
+    <p>
+      So the next question is unavoidable:
+      <strong>when conflict happens, does it follow these power lines?</strong>
+    </p>
 
   </div>
 
-<p style="margin-top:4rem; font-size: 0.85rem; color: #888; font-style: italic;">
-  Note: Values shown are PageRank scores × 10,000 for readability
-</p>
-
-<p style="margin-top:2rem;">
-  The takeaway is simple: Reddit is not flat. A small set of hubs shape discovery, 
-  and a unique set of bridges connect the silos.
-</p>
-<p>
-  So the next question is unavoidable:
-  <strong>when conflict happens, does it follow these power lines?</strong>
-</p>
-  </div>
-</section>
-
-
-<section class="story-chapter" id="rivalries">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">Rivalries and Fault Lines</h2>
+      <h3 id="rivalries" class="section-header text-center">Rivalries and Fault Lines</h3>
     </div>
 
-    <h3 class="text-center">The Circle of Conflict</h3>
 
     <!-- Hero Image: Rivalry Cards FIRST -->
     <div style="max-width: 700px; margin: 2rem auto;">
@@ -605,7 +638,7 @@ permalink: /
     <p>
       We tracked the <strong>Top 20 rivalries</strong> on Reddit. We visualized them as a "Circle of Conflict." Each community has its own color. The <strong>Ribbons</strong> represent attacks, colored by the aggressor.
     </p>
-
+    <h3 class="text-center">The Circle of Conflict</h3>
     <!-- Chord Diagram -->
     <div style="max-width: 1000px; margin: 3rem auto;">
       <div style="width: 100%; height: 750px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
@@ -642,15 +675,13 @@ permalink: /
         So the next question becomes: <strong>Who are the allies?</strong>
       </p>
   </div>
-</section>
 
-<section class="story-chapter" id="alliances">
   <div class="section-inner">
     <div class="section-header">
-      <h2 class="section-title text-center">Friendships and Safe Harbors</h2>
+      <h3 id="alliances" class="section-header text-center">Friendships and Safe Harbors</h3>
     </div>
 
-    <h3 class="text-center">The Circle of Trust</h3>
+
 
     <p>
       Not every link is an attack. In fact, supportive links vastly outnumber the hostile ones.
@@ -658,6 +689,7 @@ permalink: /
       <br>
       The <strong>Ribbons</strong> represent support, colored by the community offering it.
     </p>
+    <h3 class="text-center">The Circle of Trust</h3>
 
     <div style="width: 100%; height: 750px; border: none; overflow: hidden; background: white; margin-top: 2rem;">
       <iframe
@@ -696,17 +728,9 @@ permalink: /
       </p>
 
   </div>
-</section>
 
-
-<section class="story-chapter" id="punching-bags">
   <div class="section-inner">
-    
-    <div class="section-header">
-      <h2 class="section-title text-center">Punching Bags and Bullies</h2>
-    </div>
-
-    <h3 class="text-center">Who dishes out the most hits and who absorbs them?</h3>
+    <h3 id="punching-bags" class="text-center">Punching Bags and Bullies: Who dishes out the most hits and who absorbs them?</h3>
 
     <p>
       Not every target is a victim, and not every attacker is "evil." But the network gives us a concrete way to tell the difference:
@@ -721,7 +745,7 @@ permalink: /
     <!-- Sankey Diagram -->
     <div style="width: 100%; height: 650px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: white; margin: 3rem 0;">
       <iframe
-        src="{{ '/assets/visualizations/toxicity.html' | relative_url }}"
+        src="{{ '/assets/visualizations/toxicity_flow_sankey.html' | relative_url }}"
         width="100%"
         height="100%"
         style="border: none;"
@@ -808,16 +832,9 @@ permalink: /
     </p>
 
   </div>
-</section>
 
-<section class="story-chapter" id="power-game">
   <div class="section-inner">
-    
-    <div class="section-header">
-      <h2 class="section-title text-center">The Power Struggle</h2>
-    </div>
-
-    <h3 class="text-center">David vs Goliath: do small communities attack the big ones?</h3>
+    <h3 id="power-struggle" class="text-center">The Power Struggle (David and Goliath): do small communities attack the big ones?</h3>
 
     <!-- Hero Image -->
     <div style="max-width: 800px; margin: 2rem auto;">
@@ -843,7 +860,7 @@ permalink: /
     <!-- Waffle Chart Visualization -->
     <div style="width: 100%; height: 750px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: white; margin: 3rem 0;">
       <iframe
-        src="{{ '/assets/visualizations/insurgency.html' | relative_url }}"
+        src="{{ '/assets/visualizations/insurgency_power_waffle.html' | relative_url }}"
         width="100%"
         height="100%"
         style="border: none;"
@@ -875,11 +892,12 @@ permalink: /
   </div>
 </section>
 
+
 <section class="story-chapter" id="civility">
   <div class="section-inner">
     
     <div class="section-header">
-      <h2 class="section-title text-center">Inside the walls</h2>
+      <h2 class="section-title text-center">Inside the walls: The semantics of the network</h2>
     </div>
 
     <h3 class="section-header text-center" style="margin-top:2.5rem;">External conflict grabs the headline. Internal conflict defines the culture.</h3>
@@ -1005,7 +1023,7 @@ permalink: /
     <div style="margin: 2rem auto; max-width: 1100px;">
       <div style="width: 100%; height: 650px; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
         <iframe
-          src="{{ '/assets/visualizations/isolation.html' | relative_url }}"
+          src="{{ '/assets/visualizations/isolation_civility_slope.html' | relative_url }}"
           width="100%"
           height="100%"
           style="border: none;"
@@ -1060,8 +1078,9 @@ permalink: /
       LIWC reveals what attention sounds like.
     </h3>
       <p>
-        We've mapped Reddit's <strong>Geography</strong> (continents), <strong>Traffic</strong> (links), <strong>Power</strong> (PageRank),
-        and <strong>Conflict</strong> (rivalries). But one critical dimension remains: its <strong>Voice</strong>.
+        So far, we've mapped Reddit's geography (continents), traffic (links), power (PageRank and betweenness),
+        and conflict (rivalries, punching bags, insurgency).
+        One missing remains: it's <strong>voice</strong>, the psychological and linguistic style communities use when interacting with each other.
       </p>
       <p>
         A community that sends 10,000 negative links could be <strong>trolling</strong>, <strong>critiquing</strong>, or conducting <strong>intellectual warfare</strong>, and you can't tell the difference from the network graph alone.
@@ -1241,7 +1260,7 @@ permalink: /
     </p>
     <figure style="width:100%; height:360px; margin:0; border-radius:12px; overflow:hidden; background:white;">
       <iframe
-        src="{{ '/assets/visualizations/bridges.html' | relative_url }}"
+        src="{{ '/assets/visualizations/bridges_linguistic_bar.html' | relative_url }}"
         width="100%"
         height="100%"
         style="border: none; display:block;"
@@ -1343,7 +1362,7 @@ permalink: /
 
     <figure style="width:100%; height:700px; margin:0; border-radius:12px; overflow:hidden; background:white;">
       <iframe
-        src="{{ '/assets/visualizations/liwc_cluster.html' | relative_url }}"
+        src="{{ '/assets/visualizations/network_synthesis_explorer.html' | relative_url }}"
         width="100%"
         height="100%"
         style="border: none; display:block;"
