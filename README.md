@@ -20,7 +20,7 @@ By combining these layers, we visualized Reddit as a "social MRI", revealing how
 - 858,488 hyperlinks across 67,180 subreddits (2014-2017)
 - 3 integrated data layers (Structural, Psychological, Semantic)
 - 40 topic clusters with manual semantic validation
-- 20 statistical research questions across 5 thematic areas
+- statistical research questions across 5 thematic areas
 - 11 interactive web visualizations + 17 static analytical charts
 
 ---
@@ -227,41 +227,41 @@ Each hyperlink contains:
 
 ### Research Question Framework
 
-We conducted **20 statistical tests** organized into **5 thematic areas**:
+We conducted **statistical tests** organized into **5 thematic areas**:
 
 | Theme | Research Questions | Methods |
 |-------|-------------------|---------|
-| **1. Roles & Psychology** | RQ1-4 | ANOVA, t-tests, correlation analysis |
-| RQ1 | What linguistic patterns distinguish social roles? | Compare LIWC means across roles (Critical/Supportive/etc.) |
-| RQ2 | Which emotions dominate conflict vs support? | T-test: positive vs negative link LIWC scores |
-| RQ3 | Do communities experience emotional asymmetry? | Compare outgoing vs incoming LIWC (paired differences) |
-| RQ4 | Do ideological neighbors attack each other more? | Compare within-cluster vs cross-cluster sentiment |
-| **2. Echo Chambers** | RQ5-7 | Correlation, purity index, regression |
-| RQ5 | Does certainty correlate with insularity? | Pearson r: certainty score vs internal link percentage |
-| RQ6 | Where do semantic and structural clustering align? | Purity matrix: topic cluster × network community |
-| RQ7 | What predicts isolation? | Regression: insularity ~ LIWC + network features |
-| **3. Network Structure** | RQ8-10 | Correlation, flow matrices, bridge analysis |
-| RQ8 | What makes a bridge? | Correlation: betweenness vs LIWC/role features |
-| RQ9 | Which topics act as bridges? | Cross-cluster link density by topic |
-| RQ10 | What are the major rivalries and alliances? | Net sentiment flow matrix between clusters |
-| **4. Conflict Patterns** | RQ11-15 | Cluster comparisons, sentiment aggregation |
-| RQ11 | How are roles distributed across topics? | Role percentage per cluster |
-| RQ12 | Which clusters attack outward most? | External negativity: outgoing negative - incoming positive |
-| RQ13 | Which clusters attack themselves? | Internal civility: negative links within cluster |
-| RQ14 | What language predicts internal peace? | Correlation: civility vs LIWC features |
-| RQ15 | What language predicts external war? | Correlation: external negativity vs LIWC |
-| **5. Power Dynamics** | RQ16-20 | Flow analysis, regression, directional tests |
-| RQ16 | Who are the punching bags? | Net toxicity flow: incoming negative - outgoing negative |
-| RQ17 | What predicts PageRank? | Correlation: PageRank vs LIWC/betweenness/degree |
-| RQ18 | Do attacks flow up or down the hierarchy? | Compare low-PR → high-PR vs high-PR → low-PR links |
-| RQ19 | Does receiving hate breed sending hate? | Correlation: incoming negativity vs outgoing negativity |
-| RQ20 | Are critics analytical or emotional? | Compare cognitive vs emotional LIWC in negative links |
+| **1. Roles & Psychology** | RQ1| ANOVA, t-tests, correlation analysis |
+| RQ1.1 | What linguistic patterns distinguish social roles? | Compare LIWC means across roles (Critical/Supportive/etc.) |
+| RQ1.2 | Which emotions dominate conflict vs support? | T-test: positive vs negative link LIWC scores |
+| RQ1.3 | Do communities experience emotional asymmetry? | Compare outgoing vs incoming LIWC (paired differences) |
+| RQ1.4 | Do ideological neighbors attack each other more? | Compare within-cluster vs cross-cluster sentiment |
+| **2. Echo Chambers** | RQ2 | Correlation, purity index, regression |
+| RQ2.1 | Does certainty correlate with insularity? | Pearson r: certainty score vs internal link percentage |
+| RQ2.2 | Where do semantic and structural clustering align? | Purity matrix: topic cluster × network community |
+| RQ2.3 | What predicts isolation? | Regression: insularity ~ LIWC + network features |
+| **3. Network Structure** | RQ3 | Correlation, flow matrices, bridge analysis |
+| RQ3.1 | What makes a bridge? | Correlation: betweenness vs LIWC/role features |
+| RQ3.2 | Which topics act as bridges? | Cross-cluster link density by topic |
+| RQ3.3 | What are the major rivalries and alliances? | Net sentiment flow matrix between clusters |
+| **4. Conflict Patterns** | RQ4 | Cluster comparisons, sentiment aggregation |
+| RQ4.1 | How are roles distributed across topics? | Role percentage per cluster |
+| RQ4.2 | Which clusters attack outward most? | External negativity: outgoing negative - incoming positive |
+| RQ4.3 | Which clusters attack themselves? | Internal civility: negative links within cluster |
+| RQ4.4 | What language predicts internal peace? | Correlation: civility vs LIWC features |
+| RQ4.5 | What language predicts external war? | Correlation: external negativity vs LIWC |
+| **5. Power Dynamics** | RQ5 | Flow analysis, regression, directional tests |
+| RQ5.1 | Who are the punching bags? | Net toxicity flow: incoming negative - outgoing negative |
+| RQ5.2 | What predicts PageRank? | Correlation: PageRank vs LIWC/betweenness/degree |
+| RQ5.3 | Do attacks flow up or down the hierarchy? | Compare low-PR → high-PR vs high-PR → low-PR links |
+| RQ5.4 | Does receiving hate breed sending hate? | Correlation: incoming negativity vs outgoing negativity |
+| RQ5.5 | Are critics analytical or emotional? | Compare cognitive vs emotional LIWC in negative links |
 
 **Statistical Methods:**
 - **Correlation Analysis:** Pearson r for continuous variables
 - **T-tests:** Compare group means (e.g., positive vs negative link language)
 - **ANOVA:** Compare multiple groups (e.g., LIWC across 4 roles)
-- **Flow Matrices:** Net sentiment between clusters (Σ incoming - Σ outgoing)
+- **Flow Matrices:** Net sentiment between clusters (incoming - outgoing)
 - **Regression-Style Analysis:** Identify predictors of outcomes (e.g., what drives betweenness?)
 
 All outputs saved to `data/processed/rq_analysis/` for reproducibility.
