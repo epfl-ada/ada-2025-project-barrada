@@ -352,10 +352,6 @@ After running the notebook:
 - Kumar, S., Hamilton, W. L., Leskovec, J., & Jurafsky, D. (2018). Community interaction and conflict on the web. *Proceedings of the 2018 World Wide Web Conference*, 933-943.
 - Hamilton, W. L., Zhang, J., Danescu-Niculescu-Mizil, C., Jurafsky, D., & Leskovec, J. (2017). Loyalty in online communities. *Proceedings of the International AAAI Conference on Web and Social Media*, 11(1).
 
-**Tools:**
-- Pennebaker, J. W., Boyd, R. L., Jordan, K., & Blackburn, K. (2015). *The development and psychometric properties of LIWC2015*. University of Texas at Austin.
-- NetworkX: Hagberg, A. A., Schult, D. A., & Swart, P. J. (2008). Exploring network structure, dynamics, and function using NetworkX. *Proceedings of the 7th Python in Science Conference*, 11-15.
-
 ---
 
 **Project Repository:** [https://github.com/epfl-ada/ada-2025-project-barrada](https://github.com/epfl-ada/ada-2025-project-barrada)  
