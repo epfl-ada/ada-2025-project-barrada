@@ -140,13 +140,13 @@ jupyter lab
 
 We used three datasets from the [Stanford Network Analysis Project (SNAP)](https://snap.stanford.edu/):
 
-1. **Reddit Hyperlink Network (Body):** 858,490 hyperlinks from post bodies
-2. **Subreddit Embeddings:** 300-dimensional topic vectors for 51,278 subreddits
+1. **Reddit Hyperlink Network (Body + Title):** hyperlinks from post bodies and titles (2014-2017)
+3. **Subreddit Embeddings:** 300-dimensional topic vectors for 51,278 subreddits
 
 Each hyperlink contains:
 - Source and target subreddit
 - Timestamp
-- Sentiment label (+1 positive, -1 negative)
+- Sentiment label (+1 positive/neutral, -1 negative)
 - PROPERTIES string with 21 text features + 65 LIWC psychological scores
 
 
@@ -313,7 +313,7 @@ After running the notebook:
 
 ## Limitations
 
-1. **Temporal Scope:** Data from 2014-2017 predates major Reddit policy changes (quarantines, bans). Current dynamics may differ significantly.
+1. **Temporal Scope:** Data from 2014-2017 predates some major world events (covid quarantine, russia-ukraine war, most of the trump presidency...). Current dynamics may differ significantly.
 
 2. **Language Bias:** Analysis is English-dominant. Non-English clusters (Japanese, German, Brazilian) are underrepresented and may have biased LIWC scores.
 
@@ -333,7 +333,7 @@ After running the notebook:
 
 **Hamza Barrada:** Data integration and designed the interactive visualizations
 
-**Omar El Khyari:** Focused on LIWC analysism, role classification and created the project webpage.
+**Omar El Khyari:** Focused on LIWC analysis, role classification and created the project webpage.
 
 **Omar Zakariya:** Conducted network analysis and assisted with the webpage, visualizations, and Jupyter notebook.
 
@@ -345,7 +345,7 @@ After running the notebook:
 
 ---
 
-## Citation
+## References
 
 **Datasets:**
 - Kumar, S., Hamilton, W. L., Leskovec, J., & Jurafsky, D. (2018). Community interaction and conflict on the web. *Proceedings of the 2018 World Wide Web Conference*, 933-943.
