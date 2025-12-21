@@ -140,14 +140,13 @@ jupyter lab
 
 We used three datasets from the [Stanford Network Analysis Project (SNAP)](https://snap.stanford.edu/):
 
-1. **Reddit Hyperlink Network (Body):** 858,490 hyperlinks from post bodies (2014-2017)
-2. **Reddit Hyperlink Network (Title):** 24,053 hyperlinks from post titles (2014-2017)
-3. **Subreddit Embeddings:** 300-dimensional topic vectors for 51,278 subreddits
+1. **Reddit Hyperlink Network (Body):** 858,490 hyperlinks from post bodies
+2. **Subreddit Embeddings:** 300-dimensional topic vectors for 51,278 subreddits
 
 Each hyperlink contains:
 - Source and target subreddit
 - Timestamp
-- Sentiment label (+1 positive, -1 negative, 0 neutral)
+- Sentiment label (+1 positive, -1 negative)
 - PROPERTIES string with 21 text features + 65 LIWC psychological scores
 
 

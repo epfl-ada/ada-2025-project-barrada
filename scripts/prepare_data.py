@@ -458,7 +458,6 @@ class VisualizationDataPrep:
         rq13 = pd.read_csv(rq13_path)
         cluster_master = pd.read_csv(cluster_path)
         
-        # Merge on cluster name (src_cluster in RQ13, cluster_label in cluster_master)
         merged = pd.merge(
             rq13,
             cluster_master[['cluster_label', 'insularity', 'n_subreddits', 'pagerank_mean']], 
